@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase-config";
 import Login from "./components/Login";
-import Home from "./components/Home";
+import Dashboard from "./components/Dashboard";
 import NavBar from "./components/NavBar";
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
       <NavBar />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
