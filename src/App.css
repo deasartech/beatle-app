@@ -17,3 +17,10 @@
   color: #34d399 !important;
   font-family: "Raleway", sans-serif;
 }
+
+.tile {
+  background-color: green !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
