@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Container, Button, Form, Card, Row, Col } from "react-bootstrap";
 import { getLyrics, getSong } from "genius-lyrics-api";
 import { fetchTrack } from "../utils/api";
+import { Howl, Howler } from "howler";
 // import Player from "./Player";
+import stay from "../assets/audio/stay.mp3";
 
 export default function Dashboard() {
   const [lyrics, setLyrics] = useState(null);
@@ -16,17 +18,33 @@ export default function Dashboard() {
   const [result, setResult] = useState(null);
   const [message, setMessage] = useState("");
 
+  // test audio file
+  const songFile = new Audio(stay);
+
   const options = {
     apiKey: "ZjqI5BRYEmR_6jSPsqAbGC0D6hGaAVy_3ljEDEv6uSN_IgaCoGtj-9RDG09sv8H8",
-    title: "Blinding Lights",
-    artist: "The Weeknd",
+    title: "Stay",
+    artist: "the Kid Laroi",
     optimizeQuery: true,
   };
+
+  // howler
+  let sound = new Howl({
+    src: [stay],
+    sprite: {
+      chorus: [45000, 10000],
+    },
+  });
+
+  // let id1 = sound.play();
+
+  // sound.rate(1.5, id1);
 
   useEffect(() => {
     getLyrics(options).then((lyrics) => {
       console.log(lyrics);
-      setLyrics(lyrics.slice(24, 44));
+      console.log(lyrics.slice(24, 198));
+      setLyrics(lyrics.slice(24, 198));
     });
     fetchTrack(3362856).then((data) => {
       console.log(data, "dashboard res");
@@ -34,17 +52,26 @@ export default function Dashboard() {
   }, [options]);
 
   const handlePlay = () => {
+    // songFile.currentTime = 45;
+    // songFile.play();
+    const id1 = sound.play("chorus");
+    sound.rate(0.8, id1);
+    // sound.play(id1);
     setPlay(true);
-    setTimeout(() => {
+    sound.on("end", function () {
       setTimePassed(true);
-      console.log("this is the first message");
-    }, 5000);
+    });
+    // setTimeout(() => {
+    //   setTimePassed(true);
+    //   console.log("this is the first message");
+    //   // songFile.pause();
+    // }, 15000);
   };
 
   const handleSubmit = () => {
     if (!answer) {
       console.log("empty");
-      alert("Hello! I am an alert box!!");
+      alert("Hello! your answer is empty!!");
       return;
     }
     if (answer.toLowerCase() === lyrics.toLowerCase()) {
@@ -79,32 +106,36 @@ export default function Dashboard() {
         {/* <Player accessToken={accessToken} /> */}
         <br />
         <Card
-          className="justify-content-center text-center tile"
+          className="justify-content-center text-center tile shadow border-0"
           style={{ height: "25rem" }}
         >
           {!play ? (
             <Container>
-              <Button onClick={handlePlay} className="">
+              <Button onClick={handlePlay} className="btn-trophy px-4">
                 Play
               </Button>
             </Container>
           ) : (
             <>
               {!timePassed ? (
-                <h3>{lyrics}</h3>
+                <h3 className="p-3">{lyrics}</h3>
               ) : (
                 <>
-                  <Container>
+                  <Container className="px-3">
                     {!result ? (
                       <>
                         <Form.Control
                           as="textarea"
+                          className="contact shadow"
                           rows={4}
                           value={answer}
                           onChange={(e) => setAnswer(e.target.value)}
                           placeholder="type your answer here"
                         />
-                        <Button onClick={handleSubmit} className="m-3">
+                        <Button
+                          onClick={handleSubmit}
+                          className="m-3 btn-trophy"
+                        >
                           Submit
                         </Button>
                       </>
@@ -120,19 +151,25 @@ export default function Dashboard() {
             </>
           )}
         </Card>
-        <Card className="mt-3 p-2">
+        <Card className="mt-3 p-2 border-0 shadow">
           <Row className="justify-content-center">
             <Col className="text-center">
-              <h1>1</h1>
-              <h3>{results[0]}</h3>
+              <h2>1</h2>
+              <h3 className={results[0] === "Correct" ? "pass" : null}>
+                {results[0] || "none"}
+              </h3>
             </Col>
             <Col className="text-center">
-              <h1>2</h1>
-              <h3>{results[1]}</h3>
+              <h2>2</h2>
+              <h3 className={results[1] === "Correct" ? "pass" : null}>
+                {results[1] || "none"}
+              </h3>
             </Col>
             <Col className="text-center">
-              <h1>3</h1>
-              <h3>{results[2]}</h3>
+              <h2>3</h2>
+              <h3 className={results[2] === "Correct" ? "pass" : null}>
+                {results[2] || "none"}
+              </h3>
             </Col>
           </Row>
         </Card>
