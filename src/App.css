@@ -17,3 +17,32 @@
   color: #34d399 !important;
   font-family: "Raleway", sans-serif;
 }
+
+.tile {
+  /* background-color: green !important; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-control {
+  border: none;
+}
+
+.contact {
+  border: none !important;
+  border-radius: 10px !important;
+  font-family: "Roboto Mono", monospace;
+  padding: 10px;
+  padding-left: 15px;
+  border-radius: 20px;
+  /* box-shadow: 5px 5px 0px #34d399 !important; */
+}
+
+.pass {
+  color: #34d399;
+}
+
+.fail {
+  color: red;
+}

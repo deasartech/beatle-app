@@ -108,7 +108,7 @@ export default function NavBar() {
               )}
               {!auth.currentUser ? (
                 <>
-                  <Button href="/signin" className="btn-sign m-3">
+                  <Button href="/signin" className="btn-trophy m-3">
                     Sign in/Sign up
                   </Button>
                   <Button
