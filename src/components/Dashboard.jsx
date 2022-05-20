@@ -8,6 +8,9 @@ import stay from "../assets/audio/stay.mp3";
 import gameOver from "../assets/audio/retro-game-over.wav";
 import win from "../assets/audio/win.wav";
 
+// import nlp
+import nlp from "compromise";
+
 export default function Dashboard() {
   const [lyrics, setLyrics] = useState(null);
   const [timePassed, setTimePassed] = useState(false);
@@ -76,6 +79,12 @@ export default function Dashboard() {
       alert("Hello! your answer is empty!!");
       return;
     }
+
+    let doc = nlp(lyrics);
+    doc.contractions().expand();
+    // let ans = nlp(answer);
+    // ans.contractions().expand();
+    console.log(doc.has(answer), "answer");
     if (answer.toLowerCase() === lyrics.toLowerCase()) {
       setResult("Correct");
       if (results.length < 3) {
