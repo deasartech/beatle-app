@@ -10,6 +10,7 @@ export default function Dashboard() {
   const [lyrics, setLyrics] = useState(null);
   const [timePassed, setTimePassed] = useState(false);
   const [play, setPlay] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [results, setResults] = useState([]);
 
@@ -18,9 +19,7 @@ export default function Dashboard() {
   const [result, setResult] = useState(null);
   const [message, setMessage] = useState("");
 
-  // test audio file
-  const songFile = new Audio(stay);
-
+  // lyrics
   const options = {
     apiKey: "ZjqI5BRYEmR_6jSPsqAbGC0D6hGaAVy_3ljEDEv6uSN_IgaCoGtj-9RDG09sv8H8",
     title: "Stay",
@@ -34,11 +33,10 @@ export default function Dashboard() {
     sprite: {
       chorus: [45000, 10000],
     },
+    onload: function () {
+      setLoading(false);
+    },
   });
-
-  // let id1 = sound.play();
-
-  // sound.rate(1.5, id1);
 
   useEffect(() => {
     getLyrics(options).then((lyrics) => {
@@ -46,26 +44,20 @@ export default function Dashboard() {
       console.log(lyrics.slice(24, 198));
       setLyrics(lyrics.slice(24, 198));
     });
-    fetchTrack(3362856).then((data) => {
-      console.log(data, "dashboard res");
-    });
+    // deezer call
+    // fetchTrack(3362856).then((data) => {
+    //   console.log(data, "dashboard res");
+    // });
   }, [options]);
 
   const handlePlay = () => {
-    // songFile.currentTime = 45;
-    // songFile.play();
     const id1 = sound.play("chorus");
     sound.rate(0.8, id1);
-    // sound.play(id1);
+
     setPlay(true);
     sound.on("end", function () {
       setTimePassed(true);
     });
-    // setTimeout(() => {
-    //   setTimePassed(true);
-    //   console.log("this is the first message");
-    //   // songFile.pause();
-    // }, 15000);
   };
 
   const handleSubmit = () => {
@@ -103,7 +95,6 @@ export default function Dashboard() {
   return (
     <>
       <Container>
-        {/* <Player accessToken={accessToken} /> */}
         <br />
         <Card
           className="justify-content-center text-center tile shadow border-0"
@@ -117,35 +108,41 @@ export default function Dashboard() {
             </Container>
           ) : (
             <>
-              {!timePassed ? (
-                <h3 className="p-3">{lyrics}</h3>
+              {loading ? (
+                <p>waiting...</p>
               ) : (
                 <>
-                  <Container className="px-3">
-                    {!result ? (
-                      <>
-                        <Form.Control
-                          as="textarea"
-                          className="contact shadow"
-                          rows={4}
-                          value={answer}
-                          onChange={(e) => setAnswer(e.target.value)}
-                          placeholder="type your answer here"
-                        />
-                        <Button
-                          onClick={handleSubmit}
-                          className="m-3 btn-trophy"
-                        >
-                          Submit
-                        </Button>
-                      </>
-                    ) : (
-                      <>
-                        <h3>{result}</h3>
-                        <p>{message}</p>
-                      </>
-                    )}
-                  </Container>
+                  {!timePassed ? (
+                    <h3 className="p-3">{lyrics}</h3>
+                  ) : (
+                    <>
+                      <Container className="px-3">
+                        {!result ? (
+                          <>
+                            <Form.Control
+                              as="textarea"
+                              className="contact shadow"
+                              rows={4}
+                              value={answer}
+                              onChange={(e) => setAnswer(e.target.value)}
+                              placeholder="type your answer here"
+                            />
+                            <Button
+                              onClick={handleSubmit}
+                              className="m-3 btn-trophy"
+                            >
+                              Submit
+                            </Button>
+                          </>
+                        ) : (
+                          <>
+                            <h3>{result}</h3>
+                            <p>{message}</p>
+                          </>
+                        )}
+                      </Container>
+                    </>
+                  )}
                 </>
               )}
             </>
