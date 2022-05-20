@@ -5,6 +5,8 @@ import { fetchTrack } from "../utils/api";
 import { Howl, Howler } from "howler";
 // import Player from "./Player";
 import stay from "../assets/audio/stay.mp3";
+import gameOver from "../assets/audio/retro-game-over.wav";
+import win from "../assets/audio/win.wav";
 
 export default function Dashboard() {
   const [lyrics, setLyrics] = useState(null);
@@ -38,9 +40,17 @@ export default function Dashboard() {
     },
   });
 
+  let overSound = new Howl({
+    src: [gameOver],
+  });
+
+  let winSound = new Howl({
+    src: [win],
+  });
+
   useEffect(() => {
     getLyrics(options).then((lyrics) => {
-      console.log(lyrics);
+      // console.log(lyrics);
       console.log(lyrics.slice(24, 198));
       setLyrics(lyrics.slice(24, 198));
     });
@@ -69,6 +79,7 @@ export default function Dashboard() {
     if (answer.toLowerCase() === lyrics.toLowerCase()) {
       setResult("Correct");
       if (results.length < 3) {
+        winSound.play();
         setResults([...results, "Correct"]);
       }
     } else if (
@@ -82,6 +93,7 @@ export default function Dashboard() {
         setAnswer("");
         setPlay(false);
       }, 3000);
+      overSound.play();
 
       setResults([...results, "Incorrect"]);
     } else {
@@ -148,24 +160,30 @@ export default function Dashboard() {
             </>
           )}
         </Card>
-        <Card className="mt-3 p-2 border-0 shadow">
+        <Card
+          className="mt-3 p-2 border-0 shadow"
+          style={{ minHeight: "110px" }}
+        >
           <Row className="justify-content-center">
             <Col className="text-center">
               <h2>1</h2>
-              <h3 className={results[0] === "Correct" ? "pass" : null}>
-                {results[0] || "none"}
+              <h3 className={results[0] === "Correct" ? "pass" : "fail"}>
+                {/* {results[0] || "none"} */}
+                {results[0]}
               </h3>
             </Col>
             <Col className="text-center">
               <h2>2</h2>
-              <h3 className={results[1] === "Correct" ? "pass" : null}>
-                {results[1] || "none"}
+              <h3 className={results[1] === "Correct" ? "pass" : "fail"}>
+                {/* {results[1] || "none"} */}
+                {results[1]}
               </h3>
             </Col>
             <Col className="text-center">
               <h2>3</h2>
-              <h3 className={results[2] === "Correct" ? "pass" : null}>
-                {results[2] || "none"}
+              <h3 className={results[2] === "Correct" ? "pass" : "fail"}>
+                {/* {results[2] || "none"} */}
+                {results[2]}
               </h3>
             </Col>
           </Row>
