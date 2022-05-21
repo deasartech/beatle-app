@@ -5,8 +5,10 @@ import { fetchTrack } from "../utils/api";
 import { Howl, Howler } from "howler";
 import anime from "animejs/lib/anime.es.js";
 import Letterize from "letterizejs";
+import { getTrack, getTimeRemaining, initialiseClock } from "../utils/script";
 
 // import Player from "./Player";
+// import stay from track.song;
 import stay from "../assets/audio/stay.mp3";
 import gameOver from "../assets/audio/retro-game-over.wav";
 import win from "../assets/audio/win.wav";
@@ -19,6 +21,7 @@ export default function Dashboard() {
   const [timePassed, setTimePassed] = useState(false);
   const [play, setPlay] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [track, setTrack] = useState();
 
   const [results, setResults] = useState([]);
 
@@ -54,32 +57,6 @@ export default function Dashboard() {
     src: [win],
   });
 
-  // Wrap every letter in a span
-  // const obj = new Letterize({
-  //   targets: document.getElementById("animateMe"),
-  //   wrapper: "span",
-  //   className: "letter",
-  // });
-
-  // anime
-  //   .timeline({ loop: true })
-  //   .add({
-  //     targets: "#animateMe .letter",
-  //     scale: [4, 1],
-  //     opacity: [0, 1],
-  //     translateZ: 0,
-  //     easing: "easeOutExpo",
-  //     duration: 950,
-  //     delay: (el, i) => 30 * i,
-  //   })
-  //   .add({
-  //     targets: "#animateMe",
-  //     opacity: 0,
-  //     duration: 300,
-  //     easing: "easeOutExpo",
-  //     delay: 1000,
-  //   });
-
   useEffect(() => {
     getLyrics(options).then((lyrics) => {
       // console.log(lyrics);
@@ -90,10 +67,13 @@ export default function Dashboard() {
     // fetchTrack(3362856).then((data) => {
     //   console.log(data, "dashboard res");
     // });
+    const newSong = getTrack();
+    setTrack(newSong);
+    console.log(track?.song, "track lol");
+    console.log(initialiseClock("clockdiv"), "Clock");
   }, [options]);
 
   const tileCard = document.getElementById("tile");
-  console.log(tileCard);
 
   const flipTile = (tile) => {
     setTimeout(() => {
@@ -162,6 +142,20 @@ export default function Dashboard() {
   return (
     <>
       <Container>
+        <br />
+        <Card id="clockdiv" className="border-0 text-center">
+          <Row>
+            <Col md={4} className="block">
+              hrs: <span className="hours"> </span>
+            </Col>
+            <Col md={4} className="block">
+              Mins: <span className="minutes"></span>
+            </Col>
+            <Col md={4} className="block">
+              Secs: <span className="seconds"></span>
+            </Col>
+          </Row>
+        </Card>
         <br />
         <Card
           id="tile"

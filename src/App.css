@@ -61,3 +61,8 @@
 .tile.flip {
   transform: rotateX(90deg);
 }
+
+.block {
+  background-color: #34d399;
+  color: white;
+}
