@@ -23,6 +23,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: transform 250ms linear;
 }
 
 .form-control {
@@ -32,7 +33,7 @@
 .contact {
   border: none !important;
   border-radius: 10px !important;
-  font-family: "Roboto Mono", monospace;
+  /* font-family: "Roboto Mono", monospace; */
   padding: 10px;
   padding-left: 15px;
   border-radius: 20px;
@@ -45,4 +46,18 @@
 
 .fail {
   color: red;
+}
+
+.ml2 {
+  font-weight: 900;
+  font-size: 2em;
+}
+
+.ml2 .letter {
+  display: inline-block;
+  line-height: 1em;
+}
+
+.tile.flip {
+  transform: rotateX(90deg);
 }

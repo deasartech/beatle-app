@@ -3,6 +3,9 @@ import { Container, Button, Form, Card, Row, Col } from "react-bootstrap";
 import { getLyrics, getSong } from "genius-lyrics-api";
 import { fetchTrack } from "../utils/api";
 import { Howl, Howler } from "howler";
+import anime from "animejs/lib/anime.es.js";
+import Letterize from "letterizejs";
+
 // import Player from "./Player";
 import stay from "../assets/audio/stay.mp3";
 import gameOver from "../assets/audio/retro-game-over.wav";
@@ -36,7 +39,7 @@ export default function Dashboard() {
   let sound = new Howl({
     src: [stay],
     sprite: {
-      chorus: [45000, 10000],
+      chorus: [45000, 6100],
     },
     onload: function () {
       setLoading(false);
@@ -51,11 +54,37 @@ export default function Dashboard() {
     src: [win],
   });
 
+  // Wrap every letter in a span
+  // const obj = new Letterize({
+  //   targets: document.getElementById("animateMe"),
+  //   wrapper: "span",
+  //   className: "letter",
+  // });
+
+  // anime
+  //   .timeline({ loop: true })
+  //   .add({
+  //     targets: "#animateMe .letter",
+  //     scale: [4, 1],
+  //     opacity: [0, 1],
+  //     translateZ: 0,
+  //     easing: "easeOutExpo",
+  //     duration: 950,
+  //     delay: (el, i) => 30 * i,
+  //   })
+  //   .add({
+  //     targets: "#animateMe",
+  //     opacity: 0,
+  //     duration: 300,
+  //     easing: "easeOutExpo",
+  //     delay: 1000,
+  //   });
+
   useEffect(() => {
     getLyrics(options).then((lyrics) => {
       // console.log(lyrics);
-      console.log(lyrics.slice(24, 198));
-      setLyrics(lyrics.slice(24, 198));
+      console.log(lyrics.slice(24, 127));
+      setLyrics(lyrics.slice(24, 127));
     });
     // deezer call
     // fetchTrack(3362856).then((data) => {
@@ -63,13 +92,29 @@ export default function Dashboard() {
     // });
   }, [options]);
 
+  const tileCard = document.getElementById("tile");
+  console.log(tileCard);
+
+  const flipTile = (tile) => {
+    setTimeout(() => {
+      tile.classList.add("flip");
+    }, [250]);
+
+    tile.addEventListener("transitionend", () => {
+      tile.classList.remove("flip");
+    });
+  };
+
   const handlePlay = () => {
     const id1 = sound.play("chorus");
     sound.rate(0.8, id1);
 
     setPlay(true);
     sound.on("end", function () {
-      setTimePassed(true);
+      flipTile(tileCard);
+      setTimeout(() => {
+        setTimePassed(true);
+      }, [420]);
     });
   };
 
@@ -82,9 +127,9 @@ export default function Dashboard() {
 
     let doc = nlp(lyrics);
     doc.contractions().expand();
-    // let ans = nlp(answer);
-    // ans.contractions().expand();
-    console.log(doc.has(answer), "answer");
+    let ans = nlp(answer);
+    ans.contractions().expand();
+    console.log(ans.has(doc.text()), "answer");
     if (answer.toLowerCase() === lyrics.toLowerCase()) {
       setResult("Correct");
       if (results.length < 3) {
@@ -95,7 +140,7 @@ export default function Dashboard() {
       answer.toLowerCase() !== lyrics.toLowerCase() &&
       results.length < 2
     ) {
-      setResult("Incorrect");
+      setResult("try again");
       setTimeout(() => {
         setTimePassed(false);
         setResult("");
@@ -104,12 +149,13 @@ export default function Dashboard() {
       }, 3000);
       overSound.play();
 
-      setResults([...results, "Incorrect"]);
+      setResults([...results, "X"]);
     } else {
       console.log("whut");
-      setResult("Incorrect");
-      setMessage("The answer was: " + lyrics);
-      setResults([...results, "Incorrect"]);
+      setResult("Oh no..");
+      setMessage("The answer was: \n\n" + lyrics);
+      setResults([...results, "X"]);
+      overSound.play();
     }
   };
 
@@ -118,6 +164,7 @@ export default function Dashboard() {
       <Container>
         <br />
         <Card
+          id="tile"
           className="justify-content-center text-center tile shadow border-0"
           style={{ height: "25rem" }}
         >
@@ -130,11 +177,13 @@ export default function Dashboard() {
           ) : (
             <>
               {loading ? (
-                <p>waiting...</p>
+                <div class="sk-plane"></div>
               ) : (
                 <>
                   {!timePassed ? (
-                    <h3 className="p-3">{lyrics}</h3>
+                    <h3 className="p-3 ml2" id="animateMe">
+                      {lyrics}
+                    </h3>
                   ) : (
                     <>
                       <Container className="px-3">
@@ -174,25 +223,43 @@ export default function Dashboard() {
           style={{ minHeight: "110px" }}
         >
           <Row className="justify-content-center">
-            <Col className="text-center">
+            <Col className="text-center align-items-center">
               <h2>1</h2>
               <h3 className={results[0] === "Correct" ? "pass" : "fail"}>
                 {/* {results[0] || "none"} */}
-                {results[0]}
+                {results[0] || (
+                  <div className="sk-wander sk-center mt-3">
+                    <div clasNames="sk-wander-cube"></div>
+                    <div className="sk-wander-cube"></div>
+                    <div className="sk-wander-cube"></div>
+                  </div>
+                )}
               </h3>
             </Col>
             <Col className="text-center">
               <h2>2</h2>
               <h3 className={results[1] === "Correct" ? "pass" : "fail"}>
                 {/* {results[1] || "none"} */}
-                {results[1]}
+                {results[1] || (
+                  <div className="sk-wander sk-center mt-3">
+                    <div className="sk-wander-cube"></div>
+                    <div className="sk-wander-cube"></div>
+                    <div className="sk-wander-cube"></div>
+                  </div>
+                )}
               </h3>
             </Col>
             <Col className="text-center">
               <h2>3</h2>
               <h3 className={results[2] === "Correct" ? "pass" : "fail"}>
                 {/* {results[2] || "none"} */}
-                {results[2]}
+                {results[2] || (
+                  <div className="sk-wander sk-center mt-3">
+                    <div className="sk-wander-cube"></div>
+                    <div className="sk-wander-cube"></div>
+                    <div className="sk-wander-cube"></div>
+                  </div>
+                )}
               </h3>
             </Col>
           </Row>
