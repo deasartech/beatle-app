@@ -142,7 +142,8 @@ export default function Dashboard() {
     <>
       <Container>
         <Card id="clockdiv" className="border-0 text-center">
-          <Row>
+          <Row className="g-0">
+            <Col> </Col>
             <Col className="block">
               <span className="hours"></span>
               <p className="smalltext">Hrs</p>
@@ -155,6 +156,7 @@ export default function Dashboard() {
               <span className="seconds"></span>
               <p className="smalltext">Secs</p>
             </Col>
+            <Col> </Col>
           </Row>
         </Card>
         <Card

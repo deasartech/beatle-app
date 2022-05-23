@@ -42,10 +42,11 @@ export const getTrack = () => {
 };
 
 export const getTimeRemaining = () => {
-  // const date = new Date(Date.now() + 3600 * 1000 * 24);
-  // console.log(date, "date now");
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
 
-  const deadline = "May 25 2022";
+  const deadline = tomorrow.toDateString();
 
   const total = Date.parse(deadline) - Date.parse(new Date());
   const seconds = Math.floor((total / 1000) % 60);
