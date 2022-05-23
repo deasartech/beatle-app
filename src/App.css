@@ -61,3 +61,28 @@
 .tile.flip {
   transform: rotateX(90deg);
 }
+
+.block {
+  /* background-color: #34d399; */
+  color: white;
+}
+
+.smalltext {
+  padding-top: 5px;
+  font-size: 0.7rem;
+  color: #00816a;
+}
+
+#clockdiv {
+  font-family: sans-serif;
+  color: #fff;
+  font-weight: 100;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+#clockdiv div > span {
+  padding: 5px;
+  border-radius: 3px;
+  background: #00816a;
+}

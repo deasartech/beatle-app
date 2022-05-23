@@ -5,8 +5,10 @@ import { fetchTrack } from "../utils/api";
 import { Howl, Howler } from "howler";
 import anime from "animejs/lib/anime.es.js";
 import Letterize from "letterizejs";
+import { getTrack, getTimeRemaining, initialiseClock } from "../utils/script";
 
 // import Player from "./Player";
+// import stay from track.song;
 import stay from "../assets/audio/stay.mp3";
 import gameOver from "../assets/audio/retro-game-over.wav";
 import win from "../assets/audio/win.wav";
@@ -19,11 +21,12 @@ export default function Dashboard() {
   const [timePassed, setTimePassed] = useState(false);
   const [play, setPlay] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [track, setTrack] = useState();
 
   const [results, setResults] = useState([]);
 
   // answer
-  const [answer, setAnswer] = useState(null);
+  const [answer, setAnswer] = useState("");
   const [result, setResult] = useState(null);
   const [message, setMessage] = useState("");
 
@@ -54,32 +57,6 @@ export default function Dashboard() {
     src: [win],
   });
 
-  // Wrap every letter in a span
-  // const obj = new Letterize({
-  //   targets: document.getElementById("animateMe"),
-  //   wrapper: "span",
-  //   className: "letter",
-  // });
-
-  // anime
-  //   .timeline({ loop: true })
-  //   .add({
-  //     targets: "#animateMe .letter",
-  //     scale: [4, 1],
-  //     opacity: [0, 1],
-  //     translateZ: 0,
-  //     easing: "easeOutExpo",
-  //     duration: 950,
-  //     delay: (el, i) => 30 * i,
-  //   })
-  //   .add({
-  //     targets: "#animateMe",
-  //     opacity: 0,
-  //     duration: 300,
-  //     easing: "easeOutExpo",
-  //     delay: 1000,
-  //   });
-
   useEffect(() => {
     getLyrics(options).then((lyrics) => {
       // console.log(lyrics);
@@ -90,10 +67,13 @@ export default function Dashboard() {
     // fetchTrack(3362856).then((data) => {
     //   console.log(data, "dashboard res");
     // });
+    const newSong = getTrack();
+    setTrack(newSong);
+    console.log(track?.song, "track lol");
+    console.log(initialiseClock("clockdiv"), "Clock");
   }, [options]);
 
   const tileCard = document.getElementById("tile");
-  console.log(tileCard);
 
   const flipTile = (tile) => {
     setTimeout(() => {
@@ -151,7 +131,6 @@ export default function Dashboard() {
 
       setResults([...results, "X"]);
     } else {
-      console.log("whut");
       setResult("Oh no..");
       setMessage("The answer was: \n\n" + lyrics);
       setResults([...results, "X"]);
@@ -162,7 +141,24 @@ export default function Dashboard() {
   return (
     <>
       <Container>
-        <br />
+        <Card id="clockdiv" className="border-0 text-center">
+          <Row className="g-0">
+            <Col> </Col>
+            <Col className="block">
+              <span className="hours"></span>
+              <p className="smalltext">Hrs</p>
+            </Col>
+            <Col className="block">
+              <span className="minutes"></span>
+              <p className="smalltext">Mins</p>
+            </Col>
+            <Col className="block">
+              <span className="seconds"></span>
+              <p className="smalltext">Secs</p>
+            </Col>
+            <Col> </Col>
+          </Row>
+        </Card>
         <Card
           id="tile"
           className="justify-content-center text-center tile shadow border-0"
