@@ -26,7 +26,7 @@ export default function Dashboard() {
   const [results, setResults] = useState([]);
 
   // answer
-  const [answer, setAnswer] = useState(null);
+  const [answer, setAnswer] = useState("");
   const [result, setResult] = useState(null);
   const [message, setMessage] = useState("");
 
@@ -131,7 +131,6 @@ export default function Dashboard() {
 
       setResults([...results, "X"]);
     } else {
-      console.log("whut");
       setResult("Oh no..");
       setMessage("The answer was: \n\n" + lyrics);
       setResults([...results, "X"]);
@@ -142,21 +141,22 @@ export default function Dashboard() {
   return (
     <>
       <Container>
-        <br />
         <Card id="clockdiv" className="border-0 text-center">
           <Row>
-            <Col md={4} className="block">
-              hrs: <span className="hours"> </span>
+            <Col className="block">
+              <span className="hours"></span>
+              <p className="smalltext">Hrs</p>
             </Col>
-            <Col md={4} className="block">
-              Mins: <span className="minutes"></span>
+            <Col className="block">
+              <span className="minutes"></span>
+              <p className="smalltext">Mins</p>
             </Col>
-            <Col md={4} className="block">
-              Secs: <span className="seconds"></span>
+            <Col className="block">
+              <span className="seconds"></span>
+              <p className="smalltext">Secs</p>
             </Col>
           </Row>
         </Card>
-        <br />
         <Card
           id="tile"
           className="justify-content-center text-center tile shadow border-0"

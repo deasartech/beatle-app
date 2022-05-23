@@ -42,7 +42,10 @@ export const getTrack = () => {
 };
 
 export const getTimeRemaining = () => {
-  const deadline = "May 22 2022";
+  // const date = new Date(Date.now() + 3600 * 1000 * 24);
+  // console.log(date, "date now");
+
+  const deadline = "May 25 2022";
 
   const total = Date.parse(deadline) - Date.parse(new Date());
   const seconds = Math.floor((total / 1000) % 60);
@@ -61,7 +64,7 @@ export const getTimeRemaining = () => {
 
 export const initialiseClock = (id, endtime) => {
   const clock = document.getElementById(id);
-  const daysSpan = clock.querySelector(".days");
+
   const hoursSpan = clock.querySelector(".hours");
   const minutesSpan = clock.querySelector(".minutes");
   const secondsSpan = clock.querySelector(".seconds");
@@ -81,5 +84,8 @@ export const initialiseClock = (id, endtime) => {
   updateClock();
   const timeinterval = setInterval(updateClock, 1000);
 };
+
+// const deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
+// initialiseClock("clockdiv", deadline);
 
 // timing
