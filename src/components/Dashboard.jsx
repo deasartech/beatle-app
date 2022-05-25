@@ -1,19 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Container, Button, Form, Card, Row, Col } from "react-bootstrap";
-import { getLyrics, getSong } from "genius-lyrics-api";
-
 import { Howl } from "howler";
 // import anime from "animejs/lib/anime.es.js";
 import { initialiseClock } from "../utils/script";
 import { fetchTrack } from "../utils/api";
 import { getDailyTrack } from "../utils/getDailyTrack";
-
-// import Player from "./Player";
-// import stay from "../assets/audio/stay.mp3";
 import gameOver from "../assets/audio/retro-game-over.wav";
 import win from "../assets/audio/win.wav";
-// import tune from "../assets/audio/055.wav";
-
 // import nlp
 import nlp from "compromise";
 
@@ -23,7 +16,6 @@ export default function Dashboard({ songs }) {
   const [play, setPlay] = useState(false);
   const [loading, setLoading] = useState(true);
   const [track, setTrack] = useState();
-  const [audio, setAudio] = useState(null);
 
   const [results, setResults] = useState([]);
 
@@ -33,20 +25,6 @@ export default function Dashboard({ songs }) {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    // lyrics
-    // const options = {
-    //   apiKey:
-    //     "ZjqI5BRYEmR_6jSPsqAbGC0D6hGaAVy_3ljEDEv6uSN_IgaCoGtj-9RDG09sv8H8",
-    //   title: "Stay",
-    //   artist: "the Kid Laroi",
-    //   optimizeQuery: true,
-    // };
-
-    // getLyrics(options).then((lyrics) => {
-    //   // console.log(lyrics);
-    //   console.log(lyrics.slice(24, 127));
-    //   setLyrics(lyrics.slice(24, 127));
-    // });
     const dailySong = getDailyTrack(songs);
     setTrack(dailySong);
     setLyrics(track?.lyrics);
@@ -54,14 +32,11 @@ export default function Dashboard({ songs }) {
     console.log(track?.timestamp, "track lol");
 
     console.log(initialiseClock("clockdiv"), "Clock");
-  }, [track]);
+  }, [track, songs]);
 
   // howler
   let sound = new Howl({
     src: [track?.src],
-    // sprite: {
-    //   chorus: [45000, 6100],
-    // },
     sprite: {
       snippet: track?.timestamp,
     },
@@ -144,10 +119,6 @@ export default function Dashboard({ songs }) {
     }
   };
 
-  // words split
-  let sentence = "I like learning code";
-  const words = sentence.split(" ");
-
   return (
     <>
       <Container>
@@ -198,9 +169,9 @@ export default function Dashboard({ songs }) {
                         src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/789439948&color=ff5500"
                       ></iframe> */}
 
-                      <h3 className="p-3 ml2" id="animateMe">
+                      <h5 className="p-3 ml2" id="animateMe">
                         {lyrics}
-                      </h3>
+                      </h5>
                     </>
                   ) : (
                     <>
