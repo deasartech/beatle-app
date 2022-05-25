@@ -1,27 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { Container, Button, Form, Card, Row, Col } from "react-bootstrap";
 import { getLyrics, getSong } from "genius-lyrics-api";
+
+import { Howl } from "howler";
+// import anime from "animejs/lib/anime.es.js";
+import { initialiseClock } from "../utils/script";
 import { fetchTrack } from "../utils/api";
-import { Howl, Howler } from "howler";
-import anime from "animejs/lib/anime.es.js";
-import Letterize from "letterizejs";
-import { getTrack, getTimeRemaining, initialiseClock } from "../utils/script";
+import { getDailyTrack } from "../utils/getDailyTrack";
 
 // import Player from "./Player";
-// import stay from track.song;
-import stay from "../assets/audio/stay.mp3";
+// import stay from "../assets/audio/stay.mp3";
 import gameOver from "../assets/audio/retro-game-over.wav";
 import win from "../assets/audio/win.wav";
+// import tune from "../assets/audio/055.wav";
 
 // import nlp
 import nlp from "compromise";
 
-export default function Dashboard() {
+export default function Dashboard({ songs }) {
   const [lyrics, setLyrics] = useState(null);
   const [timePassed, setTimePassed] = useState(false);
   const [play, setPlay] = useState(false);
   const [loading, setLoading] = useState(true);
   const [track, setTrack] = useState();
+  const [audio, setAudio] = useState(null);
 
   const [results, setResults] = useState([]);
 
@@ -30,19 +32,38 @@ export default function Dashboard() {
   const [result, setResult] = useState(null);
   const [message, setMessage] = useState("");
 
-  // lyrics
-  const options = {
-    apiKey: "ZjqI5BRYEmR_6jSPsqAbGC0D6hGaAVy_3ljEDEv6uSN_IgaCoGtj-9RDG09sv8H8",
-    title: "Stay",
-    artist: "the Kid Laroi",
-    optimizeQuery: true,
-  };
+  useEffect(() => {
+    // lyrics
+    // const options = {
+    //   apiKey:
+    //     "ZjqI5BRYEmR_6jSPsqAbGC0D6hGaAVy_3ljEDEv6uSN_IgaCoGtj-9RDG09sv8H8",
+    //   title: "Stay",
+    //   artist: "the Kid Laroi",
+    //   optimizeQuery: true,
+    // };
+
+    // getLyrics(options).then((lyrics) => {
+    //   // console.log(lyrics);
+    //   console.log(lyrics.slice(24, 127));
+    //   setLyrics(lyrics.slice(24, 127));
+    // });
+    const dailySong = getDailyTrack(songs);
+    setTrack(dailySong);
+    setLyrics(track?.lyrics);
+
+    console.log(track?.timestamp, "track lol");
+
+    console.log(initialiseClock("clockdiv"), "Clock");
+  }, [track]);
 
   // howler
   let sound = new Howl({
-    src: [stay],
+    src: [track?.src],
+    // sprite: {
+    //   chorus: [45000, 6100],
+    // },
     sprite: {
-      chorus: [45000, 6100],
+      snippet: track?.timestamp,
     },
     onload: function () {
       setLoading(false);
@@ -57,22 +78,6 @@ export default function Dashboard() {
     src: [win],
   });
 
-  useEffect(() => {
-    getLyrics(options).then((lyrics) => {
-      // console.log(lyrics);
-      console.log(lyrics.slice(24, 127));
-      setLyrics(lyrics.slice(24, 127));
-    });
-    // deezer call
-    // fetchTrack(3362856).then((data) => {
-    //   console.log(data, "dashboard res");
-    // });
-    const newSong = getTrack();
-    setTrack(newSong);
-    console.log(track?.song, "track lol");
-    console.log(initialiseClock("clockdiv"), "Clock");
-  }, [options]);
-
   const tileCard = document.getElementById("tile");
 
   const flipTile = (tile) => {
@@ -86,8 +91,9 @@ export default function Dashboard() {
   };
 
   const handlePlay = () => {
-    const id1 = sound.play("chorus");
-    sound.rate(0.8, id1);
+    // const id1 = sound.play("chorus");
+    // sound.rate(0.8, id1);
+    sound.play("snippet");
 
     setPlay(true);
     sound.on("end", function () {
@@ -138,6 +144,10 @@ export default function Dashboard() {
     }
   };
 
+  // words split
+  let sentence = "I like learning code";
+  const words = sentence.split(" ");
+
   return (
     <>
       <Container>
@@ -159,6 +169,7 @@ export default function Dashboard() {
             <Col> </Col>
           </Row>
         </Card>
+
         <Card
           id="tile"
           className="justify-content-center text-center tile shadow border-0"
@@ -173,13 +184,24 @@ export default function Dashboard() {
           ) : (
             <>
               {loading ? (
-                <div class="sk-plane"></div>
+                <div className="sk-plane"></div>
               ) : (
                 <>
                   {!timePassed ? (
-                    <h3 className="p-3 ml2" id="animateMe">
-                      {lyrics}
-                    </h3>
+                    <>
+                      {/* <iframe
+                        width="100%"
+                        height="166"
+                        scrolling="no"
+                        frameBorder="no"
+                        allow="autoplay"
+                        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/789439948&color=ff5500"
+                      ></iframe> */}
+
+                      <h3 className="p-3 ml2" id="animateMe">
+                        {lyrics}
+                      </h3>
+                    </>
                   ) : (
                     <>
                       <Container className="px-3">
@@ -188,7 +210,7 @@ export default function Dashboard() {
                             <Form.Control
                               as="textarea"
                               className="contact shadow"
-                              rows={4}
+                              rows={2}
                               value={answer}
                               onChange={(e) => setAnswer(e.target.value)}
                               placeholder="type your answer here"
@@ -202,6 +224,12 @@ export default function Dashboard() {
                           </>
                         ) : (
                           <>
+                            {/* <p>{track?.title}</p>
+                            <Image
+                              src={track?.albumArt}
+                              height="100"
+                              width="100"
+                            /> */}
                             <h3>{result}</h3>
                             <p>{message}</p>
                           </>
@@ -225,7 +253,7 @@ export default function Dashboard() {
                 {/* {results[0] || "none"} */}
                 {results[0] || (
                   <div className="sk-wander sk-center mt-3">
-                    <div clasNames="sk-wander-cube"></div>
+                    <div classNames="sk-wander-cube"></div>
                     <div className="sk-wander-cube"></div>
                     <div className="sk-wander-cube"></div>
                   </div>
