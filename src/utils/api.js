@@ -6,7 +6,6 @@ const api = axios.create({
 
 export function fetchTrack(trackNum) {
   return api.get(`/track/${trackNum}`).then(({ data }) => {
-    console.log(data, "api res");
     return data;
   });
 }

@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Container, Button, Form, Card, Row, Col } from "react-bootstrap";
-import { getLyrics, getSong } from "genius-lyrics-api";
+import { Howl } from "howler";
+// import anime from "animejs/lib/anime.es.js";
+import { initialiseClock } from "../utils/script";
 import { fetchTrack } from "../utils/api";
-import { Howl, Howler } from "howler";
-import anime from "animejs/lib/anime.es.js";
+import { getDailyTrack } from "../utils/getDailyTrack";
 import { getTrack, getTimeRemaining, initialiseClock } from "../utils/script";
-
-// import Player from "./Player";
-// import stay from track.song;
-import stay from "../assets/audio/stay.mp3";
 import gameOver from "../assets/audio/retro-game-over.wav";
 import win from "../assets/audio/win.wav";
-
 // import nlp
 import nlp from "compromise";
 
-export default function Dashboard() {
+export default function Dashboard({ songs }) {
+
   const [lyrics, setLyrics] = useState("");
+
   const [timePassed, setTimePassed] = useState(false);
   const [play, setPlay] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -29,51 +27,34 @@ export default function Dashboard() {
   const [result, setResult] = useState(null);
   const [message, setMessage] = useState("");
 
-  // lyrics
-  const options = {
-    apiKey: "ZjqI5BRYEmR_6jSPsqAbGC0D6hGaAVy_3ljEDEv6uSN_IgaCoGtj-9RDG09sv8H8",
-    title: "Stay",
-    artist: "the Kid Laroi",
-    optimizeQuery: true,
-  };
+  useEffect(() => {
+    const dailySong = getDailyTrack(songs);
+    setTrack(dailySong);
+    setLyrics(track?.lyrics);
+
+    console.log(track?.timestamp, "track lol");
+
+    console.log(initialiseClock("clockdiv"), "Clock");
+  }, [track, songs]);
 
   // howler
-  let sound = new Howl({
-    src: [stay],
+  const sound = new Howl({
+    src: [track?.src],
     sprite: {
-      chorus: [45000, 6100],
+      snippet: track?.timestamp,
     },
     onload: function () {
       setLoading(false);
     },
   });
 
-  let overSound = new Howl({
+  const overSound = new Howl({
     src: [gameOver],
   });
 
-  let winSound = new Howl({
+  const winSound = new Howl({
     src: [win],
   });
-
-  useEffect(() => {
-    getLyrics(options).then((lyrics) => {
-      // console.log(lyrics);
-      console.log(lyrics.slice(24, 127), "lyrics");
-      setLyrics(
-        "I do the same thing I told you that I never would I told you I'd change, even when I knew I never could lyrics"
-      );
-    });
-    // deezer call
-    // fetchTrack(3362856).then((data) => {
-    //   console.log(data, "dashboard res");
-    // });
-
-    const newSong = getTrack();
-    setTrack(newSong);
-    console.log(track?.song, "track lol");
-    console.log(initialiseClock("clockdiv"), "Clock");
-  }, [options]);
 
   const tileCard = document.getElementById("tile");
 
@@ -88,8 +69,9 @@ export default function Dashboard() {
   };
 
   const handlePlay = () => {
-    const id1 = sound.play("chorus");
-    sound.rate(0.8, id1);
+    // const id1 = sound.play("chorus");
+    // sound.rate(0.8, id1);
+    sound.play("snippet");
 
     setPlay(true);
     sound.on("end", function () {
@@ -107,17 +89,17 @@ export default function Dashboard() {
       return;
     }
 
-    let doc = lyrics;
+    const doc = lyrics;
     console.log(doc, "doc");
-    let docClean = doc.replace(/[^\w\s]/gi, "").toLowerCase();
+    const docClean = doc.replace(/[^\w\s]/gi, "").toLowerCase();
     console.log(docClean, "clean");
-    let ans = answer;
-    let ansClean = ans.replace(/[^\w\s]/gi, "").toLowerCase();
+    const ans = answer;
+    const ansClean = ans.replace(/[^\w\s]/gi, "").toLowerCase();
     // ans.contractions().expand().all().text();
 
-    let docArr = docClean.split(" ");
-    let ansArr = ansClean.split(" ");
-    let docArrPure = docArr.filter((element) => {
+    const docArr = docClean.split(" ");
+    const ansArr = ansClean.split(" ");
+    const docArrPure = docArr.filter((element) => {
       return element !== " " && element !== "";
     });
 
@@ -181,6 +163,7 @@ export default function Dashboard() {
             <Col> </Col>
           </Row>
         </Card>
+
         <Card
           id="tile"
           className="justify-content-center text-center tile shadow border-0"
@@ -195,13 +178,15 @@ export default function Dashboard() {
           ) : (
             <>
               {loading ? (
-                <div class="sk-plane"></div>
+                <div className="sk-plane"></div>
               ) : (
                 <>
                   {!timePassed ? (
-                    <h3 className="p-3 ml2" id="animateMe">
-                      {lyrics}
-                    </h3>
+                    <>
+                      <h5 className="p-3 ml2" id="animateMe">
+                        {lyrics}
+                      </h5>
+                    </>
                   ) : (
                     <>
                       <Container className="px-3">
@@ -210,7 +195,7 @@ export default function Dashboard() {
                             <Form.Control
                               as="textarea"
                               className="contact shadow"
-                              rows={4}
+                              rows={2}
                               value={answer}
                               onChange={(e) => setAnswer(e.target.value)}
                               placeholder="type your answer here"
@@ -224,6 +209,12 @@ export default function Dashboard() {
                           </>
                         ) : (
                           <>
+                            {/* <p>{track?.title}</p>
+                            <Image
+                              src={track?.albumArt}
+                              height="100"
+                              width="100"
+                            /> */}
                             <h3>{result}</h3>
                             <p>{message}</p>
                           </>
@@ -247,7 +238,7 @@ export default function Dashboard() {
                 {/* {results[0] || "none"} */}
                 {results[0] || (
                   <div className="sk-wander sk-center mt-3">
-                    <div clasNames="sk-wander-cube"></div>
+                    <div classNames="sk-wander-cube"></div>
                     <div className="sk-wander-cube"></div>
                     <div className="sk-wander-cube"></div>
                   </div>
