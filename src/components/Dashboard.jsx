@@ -5,13 +5,16 @@ import { Howl } from "howler";
 import { initialiseClock } from "../utils/script";
 import { fetchTrack } from "../utils/api";
 import { getDailyTrack } from "../utils/getDailyTrack";
+import { getTrack, getTimeRemaining, initialiseClock } from "../utils/script";
 import gameOver from "../assets/audio/retro-game-over.wav";
 import win from "../assets/audio/win.wav";
 // import nlp
 import nlp from "compromise";
 
 export default function Dashboard({ songs }) {
-  const [lyrics, setLyrics] = useState(null);
+
+  const [lyrics, setLyrics] = useState("");
+
   const [timePassed, setTimePassed] = useState(false);
   const [play, setPlay] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -35,7 +38,7 @@ export default function Dashboard({ songs }) {
   }, [track, songs]);
 
   // howler
-  let sound = new Howl({
+  const sound = new Howl({
     src: [track?.src],
     sprite: {
       snippet: track?.timestamp,
@@ -45,11 +48,11 @@ export default function Dashboard({ songs }) {
     },
   });
 
-  let overSound = new Howl({
+  const overSound = new Howl({
     src: [gameOver],
   });
 
-  let winSound = new Howl({
+  const winSound = new Howl({
     src: [win],
   });
 
@@ -86,21 +89,41 @@ export default function Dashboard({ songs }) {
       return;
     }
 
-    let doc = nlp(lyrics);
-    doc.contractions().expand();
-    let ans = nlp(answer);
-    ans.contractions().expand();
-    console.log(ans.has(doc.text()), "answer");
-    if (answer.toLowerCase() === lyrics.toLowerCase()) {
+    const doc = lyrics;
+    console.log(doc, "doc");
+    const docClean = doc.replace(/[^\w\s]/gi, "").toLowerCase();
+    console.log(docClean, "clean");
+    const ans = answer;
+    const ansClean = ans.replace(/[^\w\s]/gi, "").toLowerCase();
+    // ans.contractions().expand().all().text();
+
+    const docArr = docClean.split(" ");
+    const ansArr = ansClean.split(" ");
+    const docArrPure = docArr.filter((element) => {
+      return element !== " " && element !== "";
+    });
+
+    console.log(docArrPure, "docArr");
+    console.log(ansArr, "ansArr");
+
+    let wordResults = [];
+    for (let i = 0; i < docArrPure.length; i++) {
+      let el = nlp(ansArr[i]);
+      if (el.has(docArrPure[i])) {
+        wordResults.push(true);
+      } else {
+        wordResults.push(false);
+      }
+    }
+    console.log(wordResults, "result");
+
+    if (!wordResults.includes(false)) {
       setResult("Correct");
       if (results.length < 3) {
         winSound.play();
         setResults([...results, "Correct"]);
       }
-    } else if (
-      answer.toLowerCase() !== lyrics.toLowerCase() &&
-      results.length < 2
-    ) {
+    } else if (wordResults.includes(false) && results.length < 2) {
       setResult("try again");
       setTimeout(() => {
         setTimePassed(false);
@@ -160,15 +183,6 @@ export default function Dashboard({ songs }) {
                 <>
                   {!timePassed ? (
                     <>
-                      {/* <iframe
-                        width="100%"
-                        height="166"
-                        scrolling="no"
-                        frameBorder="no"
-                        allow="autoplay"
-                        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/789439948&color=ff5500"
-                      ></iframe> */}
-
                       <h5 className="p-3 ml2" id="animateMe">
                         {lyrics}
                       </h5>
