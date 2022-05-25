@@ -4,7 +4,6 @@ import { getLyrics, getSong } from "genius-lyrics-api";
 import { fetchTrack } from "../utils/api";
 import { Howl, Howler } from "howler";
 import anime from "animejs/lib/anime.es.js";
-import Letterize from "letterizejs";
 import { getTrack, getTimeRemaining, initialiseClock } from "../utils/script";
 
 // import Player from "./Player";
@@ -17,7 +16,7 @@ import win from "../assets/audio/win.wav";
 import nlp from "compromise";
 
 export default function Dashboard() {
-  const [lyrics, setLyrics] = useState(null);
+  const [lyrics, setLyrics] = useState("");
   const [timePassed, setTimePassed] = useState(false);
   const [play, setPlay] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -60,13 +59,16 @@ export default function Dashboard() {
   useEffect(() => {
     getLyrics(options).then((lyrics) => {
       // console.log(lyrics);
-      console.log(lyrics.slice(24, 127));
-      setLyrics(lyrics.slice(24, 127));
+      console.log(lyrics.slice(24, 127), "lyrics");
+      setLyrics(
+        "I do the same thing I told you that I never would I told you I'd change, even when I knew I never could lyrics"
+      );
     });
     // deezer call
     // fetchTrack(3362856).then((data) => {
     //   console.log(data, "dashboard res");
     // });
+
     const newSong = getTrack();
     setTrack(newSong);
     console.log(track?.song, "track lol");
@@ -105,21 +107,41 @@ export default function Dashboard() {
       return;
     }
 
-    let doc = nlp(lyrics);
-    doc.contractions().expand();
-    let ans = nlp(answer);
-    ans.contractions().expand();
-    console.log(ans.has(doc.text()), "answer");
-    if (answer.toLowerCase() === lyrics.toLowerCase()) {
+    let doc = lyrics;
+    console.log(doc, "doc");
+    let docClean = doc.replace(/[^\w\s]/gi, "").toLowerCase();
+    console.log(docClean, "clean");
+    let ans = answer;
+    let ansClean = ans.replace(/[^\w\s]/gi, "").toLowerCase();
+    // ans.contractions().expand().all().text();
+
+    let docArr = docClean.split(" ");
+    let ansArr = ansClean.split(" ");
+    let docArrPure = docArr.filter((element) => {
+      return element !== " " && element !== "";
+    });
+
+    console.log(docArrPure, "docArr");
+    console.log(ansArr, "ansArr");
+
+    let wordResults = [];
+    for (let i = 0; i < docArrPure.length; i++) {
+      let el = nlp(ansArr[i]);
+      if (el.has(docArrPure[i])) {
+        wordResults.push(true);
+      } else {
+        wordResults.push(false);
+      }
+    }
+    console.log(wordResults, "result");
+
+    if (!wordResults.includes(false)) {
       setResult("Correct");
       if (results.length < 3) {
         winSound.play();
         setResults([...results, "Correct"]);
       }
-    } else if (
-      answer.toLowerCase() !== lyrics.toLowerCase() &&
-      results.length < 2
-    ) {
+    } else if (wordResults.includes(false) && results.length < 2) {
       setResult("try again");
       setTimeout(() => {
         setTimePassed(false);
