@@ -18,8 +18,10 @@ function App() {
       timestamp: [1000, 11000],
       name: "I'm Alright",
       artist: "Angels in Amplifiers",
-      lyrics:
-        "i know the seasons ripe for change it's changing all around i know the reasons you've arranged they're tearing me down",
+      lyrics: [
+        "i know the seasons ripe for change it's changing all around",
+        "i know the reasons you've arranged they're tearing me down",
+      ],
     },
     {
       src: "./songs/005.wav",

@@ -41,22 +41,61 @@
 }
 
 .pass {
-  color: #34d399;
+  color: #a3e635;
 }
 
 .fail {
-  color: red;
+  color: #ef4444;
 }
 
 .ml2 {
-  font-weight: 900;
+  text-align: justify;
+  font-weight: 500;
   font-size: 1.4em;
 }
 
-.ml2 .letter {
+.blank {
+  text-align: justify;
+}
+
+#inputContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.inputWrapper {
+  border-bottom: solid #00816a !important;
+  padding: 0;
+  margin: 0;
+}
+
+.guessInput {
+  padding: 0 !important;
+  margin: 0 !important;
+  outline: 0;
+  background-color: antiquewhite !important;
+}
+
+.green {
+  padding: 0 !important;
+  margin: 0 !important;
+  outline: 0;
+  color: white;
+  background-color: #a3e635 !important;
+}
+
+.red {
+  padding: 0 !important;
+  margin: 0 !important;
+  outline: 0;
+  color: white;
+  background-color: #ef4444 !important;
+}
+
+/* .ml2 .letter {
   display: inline-block;
   line-height: 1em;
-}
+} */
 
 .tile.flip {
   transform: rotateX(90deg);
