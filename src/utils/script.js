@@ -20,7 +20,7 @@ export const getTimeRemaining = () => {
   };
 };
 
-export const initialiseClock = (id, endtime) => {
+export const initialiseClock = (id) => {
   const clock = document.getElementById(id);
 
   const hoursSpan = clock.querySelector(".hours");
@@ -28,7 +28,7 @@ export const initialiseClock = (id, endtime) => {
   const secondsSpan = clock.querySelector(".seconds");
 
   function updateClock() {
-    const t = getTimeRemaining(endtime);
+    const t = getTimeRemaining();
 
     hoursSpan.innerHTML = t.hours;
     minutesSpan.innerHTML = t.minutes;
