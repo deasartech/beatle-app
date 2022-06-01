@@ -325,10 +325,10 @@ export default function Dashboard({ songs }) {
                     <>
                       {!result ? (
                         <>
-                          <Container className="px-auto text-center">
+                          {/* <Container className="px-auto text-center">
                             <p>{guessA ? guessA.join(" ") : " "}</p>
                             <p>{guessB ? guessB.join(" ") : " "}</p>
-                          </Container>
+                          </Container> */}
                           <Row>
                             <Col>
                               <Container className="px-2 text-center mt-1">
