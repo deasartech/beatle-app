@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Container, Button, Form, Card, Row, Col } from "react-bootstrap";
 import { Howl } from "howler";
 // import anime from "animejs/lib/anime.es.js";
 import { initialiseClock } from "../utils/script";
 import { getDailyTrack } from "../utils/getDailyTrack";
-import gameOver from "../assets/audio/retro-game-over.wav";
+import wrongAnswer from "../assets/audio/incorrect.wav";
+import gameOver from "../assets/audio/end.wav";
 import win from "../assets/audio/win.wav";
 // import nlp
 import nlp from "compromise";
@@ -31,6 +32,8 @@ export default function Dashboard({ songs }) {
 
   const [played, setPlayed] = useState(false);
 
+  const BACKSPACE_KEY = "Backspace";
+
   // const [answerA, setAnswerA] = useState("");
   // const [answerB, setAnswerB] = useState("");
 
@@ -46,7 +49,7 @@ export default function Dashboard({ songs }) {
 
   // howler
   const sound = new Howl({
-    src: [track?.src],
+    src: [track?.src[0]],
     sprite: {
       snippet: track?.timestamp,
     },
@@ -57,12 +60,27 @@ export default function Dashboard({ songs }) {
     },
   });
 
+  // howler
+  const wrongSound = new Howl({
+    src: [wrongAnswer],
+  });
+
+  const finalSound = new Howl({
+    src: [track?.src[1]],
+  });
+
   const overSound = new Howl({
     src: [gameOver],
+    onend: function () {
+      finalSound.play();
+    },
   });
 
   const winSound = new Howl({
     src: [win],
+    onend: function () {
+      finalSound.play();
+    },
   });
 
   const tileCard = document.getElementById("tile");
@@ -93,8 +111,11 @@ export default function Dashboard({ songs }) {
   }
 
   const handlePlay = () => {
-    // const id1 = sound.play("chorus");
-    // sound.rate(0.8, id1);
+    // if (results.length < 1) {
+    //   setTimeout(() => {
+
+    //   }, 3000);
+    // }
     sound.play("snippet");
 
     setPlay(true);
@@ -113,6 +134,10 @@ export default function Dashboard({ songs }) {
       alert("Hello! your answer is missing something!!");
       return;
     }
+    if (guessB.includes(undefined) || guessB.length < lyricsB.length) {
+      alert("Hello! your answer is missing something!!");
+      return;
+    }
 
     const doc = blockA;
     console.log(doc, "doc");
@@ -128,8 +153,24 @@ export default function Dashboard({ songs }) {
       return element !== " " && element !== "";
     });
 
+    const docB = blockB;
+    console.log(docB, "docB");
+    const docBClean = docB.replace(/[^\w\s]/gi, "").toLowerCase();
+    console.log(docBClean, "Bclean");
+    console.log(guessB, "ansB guess <<<<<----");
+    const ansB = guessB.join(" ");
+    const ansBClean = ansB.replace(/[^\w\s]/gi, "").toLowerCase();
+
+    const docBArr = docBClean.split(" ");
+    const ansBArr = ansBClean.split(" ");
+    const docBArrPure = docBArr.filter((element) => {
+      return element !== " " && element !== "";
+    });
+
     console.log(docArrPure, "docArr");
     console.log(ansArr, "ansArr");
+    console.log(docBArrPure, "docArr");
+    console.log(ansBArr, "ansArr");
 
     let wordResults = [];
     for (let i = 0; i < docArrPure.length; i++) {
@@ -141,17 +182,29 @@ export default function Dashboard({ songs }) {
       }
     }
 
+    for (let i = 0; i < docBArrPure.length; i++) {
+      let elB = nlp(ansBArr[i]);
+      if (elB.has(docBArrPure[i])) {
+        wordResults.push(true);
+      } else {
+        wordResults.push(false);
+      }
+    }
+
     console.log(wordResults, "result");
     setResultArray(wordResults);
 
     if (!wordResults.includes(false)) {
       setTimeout(() => {
-        setResult("Correct");
+        flipTile(tileCard);
       }, 4000);
-
       if (results.length < 3) {
         winSound.play();
-        setResults([...results, "Correct"]);
+        setTimeout(() => {
+          setPlayed(true);
+          setResults([...results, "Correct"]);
+          setResult("Winner");
+        }, 4500);
       }
     } else if (wordResults.includes(false) && results.length < 2) {
       setTimeout(() => {
@@ -165,41 +218,88 @@ export default function Dashboard({ songs }) {
         setResultArray("");
         setPlay(false);
       }, 6000);
-      overSound.play();
+      wrongSound.play();
 
       setResults([...results, "X"]);
     } else {
-      setGuessA("");
-      setGuessB("");
-      setPlayed(true);
-      setResult("Oh no..");
-      setMessage("The answer was: \n\n" + track?.lyrics.join("\n"));
-      setResults([...results, "X"]);
-      setResultArray("");
+      setTimeout(() => {
+        flipTile(tileCard);
+      }, 4000);
+      setTimeout(() => {
+        setResult("So close... you'll get it tomorrow!");
+        setMessage("The answer was: \n\n" + track?.lyrics.join("\n"));
+        setPlayed(true);
+        setGuessA("");
+        setGuessB("");
+        setResults([...results, "X"]);
+        setResultArray("");
+      }, [4500]);
       overSound.play();
     }
   };
 
   // handle input changeA
-  const handleInputChangeA = (e, i) => {
+  const handleInputChangeA = (e, i, maxLength) => {
     const newGuess = [...guessA];
-    newGuess[i] = e.target.value;
+    newGuess[i] = e.target.value.trim();
     setGuessA(newGuess);
-
     console.log(guessA, "guessArray");
+    if (newGuess[i].length === maxLength) {
+      changeInputFocus(i + 1);
+    }
+  };
+
+  // focus inputs
+  const inputRefs = useRef([]);
+
+  const changeInputFocus = (i) => {
+    const ref = inputRefs.current[i];
+    if (ref) {
+      ref.focus();
+    }
   };
 
   // handle input changeB
-  const handleInputChangeB = (e, i) => {
+  const handleInputChangeB = (e, i, maxLength) => {
+    const newIndex = i + lyricsA.length;
     const newGuess = [...guessB];
-    newGuess[i] = e.target.value;
+    newGuess[i] = e.target.value.trim();
     setGuessB(newGuess);
-
     console.log(guessB, "guessArray");
+    if (newGuess[i].length === maxLength) {
+      changeInputFocus(newIndex + 1);
+    }
+  };
+
+  // move focus to previous field
+  const onKeyDown = (e, i, block) => {
+    const newIndex = i + lyricsA.length;
+    const keyCode = e.nativeEvent.code;
+    if (keyCode !== BACKSPACE_KEY) {
+      return;
+    }
+
+    if (block === "A") {
+      if (guessA[i] === "" || guessA[i] === undefined) {
+        changeInputFocus(i - 1);
+      } else {
+        handleInputChangeA("", i);
+      }
+    }
+
+    if (block === "B") {
+      if (guessB[i] === "" || guessB[i] === undefined) {
+        changeInputFocus(newIndex - 1);
+      } else {
+        handleInputChangeB("", i);
+      }
+    }
   };
 
   if (played) {
-    initialiseClock("clockdiv");
+    setTimeout(() => {
+      initialiseClock("clockdiv");
+    }, [420]);
   }
 
   return (
@@ -207,7 +307,7 @@ export default function Dashboard({ songs }) {
       <Container>
         <Card
           id="tile"
-          className="justify-content-center text-center tile shadow border-0"
+          className="main-card justify-content-center text-center tile shadow border-0"
           style={{ maxHeight: "37rem", height: "28rem" }}
         >
           {!play ? (
@@ -224,91 +324,123 @@ export default function Dashboard({ songs }) {
                 <>
                   {!timePassed ? (
                     <>
-                      <Container className="text-center">
-                        <p className="px-2 ml2" id="animateMe">
-                          {blockA}
-                        </p>
-                        <p className="px-2 ml2" id="animateMe">
-                          {blockB}
-                        </p>
-                      </Container>
+                      <Row>
+                        <Col>
+                          <Container className="text-center mx-auto ml2-wrapper">
+                            <p className="px-2 ml2">{blockA}</p>
+                            <p className="px-2 ml2">{blockB}</p>
+                          </Container>
+                        </Col>
+                      </Row>
                     </>
                   ) : (
                     <>
-                      <Container className="px-2 text-center mb-2">
-                        {!result ? (
-                          <>
-                            <p>{guessA ? guessA.join(" ") : null}</p>
+                      {!result ? (
+                        <>
+                          <Row>
+                            <Col>
+                              <Container className="px-2 text-center mb-2">
+                                <p>{guessA ? guessA.join(" ") : null}</p>
 
-                            <Form id="inputContainer" className="mb-2">
-                              {lyricsA.map((element, index) => {
-                                return (
-                                  <>
-                                    <div className="inputWrapper mx-2 mb-1 py-1">
-                                      <Form.Control
-                                        key={index}
-                                        value={guessA[index]}
-                                        maxLength={element.length}
-                                        style={{
-                                          minWidth: 20,
-                                          width: 14 * element.length,
-                                        }}
-                                        className={
-                                          resultArray[index]
-                                            ? "green border-0 px-1"
-                                            : resultArray[index] === false
-                                            ? "red border-0 px-1"
-                                            : "guessInput border-0 px-1"
-                                        }
-                                        onChange={(e) =>
-                                          handleInputChangeA(e, index)
-                                        }
-                                      />
-                                    </div>
-                                  </>
-                                );
-                              })}
-                              // <br />
-                            </Form>
-                            <Form id="inputContainer" className="mb-2">
-                              {lyricsB.map((element, index) => {
-                                return (
-                                  <>
-                                    <div className="inputWrapper mx-2 mb-1 py-1">
-                                      <Form.Control
-                                        key={"b" + index}
-                                        value={guessB[index]}
-                                        maxLength={element.length}
-                                        style={{
-                                          minWidth: 20,
-                                          width: 15 * element.length,
-                                        }}
-                                        className={
-                                          resultArray[index]
-                                            ? "green border-0 px-1"
-                                            : resultArray[index] === false
-                                            ? "red border-0 px-1"
-                                            : "guessInput border-0 px-1"
-                                        }
-                                        onChange={(e) =>
-                                          handleInputChangeB(e, index)
-                                        }
-                                      />
-                                    </div>
-                                  </>
-                                );
-                              })}
-                            </Form>
+                                <Form id="inputContainer" className="mb-2">
+                                  {lyricsA.map((element, index) => {
+                                    return (
+                                      <>
+                                        <div className="inputWrapper mx-2 mb-1 py-1">
+                                          <Form.Control
+                                            ref={(el) => {
+                                              if (el) {
+                                                inputRefs.current[index] = el;
+                                              }
+                                            }}
+                                            key={index}
+                                            value={guessA[index]}
+                                            maxLength={element.length}
+                                            style={{
+                                              minWidth: 20,
+                                              width: 14 * element.length,
+                                            }}
+                                            className={
+                                              resultArray[index] === true
+                                                ? "green border-0 px-1"
+                                                : resultArray[index] === false
+                                                ? "red border-0 px-1"
+                                                : "guessInput border-0 px-1"
+                                            }
+                                            onKeyDown={(e) =>
+                                              onKeyDown(e, index, "A")
+                                            }
+                                            onChange={(e) =>
+                                              handleInputChangeA(
+                                                e,
+                                                index,
+                                                element.length
+                                              )
+                                            }
+                                          />
+                                        </div>
+                                      </>
+                                    );
+                                  })}
+                                  // <br />
+                                </Form>
+                                <Form id="inputContainer" className="mb-2">
+                                  {lyricsB.map((element, index) => {
+                                    return (
+                                      <>
+                                        <div className="inputWrapper mx-2 mb-1 py-1">
+                                          <Form.Control
+                                            ref={(el) => {
+                                              if (el) {
+                                                inputRefs.current[
+                                                  index + lyricsA.length
+                                                ] = el;
+                                              }
+                                            }}
+                                            key={"b" + index}
+                                            value={guessB[index]}
+                                            maxLength={element.length}
+                                            style={{
+                                              minWidth: 20,
+                                              width: 15 * element.length,
+                                            }}
+                                            className={
+                                              resultArray[index]
+                                                ? "green border-0 px-1"
+                                                : resultArray[index] === false
+                                                ? "red border-0 px-1"
+                                                : "guessInput border-0 px-1"
+                                            }
+                                            onKeyDown={(e) =>
+                                              onKeyDown(e, index, "B")
+                                            }
+                                            onChange={(e) =>
+                                              handleInputChangeB(
+                                                e,
+                                                index,
+                                                element.length
+                                              )
+                                            }
+                                          />
+                                        </div>
+                                      </>
+                                    );
+                                  })}
+                                </Form>
 
-                            <Button
-                              onClick={handleSubmit}
-                              className="m-3 btn-trophy"
-                            >
-                              Submit
-                            </Button>
-                          </>
-                        ) : (
-                          <>
+                                <Button
+                                  onClick={handleSubmit}
+                                  className="m-3 btn-trophy"
+                                >
+                                  Submit
+                                </Button>
+                              </Container>
+                            </Col>
+                          </Row>
+                        </>
+                      ) : (
+                        <>
+                          <Container className="px-2 text-center mb-2">
                             {/* <p>{track?.title}</p>
                             <Image
                               src={track?.albumArt}
@@ -346,9 +478,9 @@ export default function Dashboard({ songs }) {
 
                             <h3>{result}</h3>
                             <p>{message}</p>
-                          </>
-                        )}
-                      </Container>
+                          </Container>
+                        </>
+                      )}
                     </>
                   )}
                 </>
@@ -357,7 +489,7 @@ export default function Dashboard({ songs }) {
           )}
         </Card>
         <Card
-          className="mt-3 p-2 border-0 shadow"
+          className="results mt-3 p-2 border-0 shadow"
           style={{ minHeight: "110px" }}
         >
           <Row className="justify-content-center">

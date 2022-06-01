@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
 
 #offcanvasNavbar,
 #offcanvasNavbar:focus,
@@ -24,6 +25,11 @@
   justify-content: center;
   align-items: center;
   transition: transform 250ms linear;
+  border-radius: 20px !important;
+}
+
+.results {
+  border-radius: 20px !important;
 }
 
 .form-control {
@@ -48,7 +54,12 @@
   color: #ef4444;
 }
 
+.ml2-wrapper {
+  text-align: center;
+}
+
 .ml2 {
+  font-family: "Poppins", sans-serif;
   text-align: justify;
   font-weight: 500;
   font-size: 1.4em;

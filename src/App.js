@@ -6,6 +6,7 @@ import { auth } from "./firebase-config";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import NavBar from "./components/NavBar";
+import Leaderboard from "./components/Leaderboard";
 
 import { getDailyTrack } from "./utils/getDailyTrack";
 
@@ -14,13 +15,13 @@ function App() {
   const [songObj, setSongObj] = useState(null);
   const [songs, setSongs] = useState([
     {
-      src: "./songs/055.wav",
+      src: ["./songs/055.wav", "./songs/055mixture.wav"],
       timestamp: [1000, 11000],
       name: "I'm Alright",
       artist: "Angels in Amplifiers",
       lyrics: [
-        "i know the seasons ripe for change it's changing all around",
-        "i know the reasons you've arranged they're tearing me down",
+        "I know the seasons ripe for change it's changing all around",
+        "I know the reasons you've arranged they're tearing me down",
       ],
     },
     {
@@ -66,6 +67,7 @@ function App() {
             element={<Dashboard songs={songs} songObj={songObj} />}
           />
           <Route path="/login" element={<Login />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
         </Routes>
       </BrowserRouter>
     </>
