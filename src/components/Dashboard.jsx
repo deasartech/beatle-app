@@ -337,11 +337,13 @@ export default function Dashboard({ songs }) {
                     <>
                       {!result ? (
                         <>
+                          <Container className="px-auto text-center">
+                            <p>{guessA ? guessA.join(" ") : " "}</p>
+                            <p>{guessB ? guessB.join(" ") : " "}</p>
+                          </Container>
                           <Row>
                             <Col>
-                              <Container className="px-2 text-center mb-2">
-                                <p>{guessA ? guessA.join(" ") : null}</p>
-
+                              <Container className="px-2 text-center mt-1">
                                 <Form id="inputContainer" className="mb-2">
                                   {lyricsA.map((element, index) => {
                                     return (
