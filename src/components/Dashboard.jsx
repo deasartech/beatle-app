@@ -43,8 +43,6 @@ export default function Dashboard({ songs }) {
     // setLyrics(track?.lyrics);
     setBlockA(track?.lyrics[0]);
     setBlockB(track?.lyrics[1]);
-
-    console.log(track?.timestamp, "track lol");
   }, [track, songs]);
 
   // howler
@@ -102,8 +100,6 @@ export default function Dashboard({ songs }) {
     setLyricsA(sentenceArrayA);
     const sentenceArrayB = blockB.split(" ");
     setLyricsB(sentenceArrayB);
-    console.log(sentenceArrayA, "sentenceArrayA");
-    console.log(sentenceArrayB, "sentenceArrayB");
 
     // setAnswerA(answerArrayA.join(" "));
     // console.log(answerA, "arrayA");
@@ -129,7 +125,6 @@ export default function Dashboard({ songs }) {
   };
 
   const handleSubmit = () => {
-    console.log(guessA, "submit guess");
     if (guessA.includes(undefined) || guessA.length < lyricsA.length) {
       alert("Hello! your answer is missing something!!");
       return;
@@ -140,10 +135,8 @@ export default function Dashboard({ songs }) {
     }
 
     const doc = blockA;
-    console.log(doc, "doc");
+
     const docClean = doc.replace(/[^\w\s]/gi, "").toLowerCase();
-    console.log(docClean, "clean");
-    console.log(guessA, "ans guess <<<<<----");
     const ans = guessA.join(" ");
     const ansClean = ans.replace(/[^\w\s]/gi, "").toLowerCase();
 
@@ -154,10 +147,9 @@ export default function Dashboard({ songs }) {
     });
 
     const docB = blockB;
-    console.log(docB, "docB");
+
     const docBClean = docB.replace(/[^\w\s]/gi, "").toLowerCase();
-    console.log(docBClean, "Bclean");
-    console.log(guessB, "ansB guess <<<<<----");
+
     const ansB = guessB.join(" ");
     const ansBClean = ansB.replace(/[^\w\s]/gi, "").toLowerCase();
 
@@ -166,11 +158,6 @@ export default function Dashboard({ songs }) {
     const docBArrPure = docBArr.filter((element) => {
       return element !== " " && element !== "";
     });
-
-    console.log(docArrPure, "docArr");
-    console.log(ansArr, "ansArr");
-    console.log(docBArrPure, "docArr");
-    console.log(ansBArr, "ansArr");
 
     let wordResults = [];
     for (let i = 0; i < docArrPure.length; i++) {
@@ -243,7 +230,7 @@ export default function Dashboard({ songs }) {
     const newGuess = [...guessA];
     newGuess[i] = e.target.value.trim();
     setGuessA(newGuess);
-    console.log(guessA, "guessArray");
+
     if (newGuess[i].length === maxLength) {
       changeInputFocus(i + 1);
     }
@@ -265,7 +252,7 @@ export default function Dashboard({ songs }) {
     const newGuess = [...guessB];
     newGuess[i] = e.target.value.trim();
     setGuessB(newGuess);
-    console.log(guessB, "guessArray");
+
     if (newGuess[i].length === maxLength) {
       changeInputFocus(newIndex + 1);
     }
@@ -275,6 +262,7 @@ export default function Dashboard({ songs }) {
   const onKeyDown = (e, i, block) => {
     const newIndex = i + lyricsA.length;
     const keyCode = e.nativeEvent.code;
+
     if (keyCode !== BACKSPACE_KEY) {
       return;
     }
@@ -337,11 +325,13 @@ export default function Dashboard({ songs }) {
                     <>
                       {!result ? (
                         <>
+                          <Container className="px-auto text-center">
+                            <p>{guessA ? guessA.join(" ") : " "}</p>
+                            <p>{guessB ? guessB.join(" ") : " "}</p>
+                          </Container>
                           <Row>
                             <Col>
-                              <Container className="px-2 text-center mb-2">
-                                <p>{guessA ? guessA.join(" ") : null}</p>
-
+                              <Container className="px-2 text-center mt-1">
                                 <Form id="inputContainer" className="mb-2">
                                   {lyricsA.map((element, index) => {
                                     return (
