@@ -26,19 +26,19 @@ function App() {
     },
     {
       src: ["./songs/005.wav", "./songs/005mixture.wav"],
-      timestamp: [1000, 13000],
+      timestamp: [1000, 10000],
       name: "Milk Cow Blues",
       artist: "Angela Thomas Wade",
       lyrics: [
         "Well I woke up this morning looked out my door",
-        "I could tell my Milk Cow I could tell by the way she luls if you see my Milk Cow",
+        "I could tell my Milk Cow I could tell by the way she luls",
       ],
     },
     {
       src: ["./songs/stay.mp3", "./songs/stay.mp3"],
       timestamp: [11300, 5900],
-      name: "three",
-      artist: "test",
+      name: "STAY",
+      artist: "Justin Bieber and The Kid LARO",
       lyrics: [
         "I do the same thing I told you that I never would",
         "I told you I'd change even when I knew I never could",
