@@ -18,6 +18,7 @@ import win from "../assets/audio/win.wav";
 // import nlp
 import nlp from "compromise";
 import { auth } from "../firebase-config";
+import fire from "canvas-confetti";
 
 export default function Dashboard({ songs }) {
   const [lyricsA, setLyricsA] = useState("");
@@ -192,6 +193,28 @@ export default function Dashboard({ songs }) {
           setPlayed(true);
           setResults([...results, "Correct"]);
           setResult("Winner");
+          fire(0.25, {
+            spread: 26,
+            startVelocity: 55,
+          });
+          fire(0.2, {
+            spread: 60,
+          });
+          fire(0.35, {
+            spread: 100,
+            decay: 0.91,
+            scalar: 0.8,
+          });
+          fire(0.1, {
+            spread: 180,
+            startVelocity: 25,
+            decay: 0.8,
+            scalar: 1.2,
+          });
+          fire(0.1, {
+            spread: 120,
+            startVelocity: 45,
+          });
         }, 4500);
       }
     } else if (wordResults.includes(false) && results.length < 2) {
@@ -322,6 +345,19 @@ export default function Dashboard({ songs }) {
       </Modal>
     );
   }
+
+  // Countdown
+  // let timer;
+  // let timeRemaining = 3;
+
+  // function updateTimer() {
+  //   timeRemaining = timeRemaining - 1;
+  //   if (timeRemaining >= 0) ;
+  //   else {
+  //     gameOver();
+  //   }
+  // }
+  // timer = setInterval(updateTimer, 1000);
 
   return (
     <>
