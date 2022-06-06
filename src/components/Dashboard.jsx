@@ -1,5 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Container, Button, Form, Card, Row, Col } from "react-bootstrap";
+import {
+  Container,
+  Button,
+  Form,
+  Card,
+  Row,
+  Col,
+  Modal,
+} from "react-bootstrap";
 import { Howl } from "howler";
 // import anime from "animejs/lib/anime.es.js";
 import { initialiseClock } from "../utils/script";
@@ -9,6 +17,7 @@ import gameOver from "../assets/audio/end.wav";
 import win from "../assets/audio/win.wav";
 // import nlp
 import nlp from "compromise";
+import { auth } from "../firebase-config";
 
 export default function Dashboard({ songs }) {
   const [lyricsA, setLyricsA] = useState("");
@@ -31,6 +40,7 @@ export default function Dashboard({ songs }) {
   const [message, setMessage] = useState("");
 
   const [played, setPlayed] = useState(false);
+  const [modalShow, setModalShow] = useState(true);
 
   const BACKSPACE_KEY = "Backspace";
 
@@ -100,18 +110,9 @@ export default function Dashboard({ songs }) {
     setLyricsA(sentenceArrayA);
     const sentenceArrayB = blockB.split(" ");
     setLyricsB(sentenceArrayB);
-
-    // setAnswerA(answerArrayA.join(" "));
-    // console.log(answerA, "arrayA");
-    // setAnswerB(answerArrayB.join("  "));
   }
 
   const handlePlay = () => {
-    // if (results.length < 1) {
-    //   setTimeout(() => {
-
-    //   }, 3000);
-    // }
     sound.play("snippet");
 
     setPlay(true);
@@ -290,9 +291,45 @@ export default function Dashboard({ songs }) {
     }, [420]);
   }
 
+  // instructions modal
+  function Instructions(props) {
+    return (
+      <Modal
+        {...props}
+        size="md"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            How to play
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h4>Beatle plays a new song every day</h4>
+          <p>
+            When you are ready to play, listen to the track and memorise the
+            lyrics. You have 3 attempts to answer with the correct lyrics to
+            win. There is a leaderboard for the best players, but you must be
+            signed in to view and enter.
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button href="/login" className="btn-trophy">
+            Sign in
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
+
   return (
     <>
       <Container>
+        {!auth.currentUser ? (
+          <Instructions show={modalShow} onHide={() => setModalShow(false)} />
+        ) : null}
+
         <Card
           id="tile"
           className="main-card justify-content-center text-center tile shadow border-0"
