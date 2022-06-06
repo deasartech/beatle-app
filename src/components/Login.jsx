@@ -28,10 +28,9 @@ export default function Login() {
   };
 
   return (
-    <Container>
-      <h1 className="mt-3">Login</h1>
+    <Container className="text-center">
       <Form>
-        <h4 className="mt-3">or sign in with</h4>
+        <h4 className="mt-3">sign in with</h4>
         <Button
           style={{ color: "white" }}
           variant=""

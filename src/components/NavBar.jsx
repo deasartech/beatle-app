@@ -61,7 +61,7 @@ export default function NavBar() {
           </svg>
         </Button>
 
-        <Navbar.Toggle aria-controls="offcanvasNavbar" id="offcanvasNavbar">
+        {/* <Navbar.Toggle aria-controls="offcanvasNavbar" id="offcanvasNavbar">
           {" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +125,7 @@ export default function NavBar() {
               )}
             </Nav>
           </Offcanvas.Body>
-        </Navbar.Offcanvas>
+        </Navbar.Offcanvas> */}
       </Container>
     </Navbar>
   );
