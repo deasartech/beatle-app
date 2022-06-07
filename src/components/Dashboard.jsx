@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import { Howl } from "howler";
 // import anime from "animejs/lib/anime.es.js";
-import { initialiseClock } from "../utils/script";
+import { initialiseClock, initialiseCountdown } from "../utils/script";
 import { getDailyTrack } from "../utils/getDailyTrack";
 import wrongAnswer from "../assets/audio/incorrect.wav";
 import gameOver from "../assets/audio/end.wav";
@@ -65,7 +65,7 @@ export default function Dashboard({ songs }) {
     onload: function () {
       setTimeout(() => {
         setLoading(false);
-      }, [1300]);
+      }, [3000]);
     },
   });
 
@@ -115,7 +115,6 @@ export default function Dashboard({ songs }) {
 
   const handlePlay = () => {
     sound.play("snippet");
-
     setPlay(true);
     sound.on("end", function () {
       flipTile(tileCard);
@@ -330,11 +329,11 @@ export default function Dashboard({ songs }) {
         </Modal.Header>
         <Modal.Body>
           <h4>Beatle plays a new song every day</h4>
+          <p> 1. listen to the track and memorise the lyrics</p>
+          <p>2. You have 3 attempts to answer with the correct lyrics to win</p>
           <p>
-            When you are ready to play, listen to the track and memorise the
-            lyrics. You have 3 attempts to answer with the correct lyrics to
-            win. There is a leaderboard for the best players, but you must be
-            signed in to view and enter.
+            3. There is a leaderboard for the best players, but you must be
+            signed in to view and enter
           </p>
         </Modal.Body>
         <Modal.Footer>
@@ -361,15 +360,19 @@ export default function Dashboard({ songs }) {
 
   return (
     <>
-      <Container>
+      <Container className="text-center">
         {!auth.currentUser ? (
           <Instructions show={modalShow} onHide={() => setModalShow(false)} />
         ) : null}
 
         <Card
           id="tile"
-          className="main-card justify-content-center text-center tile shadow border-0"
-          style={{ maxHeight: "37rem", height: "28rem" }}
+          className="main-card justify-content-center text-center tile shadow border-0 mx-auto"
+          style={{
+            maxHeight: "37rem",
+            height: "28rem",
+            maxWidth: "50rem",
+          }}
         >
           {!play ? (
             <Container>
@@ -380,7 +383,9 @@ export default function Dashboard({ songs }) {
           ) : (
             <>
               {loading ? (
-                <div className="sk-plane"></div>
+                <>
+                  <div className="sk-plane"></div>
+                </>
               ) : (
                 <>
                   {!timePassed ? (
@@ -445,7 +450,7 @@ export default function Dashboard({ songs }) {
                                       </>
                                     );
                                   })}
-                                  // <br />
+                                  <br />
                                 </Form>
                                 <Form id="inputContainer" className="mb-2">
                                   {lyricsB.map((element, index) => {
@@ -552,8 +557,8 @@ export default function Dashboard({ songs }) {
           )}
         </Card>
         <Card
-          className="results mt-3 p-2 border-0 shadow"
-          style={{ minHeight: "110px" }}
+          className="results mt-3 p-2 border-0 shadow mx-auto"
+          style={{ minHeight: "110px", maxWidth: "50rem" }}
         >
           <Row className="justify-content-center">
             <Col className="text-center align-items-center">
@@ -562,7 +567,7 @@ export default function Dashboard({ songs }) {
                 {/* {results[0] || "none"} */}
                 {results[0] || (
                   <div className="sk-wander sk-center mt-3">
-                    <div classNames="sk-wander-cube"></div>
+                    <div className="sk-wander-cube"></div>
                     <div className="sk-wander-cube"></div>
                     <div className="sk-wander-cube"></div>
                   </div>

@@ -10,8 +10,14 @@
 
 .btn-trophy {
   border: 0 none !important;
-  box-shadow: none;
+  box-shadow: none !important;
   background-color: #34d399 !important;
+}
+
+.btn-info {
+  border: 0 none !important;
+  box-shadow: none !important;
+  background: none !important;
 }
 
 .nav-title {
@@ -47,7 +53,7 @@
 }
 
 .pass {
-  color: #a3e635;
+  color: #00816a;
 }
 
 .fail {
@@ -132,6 +138,20 @@
 }
 
 #clockdiv div > span {
+  padding: 5px;
+  border-radius: 3px;
+  background: #00816a;
+}
+
+#countdowndiv {
+  font-family: sans-serif;
+  color: #fff;
+  font-weight: 100;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+#dountdowndiv div > span {
   padding: 5px;
   border-radius: 3px;
   background: #00816a;

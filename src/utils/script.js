@@ -43,7 +43,20 @@ export const initialiseClock = (id) => {
   const timeinterval = setInterval(updateClock, 1000);
 };
 
-// const deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
-// initialiseClock("clockdiv", deadline);
+// First attempt countdown from 3
+export const initialiseCountdown = (id) => {
+  let timeleft = 3;
 
-// timing
+  const clock = document.getElementById(id);
+
+  let downloadTimer = setInterval(function () {
+    if (timeleft <= 0) {
+      clearInterval(downloadTimer);
+      clock.querySelector(".countdown").innerHTML = "Finished";
+    } else {
+      clock.querySelector(".countdown").innerHTML = timeleft;
+      console.log(timeleft);
+    }
+    timeleft -= 1;
+  }, 1000);
+};
