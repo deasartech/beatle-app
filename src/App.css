@@ -97,7 +97,6 @@
   padding: 0 !important;
   margin: 0 !important;
   outline: 0;
-  color: white;
   background-color: #a3e635 !important;
 }
 
@@ -105,8 +104,13 @@
   padding: 0 !important;
   margin: 0 !important;
   outline: 0;
-  color: white;
+  color: white !important;
   background-color: #ef4444 !important;
+}
+
+.answer {
+  color: lightgray;
+  font-family: "Poppins", sans-serif;
 }
 
 /* .ml2 .letter {

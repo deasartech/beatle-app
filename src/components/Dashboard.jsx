@@ -237,7 +237,7 @@ export default function Dashboard({ songs }) {
       }, 4000);
       setTimeout(() => {
         setResult("So close... you'll get it tomorrow!");
-        setMessage("The answer was: \n\n" + track?.lyrics.join("\n"));
+        // setMessage("The answer was: \n\n" + track?.lyrics.join("\n"));
         setPlayed(true);
         setGuessA("");
         setGuessB("");
@@ -500,7 +500,7 @@ export default function Dashboard({ songs }) {
                                   onClick={handleSubmit}
                                   className="m-3 btn-trophy"
                                 >
-                                  Submit
+                                  Guess
                                 </Button>
                               </Container>
                             </Col>
@@ -544,8 +544,7 @@ export default function Dashboard({ songs }) {
                               </>
                             ) : null}
 
-                            <h3>{result}</h3>
-                            <p>{message}</p>
+                            <h5>{result}</h5>
                           </Container>
                         </>
                       )}
