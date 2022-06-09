@@ -17,10 +17,19 @@ import gameOver from "../assets/audio/end.wav";
 import win from "../assets/audio/win.wav";
 // import nlp
 import nlp from "compromise";
-import { auth } from "../firebase-config";
+import { auth, db } from "../firebase-config";
+import {
+  doc,
+  setDoc,
+  collection,
+  updateDoc,
+  arrayUnion,
+} from "firebase/firestore";
 import fire from "canvas-confetti";
+import SignUp from "./SignUp";
+import Login from "./Login";
 
-export default function Dashboard({ songs }) {
+export default function Dashboard({ songs, user, modalShow, setModalShow }) {
   const [lyricsA, setLyricsA] = useState("");
   const [lyricsB, setLyricsB] = useState("");
   const [blockA, setBlockA] = useState("");
@@ -33,6 +42,8 @@ export default function Dashboard({ songs }) {
 
   const [results, setResults] = useState([]);
   const [resultArray, setResultArray] = useState([]);
+  const [scoreValues, setScoreValues] = useState({});
+  const [score, setScore] = useState(0);
 
   // answer
   const [guessA, setGuessA] = useState("");
@@ -41,7 +52,8 @@ export default function Dashboard({ songs }) {
   const [message, setMessage] = useState("");
 
   const [played, setPlayed] = useState(false);
-  const [modalShow, setModalShow] = useState(true);
+  const [loginShow, setLoginShow] = useState(false);
+  const [registerShow, setRegisterShow] = useState(false);
 
   const BACKSPACE_KEY = "Backspace";
 
@@ -125,6 +137,41 @@ export default function Dashboard({ songs }) {
     });
   };
 
+  // // Get scores
+  // const docRef = doc(db, "users", auth.currentUser?.uid);
+
+  // useEffect(() => {
+  //   const getScores = async () => {
+  //     const docSnap = await getDoc(docRef);
+  //     console.log(docSnap.data().scores, "docSnap");
+  //     setScoreValues(docSnap.data().scores);
+  //   };
+  //   getScores();
+  // }, []);
+  // console.log(scoreValues, "score values <<<-----");
+
+  // // Add score to database
+  const handleAddScore = async (score) => {
+    await setDoc(
+      doc(db, `users/${auth.currentUser?.uid}/scores`, `${Date.now()}`),
+      {
+        points: score,
+      }
+    );
+  };
+
+  // const handleAddScore = async (score) => {
+  //   const scoreCopy = score;
+  //   setScoreValues((currScoreValues) => [...currScoreValues, score]);
+  //   console.log(scoreValues, "task items");
+  //   setScore("");
+
+  //   const updateRef = doc(db, "users", auth.currentUser?.uid);
+  //   await updateDoc(updateRef, {
+  //     tasks: arrayUnion(scoreCopy),
+  //   });
+  // };
+
   const handleSubmit = () => {
     if (guessA.includes(undefined) || guessA.length < lyricsA.length) {
       alert("Hello! your answer is missing something!!");
@@ -192,6 +239,7 @@ export default function Dashboard({ songs }) {
           setPlayed(true);
           setResults([...results, "Correct"]);
           setResult("Winner");
+          handleAddScore(10);
           fire(0.25, {
             spread: 26,
             startVelocity: 55,
@@ -313,6 +361,16 @@ export default function Dashboard({ songs }) {
     }, [420]);
   }
 
+  const handleLoginShow = () => {
+    setRegisterShow(false);
+    setLoginShow(true);
+  };
+
+  const handleSignUpShow = () => {
+    setLoginShow(false);
+    setRegisterShow(true);
+  };
+
   // instructions modal
   function Instructions(props) {
     return (
@@ -322,25 +380,60 @@ export default function Dashboard({ songs }) {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            How to play
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <h4>Beatle plays a new song every day</h4>
-          <p> 1. listen to the track and memorise the lyrics</p>
-          <p>2. You have 3 attempts to answer with the correct lyrics to win</p>
-          <p>
-            3. There is a leaderboard for the best players, but you must be
-            signed in to view and enter
-          </p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button href="/login" className="btn-trophy">
-            Sign in
-          </Button>
-        </Modal.Footer>
+        {loginShow && !user ? (
+          <>
+            <Modal.Header closeButton></Modal.Header>
+            <Modal.Body>
+              <Login />
+            </Modal.Body>
+            <Modal.Footer>
+              {/* <Button href="/login" className="btn-trophy"> */}
+              <Button onClick={handleSignUpShow} className="btn-trophy">
+                Create an account
+              </Button>
+            </Modal.Footer>
+          </>
+        ) : registerShow && !user ? (
+          <>
+            <Modal.Header closeButton></Modal.Header>
+            <Modal.Body>
+              <SignUp />
+            </Modal.Body>
+            <Modal.Footer>
+              {/* <Button href="/login" className="btn-trophy"> */}
+              <Button onClick={handleLoginShow} className="btn-trophy">
+                Sign in
+              </Button>
+            </Modal.Footer>
+          </>
+        ) : (
+          <>
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                How to play
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>
+                <b>Beatle plays a new song every day</b>
+              </p>
+              <p> 1. listen to the track and memorise the lyrics</p>
+              <p>
+                2. You have 3 attempts to answer with the correct lyrics to win
+              </p>
+              <p>
+                3. There is a leaderboard for the best players, but you must be
+                signed in to view and enter
+              </p>
+            </Modal.Body>
+            <Modal.Footer>
+              {/* <Button href="/login" className="btn-trophy"> */}
+              <Button onClick={setLoginShow} className="btn-trophy">
+                Sign in
+              </Button>
+            </Modal.Footer>
+          </>
+        )}
       </Modal>
     );
   }
@@ -361,9 +454,9 @@ export default function Dashboard({ songs }) {
   return (
     <>
       <Container className="text-center">
-        {!auth.currentUser ? (
+        {user ? null : (
           <Instructions show={modalShow} onHide={() => setModalShow(false)} />
-        ) : null}
+        )}
 
         <Card
           id="tile"

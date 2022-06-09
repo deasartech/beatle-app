@@ -1,45 +1,89 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase-config";
-import {
-  //   createUserWithEmailAndPassword,
-  //   signInWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
-} from "firebase/auth";
+import { Link } from "react-router-dom";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { Form, Container, Button, Image } from "react-bootstrap";
-import google from "../assets/google.png";
 
-export default function Login() {
-  //   const [loginEmail, setLoginEmail] = useState("");
-  //   const [loginPassword, setLoginPassword] = useState("");
+export default function Login({ user, setUser }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
-  const signInWithGoogle = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((res) => {
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (authUser) => {
+      if (authUser) {
         navigate("/");
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
+  const handleSignIn = (event) => {
+    event.preventDefault();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        setEmail("");
+        setPassword("");
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.message);
+        setError(error);
       });
   };
 
   return (
-    <Container className="text-center">
-      <Form>
-        <h4 className="mt-3">sign in with</h4>
-        <Button
-          style={{ color: "white" }}
-          variant=""
-          className="p-2 px-4 mt-3 align-items-center"
-          onClick={signInWithGoogle}
-        >
-          <Image src={google} width="50" height="50" />
-        </Button>
-      </Form>
-    </Container>
+    <>
+      <Container className="align-items-center">
+        <div className="text-center p-2">
+          <h4>Sign in</h4>
+          <Form onSubmit={handleSignIn}>
+            <Row className="justify-content-center px-4">
+              <Col lg="5">
+                <Form.Control
+                  placeholder="email"
+                  className="my-1 mt-4 sign-form"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+                <br />
+                <Form.Control
+                  type="password"
+                  className="my-1 sign-form"
+                  value={password}
+                  placeholder="password"
+                  onChange={(event) => setPassword(event.target.value)}
+                />
+                {error ? (
+                  <p className="text-center p-1">
+                    Please check your email/password and try again
+                  </p>
+                ) : (
+                  ""
+                )}
+                <Button
+                  style={{ color: "white" }}
+                  variant="light"
+                  className="p-2 px-4 mt-3 btn-trophy align-items-center"
+                  type="submit"
+                >
+                  Sign In
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+          <p className="py-3">
+            Don't have an account?{" "}
+            <Link to="/signup" className="link">
+              Create an account
+            </Link>
+          </p>
+        </div>
+      </Container>
+    </>
   );
 }
