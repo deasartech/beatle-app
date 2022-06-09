@@ -23,7 +23,8 @@ export default function Login() {
         navigate("/");
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.code);
+        console.log(error.message);
       });
   };
 
