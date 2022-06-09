@@ -1,6 +1,6 @@
+import React from "react";
 import { auth } from "../firebase-config";
 import { signOut } from "firebase/auth";
-import React from "react";
 import { Button } from "react-bootstrap";
 
 export default function Logout() {
@@ -9,8 +9,19 @@ export default function Logout() {
   };
 
   return (
-    <Button className="btn-sign m-3" onClick={handleLogout}>
-      Sign Out
-    </Button>
+    <>
+      {auth.currentUser ? (
+        <>
+          <p>{auth.currentUser?.displayName}</p>
+          <Button className="btn-trophy m-3" onClick={handleLogout}>
+            Sign Out
+          </Button>
+        </>
+      ) : (
+        <Button href="/login" className="btn-trophy">
+          Sign in
+        </Button>
+      )}
+    </>
   );
 }
