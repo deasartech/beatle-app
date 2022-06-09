@@ -31,6 +31,7 @@ export default function Login({ user, setUser }) {
         setPassword("");
       })
       .catch((error) => {
+        console.log(error.code);
         console.log(error.message);
         setError(error);
       });
