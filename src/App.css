@@ -8,6 +8,17 @@
   box-shadow: none;
 }
 
+.play {
+  cursor: pointer;
+  border: 0 none !important;
+  box-shadow: none !important;
+  background-color: #5de6de;
+  background-image: linear-gradient(315deg, #5de6de 0%, #b58ecc 74%);
+  border-radius: 35px !important;
+  transition: 200ms !important;
+  font-weight: 700 !important;
+}
+
 .btn-trophy {
   border: 0 none !important;
   box-shadow: none !important;
@@ -20,8 +31,20 @@
   background: none !important;
 }
 
+svg:hover {
+  cursor: pointer;
+  border: 0 none !important;
+  box-shadow: none !important;
+  fill: #5de6de;
+  animation-fill-mode: both !important;
+  /* image: linear-gradient(315deg, #5de6de 0%, #b58ecc 74%); */
+
+  transition: 200ms !important;
+}
+
 .nav-title {
-  color: #34d399 !important;
+  /* color: #34d399 !important; */
+  color: rgba(0, 0, 0, 0.8);
   font-family: "Raleway", sans-serif;
 }
 
@@ -31,6 +54,14 @@
   justify-content: center;
   align-items: center;
   transition: transform 250ms linear;
+  border-radius: 20px !important;
+}
+
+.leaderboard-card {
+  border-radius: 50px !important;
+}
+
+.popup {
   border-radius: 20px !important;
 }
 

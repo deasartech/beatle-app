@@ -11,11 +11,11 @@ export default function Logout() {
   return (
     <>
       {auth.currentUser ? (
-        <Button className="btn-trophy ms-auto" onClick={handleLogout}>
+        <Button className="play ms-auto" onClick={handleLogout}>
           Sign Out
         </Button>
       ) : (
-        <Button href="/login" className="btn-trophy">
+        <Button href="/login" className="play">
           Sign in
         </Button>
       )}

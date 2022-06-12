@@ -55,14 +55,11 @@ export default function Leaderboard() {
 
   return (
     <Container>
-      <p className="text-center">Leaderboard is in development</p>
       <Row className="g-3">
         <Col md="6" lg="6">
-          <Card>
-            <Card.Header>
-              <Card.Title className="text-center">Leaderboard</Card.Title>
-            </Card.Header>
+          <Card className="leaderboard-card">
             <Card.Body>
+              <Card.Title className="text-center">Leaderboard</Card.Title>
               <Row className="pb-2">
                 <Col className="text-center">
                   <b>Username</b>
@@ -93,15 +90,13 @@ export default function Leaderboard() {
           </Card>
         </Col>
         <Col md="6" lg="6">
-          <Card>
+          <Card className="leaderboard-card">
             {auth.currentUser ? (
               <>
-                <Card.Header>
+                <Card.Body>
                   <Card.Title className="text-center">
                     {auth.currentUser?.displayName}'s Performance{" "}
                   </Card.Title>
-                </Card.Header>
-                <Card.Body>
                   <Row className="pb-2">
                     <Col className="text-center">
                       <b>Date</b>
@@ -133,11 +128,11 @@ export default function Leaderboard() {
               </>
             ) : (
               <>
-                <Card.Header>
-                  <Card.Title className="text-center">Performance</Card.Title>
-                </Card.Header>
                 <Card.Body>
-                  <h5 className="text-center">Sign in to view your history</h5>
+                  <Card.Title className="text-center mb-5">
+                    Performance
+                  </Card.Title>
+                  <h6 className="text-center">Sign in to view your history</h6>
                   <div className="text-center py-4">
                     <Logout />
                   </div>

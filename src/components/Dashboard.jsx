@@ -19,13 +19,7 @@ import win from "../assets/audio/win.wav";
 // import nlp
 import nlp from "compromise";
 import { auth, db } from "../firebase-config";
-import {
-  doc,
-  setDoc,
-  collection,
-  updateDoc,
-  arrayUnion,
-} from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import fire from "canvas-confetti";
 import SignUp from "./SignUp";
 import Login from "./Login";
@@ -374,6 +368,7 @@ export default function Dashboard({
       <Modal
         {...props}
         size="md"
+        dialogClassName="modal-border-0"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
@@ -458,33 +453,14 @@ export default function Dashboard({
           id="tile"
           className="main-card justify-content-center text-center tile shadow border-0 mx-auto"
           style={{
-            maxHeight: "37rem",
+            maxHeight: "35rem",
             height: "28rem",
-            maxWidth: "50rem",
+            maxWidth: "45rem",
           }}
         >
-          {/* <Card.Header>
-            <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="red"
-                class="bi bi-heart-fill"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
-                />
-              </svg>
-              <Badge bg="secondary">{hearts}</Badge>
-            </div>
-          </Card.Header> */}
-
           {!play ? (
             <Container>
-              <Button onClick={handlePlay} className="btn-trophy px-4">
+              <Button onClick={handlePlay} className="play px-4">
                 Play
               </Button>
             </Container>
@@ -606,7 +582,7 @@ export default function Dashboard({
 
                                 <Button
                                   onClick={handleSubmit}
-                                  className="m-3 btn-trophy"
+                                  className="m-3 play"
                                 >
                                   Guess
                                 </Button>
@@ -669,11 +645,11 @@ export default function Dashboard({
         >
           <Row className="justify-content-center">
             <Col className="text-center align-items-center">
-              <h2>1</h2>
+              {/* <h2>1</h2> */}
               <h3 className={results[0] === "Correct" ? "pass" : "fail"}>
                 {/* {results[0] || "none"} */}
                 {results[0] || (
-                  <div className="sk-wander sk-center mt-3">
+                  <div className="sk-wander sk-center my-4">
                     <div className="sk-wander-cube"></div>
                     <div className="sk-wander-cube"></div>
                     <div className="sk-wander-cube"></div>
@@ -682,11 +658,11 @@ export default function Dashboard({
               </h3>
             </Col>
             <Col className="text-center">
-              <h2>2</h2>
+              {/* <h2>2</h2> */}
               <h3 className={results[1] === "Correct" ? "pass" : "fail"}>
                 {/* {results[1] || "none"} */}
                 {results[1] || (
-                  <div className="sk-wander sk-center mt-3">
+                  <div className="sk-wander sk-center my-4">
                     <div className="sk-wander-cube"></div>
                     <div className="sk-wander-cube"></div>
                     <div className="sk-wander-cube"></div>
@@ -695,11 +671,11 @@ export default function Dashboard({
               </h3>
             </Col>
             <Col className="text-center">
-              <h2>3</h2>
+              {/* <h2>3</h2> */}
               <h3 className={results[2] === "Correct" ? "pass" : "fail"}>
                 {/* {results[2] || "none"} */}
                 {results[2] || (
-                  <div className="sk-wander sk-center mt-3">
+                  <div className="sk-wander sk-center my-4">
                     <div className="sk-wander-cube"></div>
                     <div className="sk-wander-cube"></div>
                     <div className="sk-wander-cube"></div>
