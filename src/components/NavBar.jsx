@@ -7,7 +7,6 @@ import {
   Image,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-
 import { auth } from "../firebase-config";
 import {
   //   createUserWithEmailAndPassword,
@@ -15,23 +14,9 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
-import Logout from "./Logout";
-
-import google from "../assets/google.png";
 
 export default function NavBar() {
   //   const navigate = useNavigate();
-
-  const signInWithGoogle = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((res) => {
-        // navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
   return (
     <Navbar expand={false}>
       <Container>

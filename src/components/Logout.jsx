@@ -11,12 +11,9 @@ export default function Logout() {
   return (
     <>
       {auth.currentUser ? (
-        <>
-          <p>{auth.currentUser?.displayName}</p>
-          <Button className="btn-trophy m-3" onClick={handleLogout}>
-            Sign Out
-          </Button>
-        </>
+        <Button className="btn-trophy ms-auto" onClick={handleLogout}>
+          Sign Out
+        </Button>
       ) : (
         <Button href="/login" className="btn-trophy">
           Sign in
