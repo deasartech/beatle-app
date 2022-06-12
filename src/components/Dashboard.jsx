@@ -137,19 +137,6 @@ export default function Dashboard({ songs, user, modalShow, setModalShow }) {
     });
   };
 
-  // // Get scores
-  // const docRef = doc(db, "users", auth.currentUser?.uid);
-
-  // useEffect(() => {
-  //   const getScores = async () => {
-  //     const docSnap = await getDoc(docRef);
-  //     console.log(docSnap.data().scores, "docSnap");
-  //     setScoreValues(docSnap.data().scores);
-  //   };
-  //   getScores();
-  // }, []);
-  // console.log(scoreValues, "score values <<<-----");
-
   // // Add score to database
   const handleAddScore = async (score) => {
     await setDoc(
@@ -159,18 +146,6 @@ export default function Dashboard({ songs, user, modalShow, setModalShow }) {
       }
     );
   };
-
-  // const handleAddScore = async (score) => {
-  //   const scoreCopy = score;
-  //   setScoreValues((currScoreValues) => [...currScoreValues, score]);
-  //   console.log(scoreValues, "task items");
-  //   setScore("");
-
-  //   const updateRef = doc(db, "users", auth.currentUser?.uid);
-  //   await updateDoc(updateRef, {
-  //     tasks: arrayUnion(scoreCopy),
-  //   });
-  // };
 
   const handleSubmit = () => {
     if (guessA.includes(undefined) || guessA.length < lyricsA.length) {
@@ -234,12 +209,21 @@ export default function Dashboard({ songs, user, modalShow, setModalShow }) {
         flipTile(tileCard);
       }, 4000);
       if (results.length < 3) {
+        // ADD SCORE
+        console.log(results, "results");
+        console.log(results.length, "results length");
+        if (results.length === 0) {
+          handleAddScore(15);
+        } else if (results.length === 1) {
+          handleAddScore(10);
+        } else {
+          handleAddScore(5);
+        }
         winSound.play();
         setTimeout(() => {
           setPlayed(true);
           setResults([...results, "Correct"]);
           setResult("Winner");
-          handleAddScore(10);
           fire(0.25, {
             spread: 26,
             startVelocity: 55,

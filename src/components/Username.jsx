@@ -18,10 +18,16 @@ export default function Username() {
       await updateProfile(auth.currentUser, {
         displayName: username,
       });
+      // create user doc with uid
       await setDoc(doc(db, "users", auth.currentUser?.uid), {
         displayName: username,
-        scores: {},
+        totalPoints: 0,
         uid: auth.currentUser?.uid,
+      });
+      // create spot on leaderboard for player
+      await setDoc(doc(db, "leaderboard", auth.currentUser?.uid), {
+        username: username,
+        totalPoints: 0,
       });
       // navigation.navigate("Home");
       setUsername("");
