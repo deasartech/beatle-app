@@ -7,6 +7,7 @@ import {
   Row,
   Col,
   Modal,
+  Badge,
 } from "react-bootstrap";
 import { Howl } from "howler";
 // import anime from "animejs/lib/anime.es.js";
@@ -29,7 +30,16 @@ import fire from "canvas-confetti";
 import SignUp from "./SignUp";
 import Login from "./Login";
 
-export default function Dashboard({ songs, user, modalShow, setModalShow }) {
+export default function Dashboard({
+  songs,
+  user,
+  modalShow,
+  setModalShow,
+  hearts,
+  setHearts,
+  played,
+  setPlayed,
+}) {
   const [lyricsA, setLyricsA] = useState("");
   const [lyricsB, setLyricsB] = useState("");
   const [blockA, setBlockA] = useState("");
@@ -50,8 +60,6 @@ export default function Dashboard({ songs, user, modalShow, setModalShow }) {
   const [guessB, setGuessB] = useState("");
   const [result, setResult] = useState(null);
   const [message, setMessage] = useState("");
-
-  const [played, setPlayed] = useState(false);
   const [loginShow, setLoginShow] = useState(false);
   const [registerShow, setRegisterShow] = useState(false);
 
@@ -66,6 +74,9 @@ export default function Dashboard({ songs, user, modalShow, setModalShow }) {
     // setLyrics(track?.lyrics);
     setBlockA(track?.lyrics[0]);
     setBlockB(track?.lyrics[1]);
+    if (!played) {
+      setHearts(3);
+    }
   }, [track, songs]);
 
   // howler
@@ -249,6 +260,7 @@ export default function Dashboard({ songs, user, modalShow, setModalShow }) {
         }, 4500);
       }
     } else if (wordResults.includes(false) && results.length < 2) {
+      setHearts((currNum) => currNum - 1);
       setTimeout(() => {
         setResult("try again");
       }, 4000);
@@ -264,6 +276,7 @@ export default function Dashboard({ songs, user, modalShow, setModalShow }) {
 
       setResults([...results, "X"]);
     } else {
+      setHearts((currNum) => currNum - 1);
       setTimeout(() => {
         flipTile(tileCard);
       }, 4000);
@@ -441,7 +454,6 @@ export default function Dashboard({ songs, user, modalShow, setModalShow }) {
         {user ? null : (
           <Instructions show={modalShow} onHide={() => setModalShow(false)} />
         )}
-
         <Card
           id="tile"
           className="main-card justify-content-center text-center tile shadow border-0 mx-auto"
@@ -451,6 +463,25 @@ export default function Dashboard({ songs, user, modalShow, setModalShow }) {
             maxWidth: "50rem",
           }}
         >
+          {/* <Card.Header>
+            <div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="red"
+                class="bi bi-heart-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+                />
+              </svg>
+              <Badge bg="secondary">{hearts}</Badge>
+            </div>
+          </Card.Header> */}
+
           {!play ? (
             <Container>
               <Button onClick={handlePlay} className="btn-trophy px-4">
@@ -592,7 +623,7 @@ export default function Dashboard({ songs, user, modalShow, setModalShow }) {
                               height="100"
                               width="100"
                             /> */}
-                            {played ? (
+                            {played || hearts === 0 ? (
                               <>
                                 <h5>Next Beatle in</h5>
                                 <Card

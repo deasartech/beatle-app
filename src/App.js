@@ -14,6 +14,8 @@ function App() {
   const [user, setUser] = useState(null);
   const [songObj, setSongObj] = useState(null);
   const [modalShow, setModalShow] = useState(true);
+  const [hearts, setHearts] = useState();
+  const [played, setPlayed] = useState(false);
   const [songs, setSongs] = useState([
     {
       src: ["./songs/055.wav", "./songs/055mixture.wav"],
@@ -58,7 +60,7 @@ function App() {
 
   return (
     <>
-      <NavBar />
+      <NavBar hearts={hearts} />
       <BrowserRouter>
         <Routes>
           <Route
@@ -70,6 +72,10 @@ function App() {
                 user={user}
                 modalShow={modalShow}
                 setModalShow={setModalShow}
+                hearts={hearts}
+                setHearts={setHearts}
+                played={played}
+                setPlayed={setHearts}
               />
             }
           />

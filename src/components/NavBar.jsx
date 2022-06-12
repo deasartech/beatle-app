@@ -4,7 +4,7 @@ import {
   Nav,
   Offcanvas,
   Button,
-  Image,
+  Badge,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase-config";
@@ -14,8 +14,10 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
+import { useEffect } from "react";
 
-export default function NavBar() {
+export default function NavBar({ hearts }) {
+  useEffect(() => {}, [hearts]);
   //   const navigate = useNavigate();
   return (
     <Navbar expand={false}>
@@ -23,8 +25,21 @@ export default function NavBar() {
         <Button href="/info" className="btn-info">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="25"
-            height="25"
+            width="20"
+            height="20"
+            fill="gray"
+            class="bi bi-music-player-fill"
+            viewBox="0 0 16 16"
+          >
+            <path d="M8 12a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+            <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm1 2h6a1 1 0 0 1 1 1v2.5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm3 12a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+          </svg>
+        </Button>
+        <Button href="/info" className="btn-info">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
             fill="gray"
             className="bi bi-info-circle-fill"
             viewBox="0 0 16 16"
@@ -32,24 +47,58 @@ export default function NavBar() {
             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
           </svg>
         </Button>
+
         <Navbar.Brand className="ms-auto">
           <Nav.Link href="/">
-            {/* <img
-              src={paw}
-              alt="paw image"
-              width="50"
-              height="50"
-              className="d-inline-block align-top"
-            /> */}
-            <h2 className="nav-title">Beatle</h2>
+            <h1 className="nav-title pt-2">Beatle</h1>
           </Nav.Link>
         </Navbar.Brand>
         {/* <Image src={logo} height="35" className="" /> */}
+        {hearts > 0 ? (
+          <div className="pb-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="red"
+              class="bi bi-heart-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+              />
+            </svg>
+            <Badge bg="light" style={{ color: "red" }}>
+              {hearts}
+            </Badge>
+          </div>
+        ) : (
+          <div className="pb-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              class="bi bi-heartbreak"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M8.867 14.41c13.308-9.322 4.79-16.563.064-13.824L7 3l1.5 4-2 3L8 15a38.094 38.094 0 0 0 .867-.59Zm-.303-1.01c6.164-4.4 6.91-7.982 6.22-9.921C14.031 1.37 11.447.42 9.587 1.368L8.136 3.18l1.3 3.468a1 1 0 0 1-.104.906l-1.739 2.608.971 3.237Zm-1.25 1.137a36.027 36.027 0 0 1-1.522-1.116C-5.077 4.97 1.842-1.472 6.454.293c.314.12.618.279.904.477L5.5 3 7 7l-1.5 3 1.815 4.537Zm-2.3-3.06C.895 7.797.597 4.875 1.308 3.248c.756-1.73 2.768-2.577 4.456-2.127L4.732 2.36a1 1 0 0 0-.168.991L5.91 6.943l-1.305 2.61a1 1 0 0 0-.034.818l.442 1.106Z"
+              />
+            </svg>
+            <Badge bg="light" style={{ color: "red" }}>
+              0
+            </Badge>
+          </div>
+        )}
+
         <Button href="/leaderboard" className="ms-auto btn-trophy">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
+            width="15"
+            height="15"
             fill="currentColor"
             className="bi bi-trophy-fill"
             viewBox="0 0 16 16"
