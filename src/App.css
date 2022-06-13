@@ -19,6 +19,11 @@
   font-weight: 700 !important;
 }
 
+.play:hover {
+  background-image: linear-gradient(315deg, #60f8ee 0%, #dfaefb 74%);
+  color: white;
+}
+
 .btn-trophy {
   border: 0 none !important;
   box-shadow: none !important;

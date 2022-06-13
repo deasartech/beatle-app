@@ -20,8 +20,8 @@ export default function NavBar({ hearts }) {
   useEffect(() => {}, [hearts]);
   //   const navigate = useNavigate();
   return (
-    <Navbar expand={false}>
-      <Container>
+    <Navbar expand={false} className="py-0">
+      <Container className="py-0">
         <Button href="/info" className="btn-info">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -48,9 +48,9 @@ export default function NavBar({ hearts }) {
           </svg>
         </Button>
 
-        <Navbar.Brand className="ms-auto">
+        <Navbar.Brand className="ms-auto py-0">
           <Nav.Link href="/">
-            <h1 className="nav-title pt-2">Beatle</h1>
+            <h3 className="nav-title pt-2">Beatle</h3>
           </Nav.Link>
         </Navbar.Brand>
         {/* <Image src={logo} height="35" className="" /> */}

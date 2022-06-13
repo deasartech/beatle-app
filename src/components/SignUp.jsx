@@ -85,7 +85,7 @@ export default function SignUp({ user, setUser }) {
                   <Button
                     style={{ color: "white" }}
                     variant="light"
-                    className="p-2 px-4 mt-3 btn-trophy align-items-center"
+                    className="p-2 px-4 mt-3 play align-items-center"
                     type="submit"
                   >
                     Register

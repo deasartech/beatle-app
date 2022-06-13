@@ -380,7 +380,7 @@ export default function Dashboard({
             </Modal.Body>
             <Modal.Footer>
               {/* <Button href="/login" className="btn-trophy"> */}
-              <Button onClick={handleSignUpShow} className="btn-trophy">
+              <Button onClick={handleSignUpShow} className="play">
                 Create an account
               </Button>
             </Modal.Footer>
@@ -393,7 +393,7 @@ export default function Dashboard({
             </Modal.Body>
             <Modal.Footer>
               {/* <Button href="/login" className="btn-trophy"> */}
-              <Button onClick={handleLoginShow} className="btn-trophy">
+              <Button onClick={handleLoginShow} className="play">
                 Sign in
               </Button>
             </Modal.Footer>
@@ -420,7 +420,7 @@ export default function Dashboard({
             </Modal.Body>
             <Modal.Footer>
               {/* <Button href="/login" className="btn-trophy"> */}
-              <Button onClick={setLoginShow} className="btn-trophy">
+              <Button onClick={setLoginShow} className="play">
                 Sign in
               </Button>
             </Modal.Footer>
