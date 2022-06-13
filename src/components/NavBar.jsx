@@ -20,15 +20,15 @@ export default function NavBar({ hearts }) {
   useEffect(() => {}, [hearts]);
   //   const navigate = useNavigate();
   return (
-    <Navbar expand={false}>
-      <Container>
+    <Navbar expand={false} className="py-0">
+      <Container className="py-0">
         <Button href="/info" className="btn-info">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
-            fill="gray"
-            class="bi bi-music-player-fill"
+            fill="rgba(0, 0, 0, 0.80)"
+            className="bi bi-music-player-fill"
             viewBox="0 0 16 16"
           >
             <path d="M8 12a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
@@ -40,17 +40,17 @@ export default function NavBar({ hearts }) {
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
-            fill="gray"
-            className="bi bi-info-circle-fill"
+            fill="rgba(0, 0, 0, 0.80)"
+            className="bi bi-info-circle-fill buttons"
             viewBox="0 0 16 16"
           >
             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
           </svg>
         </Button>
 
-        <Navbar.Brand className="ms-auto">
+        <Navbar.Brand className="ms-auto py-0">
           <Nav.Link href="/">
-            <h1 className="nav-title pt-2">Beatle</h1>
+            <h3 className="nav-title pt-2">Beatle</h3>
           </Nav.Link>
         </Navbar.Brand>
         {/* <Image src={logo} height="35" className="" /> */}
@@ -94,12 +94,12 @@ export default function NavBar({ hearts }) {
           </div>
         )}
 
-        <Button href="/leaderboard" className="ms-auto btn-trophy">
+        <Button href="/leaderboard" className="ms-auto btn-info">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="15"
-            height="15"
-            fill="currentColor"
+            width="20"
+            height="20"
+            fill="rgba(0, 0, 0, 0.80)"
             className="bi bi-trophy-fill"
             viewBox="0 0 16 16"
           >
