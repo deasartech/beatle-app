@@ -23,6 +23,7 @@ import { doc, setDoc } from "firebase/firestore";
 import fire from "canvas-confetti";
 import SignUp from "./SignUp";
 import Login from "./Login";
+import Player from "./Player";
 
 export default function Dashboard({
   songs,
@@ -74,17 +75,17 @@ export default function Dashboard({
   }, [track, songs]);
 
   // howler
-  const sound = new Howl({
-    src: [track?.src[0]],
-    sprite: {
-      snippet: track?.timestamp,
-    },
-    onload: function () {
-      setTimeout(() => {
-        setLoading(false);
-      }, [3000]);
-    },
-  });
+  // const sound = new Howl({
+  //   src: [track?.src[0]],
+  //   sprite: {
+  //     snippet: track?.timestamp,
+  //   },
+  //   onload: function () {
+  //     setTimeout(() => {
+  //       setLoading(false);
+  //     }, [3000]);
+  //   },
+  // });
 
   // howler
   const wrongSound = new Howl({
@@ -131,15 +132,19 @@ export default function Dashboard({
   }
 
   const handlePlay = () => {
-    sound.play("snippet");
+    // window.lol();
+    window.widgetPlay();
+
+    // sound.play("snippet");
     setPlay(true);
-    sound.on("end", function () {
-      flipTile(tileCard);
-      setTimeout(() => {
-        setTimePassed(true);
-        init();
-      }, [420]);
-    });
+
+    // sound.on("end", function () {
+    //   flipTile(tileCard);
+    //   setTimeout(() => {
+    //     setTimePassed(true);
+    //     init();
+    //   }, [420]);
+    // });
   };
 
   // // Add score to database
@@ -442,6 +447,13 @@ export default function Dashboard({
   //   }
   // }
   // timer = setInterval(updateTimer, 1000);
+  // DOM elements
+  // const playButton = document.getElementById("play-button");
+  // if (playButton) {
+  //   playButton.addEventListener("click", () => {
+  //     console.log("play button pressed");
+  //   });
+  // }
 
   return (
     <>
@@ -460,7 +472,12 @@ export default function Dashboard({
         >
           {!play ? (
             <Container>
-              <Button onClick={handlePlay} className="play px-4">
+              {/* <Player /> */}
+              <Button
+                id="play-button"
+                onClick={handlePlay}
+                className="play px-4"
+              >
                 Play
               </Button>
             </Container>
