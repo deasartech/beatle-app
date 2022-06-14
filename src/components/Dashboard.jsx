@@ -23,7 +23,7 @@ import { doc, setDoc } from "firebase/firestore";
 import fire from "canvas-confetti";
 import SignUp from "./SignUp";
 import Login from "./Login";
-import Player from "./Player";
+import ReactPlayer from "react-player";
 
 export default function Dashboard({
   songs,
@@ -44,6 +44,13 @@ export default function Dashboard({
   const [play, setPlay] = useState(false);
   const [loading, setLoading] = useState(true);
   const [track, setTrack] = useState();
+  const [playing, setPlaying] = useState(false);
+  const [state, setState] = useState({
+    played: 0,
+    playedSeconds: 0,
+    loaded: 0,
+    loadedSeconds: 0,
+  });
 
   const [results, setResults] = useState([]);
   const [resultArray, setResultArray] = useState([]);
@@ -76,16 +83,10 @@ export default function Dashboard({
 
   // howler
   // const sound = new Howl({
-  //   src: [track?.src[0]],
+  //   src: "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1262879566",
   //   sprite: {
   //     snippet: track?.timestamp,
   //   },
-  //   onload: function () {
-  //     setTimeout(() => {
-  //       setLoading(false);
-  //     }, [3000]);
-  //   },
-  // });
 
   // howler
   const wrongSound = new Howl({
@@ -122,8 +123,6 @@ export default function Dashboard({
     });
   };
 
-  ///////
-
   function init() {
     const sentenceArrayA = blockA.split(" ");
     setLyricsA(sentenceArrayA);
@@ -131,20 +130,38 @@ export default function Dashboard({
     setLyricsB(sentenceArrayB);
   }
 
+  // ref
+  const playerRefs = useRef([]);
+  const ref = playerRefs.current[0];
+  console.log(ref, "ref obj");
+
   const handlePlay = () => {
-    // window.lol();
-    window.widgetPlay();
-
-    // sound.play("snippet");
+    ref.seekTo(69, "seconds");
+    setPlaying(true);
     setPlay(true);
+  };
 
-    // sound.on("end", function () {
-    //   flipTile(tileCard);
-    //   setTimeout(() => {
-    //     setTimePassed(true);
-    //     init();
-    //   }, [420]);
-    // });
+  const handlePause = () => {
+    flipTile(tileCard);
+    setTimeout(() => {
+      setTimePassed(true);
+      init();
+    }, [420]);
+  };
+
+  const handlePlayerLoaded = (e) => {
+    console.log("player loaded successfully");
+    setTimeout(() => {
+      setLoading(false);
+    }, [3000]);
+  };
+
+  const handleProgress = ({ playedSeconds }) => {
+    console.log(playedSeconds, "progress");
+  };
+
+  const handleDuration = (duration) => {
+    console.log("onDuration", duration);
   };
 
   // // Add score to database
@@ -447,16 +464,38 @@ export default function Dashboard({
   //   }
   // }
   // timer = setInterval(updateTimer, 1000);
-  // DOM elements
-  // const playButton = document.getElementById("play-button");
-  // if (playButton) {
-  //   playButton.addEventListener("click", () => {
-  //     console.log("play button pressed");
-  //   });
-  // }
 
   return (
     <>
+      <ReactPlayer
+        url={`https%3A//api.soundcloud.com/tracks/${1262879566}`}
+        width="100%"
+        height="150"
+        // style={{ display: "none" }}
+        ref={(el) => (playerRefs.current[0] = el)}
+        id="react-player"
+        // pip={pip}
+        playing={playing}
+        // controls={controls}
+        // light={light}
+        // loop={loop}
+        // playbackRate={playbackRate}
+        // volume={volume}
+        // muted={muted}
+        onReady={handlePlayerLoaded}
+        onStart={() => console.log("onStart")}
+        // onPlay={handlePlay}
+        // onEnablePIP={this.handleEnablePIP}
+        // onDisablePIP={this.handleDisablePIP}
+        onPause={handlePause}
+        onBuffer={() => console.log("onBuffer")}
+        // onPlaybackRateChange={this.handleOnPlaybackRateChange}
+        onSeek={(seconds) => console.log("onSeek", seconds)}
+        // onEnded={this.handleEnded}
+        onError={(e) => console.log("onError", e)}
+        onProgress={handleProgress(state)}
+        onDuration={handleDuration}
+      />
       <Container className="text-center">
         {user ? null : (
           <Instructions show={modalShow} onHide={() => setModalShow(false)} />

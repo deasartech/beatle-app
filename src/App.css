@@ -4,7 +4,7 @@
 #offcanvasNavbar,
 #offcanvasNavbar:focus,
 #offcanvasNavbar:active {
-  border: 0 none !important;
+  /* border: 0 none !important; */
   box-shadow: none;
 }
 

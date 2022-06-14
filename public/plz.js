@@ -5,14 +5,25 @@ function widgetPlay() {
   widget.play();
 }
 
-// function new Promise
-
 (function () {
   var widgetIframe = document.getElementById("sc-widget"),
     widget = SC.Widget(widgetIframe);
+  console.log(widget, "widget");
+  // widgetIframe.attr(
+  //   "src",
+  //   `https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/${1262879566}`
+  // );
+  // Churchill downs song
+
+  const Churchill = {
+    track: 1262879566,
+    title: "Churchill Downs",
+    atrist: "Jack Harlow ft. Drake",
+    time: [69000, 80293],
+  };
 
   widget.bind(SC.Widget.Events.READY, function () {
-    widget.seekTo(44000);
+    widget.seekTo(Churchill.time[0]);
     widget.bind(SC.Widget.Events.PLAY, function () {});
     // get current level of volume
     widget.getVolume(function (volume) {
@@ -21,10 +32,10 @@ function widgetPlay() {
     widget.bind(SC.Widget.Events.PLAY_PROGRESS, function () {
       widget.getPosition((position) => {
         console.log(position);
-        if (position >= 60865) {
+        if (position >= Churchill.time[1]) {
           widget.pause();
-
-          widget.seekTo(44000);
+          widget.seekTo(Churchill.time[0]);
+          // trigger flip tile in Dashboard
         }
       });
     });

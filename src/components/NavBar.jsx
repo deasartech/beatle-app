@@ -8,19 +8,13 @@ import {
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase-config";
-import {
-  //   createUserWithEmailAndPassword,
-  //   signInWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
-} from "firebase/auth";
 import { useEffect } from "react";
 
 export default function NavBar({ hearts }) {
   useEffect(() => {}, [hearts]);
   //   const navigate = useNavigate();
   return (
-    <Navbar expand={false} className="py-0">
+    <Navbar expand={false} className="py-0 ">
       <Container className="py-0">
         <Button href="/info" className="btn-info">
           <svg
