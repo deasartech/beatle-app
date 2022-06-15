@@ -12,7 +12,7 @@ import Username from "./components/Username";
 
 function App() {
   const [user, setUser] = useState(null);
-  const [modalShow, setModalShow] = useState(true);
+  const [modalShow, setModalShow] = useState(false);
   const [hearts, setHearts] = useState();
   const [played, setPlayed] = useState(false);
   const [songs, setSongs] = useState([
@@ -66,7 +66,11 @@ function App() {
 
   return (
     <>
-      <NavBar hearts={hearts} />
+      <NavBar
+        hearts={hearts}
+        modalShow={modalShow}
+        setModalShow={setModalShow}
+      />
       <BrowserRouter>
         <Routes>
           <Route
