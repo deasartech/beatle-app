@@ -1,13 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import {
-  Container,
-  Button,
-  Form,
-  Card,
-  Row,
-  Col,
-  Modal,
-} from "react-bootstrap";
+import { Container, Button, Form, Card, Row, Col } from "react-bootstrap";
 import { Howl } from "howler";
 // import anime from "animejs/lib/anime.es.js";
 import { initialiseClock } from "../utils/script";
@@ -20,17 +12,19 @@ import win from "../assets/audio/win.wav";
 import { auth, db } from "../firebase-config";
 import { doc, setDoc } from "firebase/firestore";
 import fire from "canvas-confetti";
-import SignUp from "./SignUp";
-import Login from "./Login";
 import ReactPlayer from "react-player";
 // import Player from "./Player";
 import { checkGuess } from "../utils/checkGuess";
+import InfoModal from "./InfoModal";
+import MusicModal from "./MusicModal";
 
 export default function Dashboard({
   songs,
   user,
   modalShow,
   setModalShow,
+  musicModalShow,
+  setMusicModalShow,
   hearts,
   setHearts,
   played,
@@ -59,8 +53,6 @@ export default function Dashboard({
   const [guessB, setGuessB] = useState("");
   const [result, setResult] = useState(null);
   // const [message, setMessage] = useState("");
-  const [loginShow, setLoginShow] = useState(false);
-  const [registerShow, setRegisterShow] = useState(false);
 
   const BACKSPACE_KEY = "Backspace";
 
@@ -326,84 +318,6 @@ export default function Dashboard({
     }, [420]);
   }
 
-  const handleLoginShow = () => {
-    setRegisterShow(false);
-    setLoginShow(true);
-  };
-
-  const handleSignUpShow = () => {
-    setLoginShow(false);
-    setRegisterShow(true);
-  };
-
-  // instructions modal
-  function Instructions(props) {
-    return (
-      <Modal
-        {...props}
-        size="md"
-        dialogClassName="modal-border-0"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        {loginShow ? (
-          <>
-            <Modal.Header closeButton></Modal.Header>
-            <Modal.Body>
-              <Login />
-            </Modal.Body>
-            <Modal.Footer>
-              {/* <Button href="/login" className="btn-trophy"> */}
-              <Button onClick={handleSignUpShow} className="play">
-                Create an account
-              </Button>
-            </Modal.Footer>
-          </>
-        ) : registerShow ? (
-          <>
-            <Modal.Header closeButton></Modal.Header>
-            <Modal.Body>
-              <SignUp />
-            </Modal.Body>
-            <Modal.Footer>
-              {/* <Button href="/login" className="btn-trophy"> */}
-              <Button onClick={handleLoginShow} className="play">
-                Sign in
-              </Button>
-            </Modal.Footer>
-          </>
-        ) : (
-          <>
-            <Modal.Header closeButton>
-              <Modal.Title id="contained-modal-title-vcenter">
-                How to play
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <p>
-                <b>Beatle plays a new song every day</b>
-              </p>
-              <p> 1. listen to the track and memorise the lyrics</p>
-              <p>
-                2. You have 3 attempts to answer with the correct lyrics to win
-              </p>
-              <p>
-                3. There is a leaderboard for the best players, but you must be
-                signed in to view and enter
-              </p>
-            </Modal.Body>
-            <Modal.Footer>
-              {/* <Button href="/login" className="btn-trophy"> */}
-              <Button onClick={setLoginShow} className="play">
-                Sign in
-              </Button>
-            </Modal.Footer>
-          </>
-        )}
-      </Modal>
-    );
-  }
-
   return (
     <>
       <ReactPlayer
@@ -436,7 +350,16 @@ export default function Dashboard({
         onDuration={handleDuration}
       />
       <Container className="text-center">
-        <Instructions show={modalShow} onHide={() => setModalShow(false)} />
+        <InfoModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          user={user}
+          setModalShow={setModalShow}
+        />
+        <MusicModal
+          show={musicModalShow}
+          onHide={() => setMusicModalShow(false)}
+        />
         <Card
           id="tile"
           className="main-card justify-content-center text-center tile shadow border-0 mx-auto"

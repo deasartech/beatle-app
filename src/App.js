@@ -13,6 +13,7 @@ import Username from "./components/Username";
 function App() {
   const [user, setUser] = useState(null);
   const [modalShow, setModalShow] = useState(false);
+  const [musicModalShow, setMusicModalShow] = useState(false);
   const [hearts, setHearts] = useState();
   const [played, setPlayed] = useState(false);
   const [songs, setSongs] = useState([
@@ -70,6 +71,8 @@ function App() {
         hearts={hearts}
         modalShow={modalShow}
         setModalShow={setModalShow}
+        musicModalShow={musicModalShow}
+        setMusicModalShow={setMusicModalShow}
       />
       <BrowserRouter>
         <Routes>
@@ -81,6 +84,8 @@ function App() {
                 user={user}
                 modalShow={modalShow}
                 setModalShow={setModalShow}
+                musicModalShow={musicModalShow}
+                setMusicModalShow={setMusicModalShow}
                 hearts={hearts}
                 setHearts={setHearts}
                 played={played}
