@@ -7,17 +7,16 @@ import {
   Row,
   Col,
   Modal,
-  Badge,
 } from "react-bootstrap";
 import { Howl } from "howler";
 // import anime from "animejs/lib/anime.es.js";
-import { initialiseClock, initialiseCountdown } from "../utils/script";
+import { initialiseClock } from "../utils/script";
 import { getDailyTrack } from "../utils/getDailyTrack";
 import wrongAnswer from "../assets/audio/incorrect.wav";
 import gameOver from "../assets/audio/end.wav";
 import win from "../assets/audio/win.wav";
 // import nlp
-import nlp from "compromise";
+// import nlp from "compromise";
 import { auth, db } from "../firebase-config";
 import { doc, setDoc } from "firebase/firestore";
 import fire from "canvas-confetti";
@@ -25,6 +24,7 @@ import SignUp from "./SignUp";
 import Login from "./Login";
 import ReactPlayer from "react-player";
 // import Player from "./Player";
+import { checkGuess } from "../utils/checkGuess";
 
 export default function Dashboard({
   songs,
@@ -46,26 +46,23 @@ export default function Dashboard({
   const [loading, setLoading] = useState(true);
   const [track, setTrack] = useState();
   const [playing, setPlaying] = useState(false);
-  const [seconds, setSeconds] = useState(0);
-  const [duration, setDuration] = useState(0);
+  // const [seconds, setSeconds] = useState(0);
+  // const [duration, setDuration] = useState(0);
 
   const [results, setResults] = useState([]);
   const [resultArray, setResultArray] = useState([]);
-  const [scoreValues, setScoreValues] = useState({});
-  const [score, setScore] = useState(0);
+  // const [scoreValues, setScoreValues] = useState({});
+  // const [score, setScore] = useState(0);
 
   // answer
   const [guessA, setGuessA] = useState("");
   const [guessB, setGuessB] = useState("");
   const [result, setResult] = useState(null);
-  const [message, setMessage] = useState("");
+  // const [message, setMessage] = useState("");
   const [loginShow, setLoginShow] = useState(false);
   const [registerShow, setRegisterShow] = useState(false);
 
   const BACKSPACE_KEY = "Backspace";
-
-  // const [answerA, setAnswerA] = useState("");
-  // const [answerB, setAnswerB] = useState("");
 
   useEffect(() => {
     const dailySong = getDailyTrack(songs);
@@ -76,7 +73,7 @@ export default function Dashboard({
     if (!played) {
       setHearts(3);
     }
-  }, [track, songs]);
+  }, [track, songs, played, setHearts]);
 
   // ref
   const playerRefs = useRef([]);
@@ -116,21 +113,17 @@ export default function Dashboard({
   };
 
   const handleProgress = (secs) => {
-    setSeconds(secs);
+    // setSeconds(secs);
   };
 
   const handleDuration = (dur) => {
-    setDuration(dur);
+    // setDuration(dur);
   };
 
   // howler
   const wrongSound = new Howl({
     src: [wrongAnswer],
   });
-
-  // const finalSound = new Howl({
-  //   src: [track?.src[1]],
-  // });
 
   const overSound = new Howl({
     src: [gameOver],
@@ -166,7 +159,7 @@ export default function Dashboard({
     setLyricsB(sentenceArrayB);
   }
 
-  // // Add score to database
+  // // handleAddScore: Add score to database
   const handleAddScore = async (score) => {
     await setDoc(
       doc(db, `users/${auth.currentUser?.uid}/scores`, `${Date.now()}`),
@@ -176,6 +169,7 @@ export default function Dashboard({
     );
   };
 
+  // handleSubmit: check guess submission and calculate result
   const handleSubmit = () => {
     if (guessA.includes(undefined) || guessA.length < lyricsA.length) {
       alert("Hello! your answer is missing something!!");
@@ -186,51 +180,8 @@ export default function Dashboard({
       return;
     }
 
-    const doc = blockA;
-
-    const docClean = doc.replace(/[^\w\s]/gi, "").toLowerCase();
-    const ans = guessA.join(" ");
-    const ansClean = ans.replace(/[^\w\s]/gi, "").toLowerCase();
-
-    const docArr = docClean.split(" ");
-    const ansArr = ansClean.split(" ");
-    const docArrPure = docArr.filter((element) => {
-      return element !== " " && element !== "";
-    });
-
-    const docB = blockB;
-
-    const docBClean = docB.replace(/[^\w\s]/gi, "").toLowerCase();
-
-    const ansB = guessB.join(" ");
-    const ansBClean = ansB.replace(/[^\w\s]/gi, "").toLowerCase();
-
-    const docBArr = docBClean.split(" ");
-    const ansBArr = ansBClean.split(" ");
-    const docBArrPure = docBArr.filter((element) => {
-      return element !== " " && element !== "";
-    });
-
-    let wordResults = [];
-    for (let i = 0; i < docArrPure.length; i++) {
-      let el = nlp(ansArr[i]);
-      if (el.has(docArrPure[i])) {
-        wordResults.push(true);
-      } else {
-        wordResults.push(false);
-      }
-    }
-
-    for (let i = 0; i < docBArrPure.length; i++) {
-      let elB = nlp(ansBArr[i]);
-      if (elB.has(docBArrPure[i])) {
-        wordResults.push(true);
-      } else {
-        wordResults.push(false);
-      }
-    }
-
-    console.log(wordResults, "result");
+    const wordResults = checkGuess(blockA, blockB, guessA, guessB);
+    console.log(wordResults, "wordResults");
     setResultArray(wordResults);
 
     if (!wordResults.includes(false)) {
@@ -395,7 +346,7 @@ export default function Dashboard({
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        {loginShow && !user ? (
+        {loginShow ? (
           <>
             <Modal.Header closeButton></Modal.Header>
             <Modal.Body>
@@ -408,7 +359,7 @@ export default function Dashboard({
               </Button>
             </Modal.Footer>
           </>
-        ) : registerShow && !user ? (
+        ) : registerShow ? (
           <>
             <Modal.Header closeButton></Modal.Header>
             <Modal.Body>
@@ -453,22 +404,8 @@ export default function Dashboard({
     );
   }
 
-  // Countdown
-  // let timer;
-  // let timeRemaining = 3;
-
-  // function updateTimer() {
-  //   timeRemaining = timeRemaining - 1;
-  //   if (timeRemaining >= 0) ;
-  //   else {
-  //     gameOver();
-  //   }
-  // }
-  // timer = setInterval(updateTimer, 1000);
-
   return (
     <>
-      {/* <Player playing={playing} setPlaying={setPlaying} /> */}
       <ReactPlayer
         url={`https%3A//api.soundcloud.com/tracks/${track?.id}`}
         width="10%"
@@ -499,9 +436,7 @@ export default function Dashboard({
         onDuration={handleDuration}
       />
       <Container className="text-center">
-        {user ? null : (
-          <Instructions show={modalShow} onHide={() => setModalShow(false)} />
-        )}
+        <Instructions show={modalShow} onHide={() => setModalShow(false)} />
         <Card
           id="tile"
           className="main-card justify-content-center text-center tile shadow border-0 mx-auto"
