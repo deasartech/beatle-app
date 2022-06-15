@@ -1,13 +1,22 @@
 import { Navbar, Container, Nav, Button, Badge } from "react-bootstrap";
 import { useEffect } from "react";
 
-export default function NavBar({ hearts, modalShow, setModalShow }) {
+export default function NavBar({
+  hearts,
+  modalShow,
+  setModalShow,
+  musicModalshow,
+  setMusicModalShow,
+}) {
   useEffect(() => {}, [hearts]);
   //   const navigate = useNavigate();
   return (
     <Navbar expand={false} className="py-0 mb-2">
       <Container className="py-0">
-        <Button href="/info" className="btn-info">
+        <Button
+          onClick={() => setMusicModalShow(!musicModalshow)}
+          className="btn-info"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"

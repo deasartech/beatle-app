@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-export default function Login({ user, setUser }) {
+export default function Login(setModalShow) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -20,7 +20,7 @@ export default function Login({ user, setUser }) {
     });
 
     return unsubscribe;
-  }, []);
+  }, [navigate]);
 
   const handleSignIn = (event) => {
     event.preventDefault();
@@ -29,6 +29,8 @@ export default function Login({ user, setUser }) {
         const user = userCredential.user;
         setEmail("");
         setPassword("");
+        navigate("/");
+        setModalShow(false);
       })
       .catch((error) => {
         console.log(error.code);
