@@ -24,6 +24,7 @@ import fire from "canvas-confetti";
 import SignUp from "./SignUp";
 import Login from "./Login";
 import ReactPlayer from "react-player";
+// import Player from "./Player";
 
 export default function Dashboard({
   songs,
@@ -45,12 +46,8 @@ export default function Dashboard({
   const [loading, setLoading] = useState(true);
   const [track, setTrack] = useState();
   const [playing, setPlaying] = useState(false);
-  const [state, setState] = useState({
-    played: 0,
-    playedSeconds: 0,
-    loaded: 0,
-    loadedSeconds: 0,
-  });
+  const [seconds, setSeconds] = useState(0);
+  const [duration, setDuration] = useState(0);
 
   const [results, setResults] = useState([]);
   const [resultArray, setResultArray] = useState([]);
@@ -81,33 +78,72 @@ export default function Dashboard({
     }
   }, [track, songs]);
 
-  // howler
-  // const sound = new Howl({
-  //   src: "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1262879566",
-  //   sprite: {
-  //     snippet: track?.timestamp,
-  //   },
+  // ref
+  const playerRefs = useRef([]);
+  const ref = playerRefs.current[0];
+
+  const handlePlay = () => {
+    if (hearts > 0) {
+      ref.seekTo(track?.timestamp[0], "seconds");
+      setPlaying(true);
+      setPlay(true);
+      // temporary work-around
+      setTimeout(() => {
+        setPlaying(false);
+      }, track?.timestamp[1]);
+      // if (seconds >= 80) {
+      //   console.log("stop");
+      //   setPlaying(!playing);
+      // }
+    } else {
+      setPlaying(true);
+    }
+  };
+
+  const handlePause = () => {
+    flipTile(tileCard);
+    setTimeout(() => {
+      setTimePassed(true);
+      init();
+    }, [420]);
+  };
+
+  const handlePlayerLoaded = (e) => {
+    console.log("player loaded successfully");
+    setTimeout(() => {
+      setLoading(false);
+    }, [3000]);
+  };
+
+  const handleProgress = (secs) => {
+    setSeconds(secs);
+  };
+
+  const handleDuration = (dur) => {
+    setDuration(dur);
+  };
 
   // howler
   const wrongSound = new Howl({
     src: [wrongAnswer],
   });
 
-  const finalSound = new Howl({
-    src: [track?.src[1]],
-  });
+  // const finalSound = new Howl({
+  //   src: [track?.src[1]],
+  // });
 
   const overSound = new Howl({
     src: [gameOver],
     onend: function () {
-      finalSound.play();
+      setPlaying(true);
     },
   });
 
   const winSound = new Howl({
     src: [win],
     onend: function () {
-      finalSound.play();
+      ref.seekTo(0, "seconds");
+      setPlaying(true);
     },
   });
 
@@ -129,40 +165,6 @@ export default function Dashboard({
     const sentenceArrayB = blockB.split(" ");
     setLyricsB(sentenceArrayB);
   }
-
-  // ref
-  const playerRefs = useRef([]);
-  const ref = playerRefs.current[0];
-  console.log(ref, "ref obj");
-
-  const handlePlay = () => {
-    ref.seekTo(69, "seconds");
-    setPlaying(true);
-    setPlay(true);
-  };
-
-  const handlePause = () => {
-    flipTile(tileCard);
-    setTimeout(() => {
-      setTimePassed(true);
-      init();
-    }, [420]);
-  };
-
-  const handlePlayerLoaded = (e) => {
-    console.log("player loaded successfully");
-    setTimeout(() => {
-      setLoading(false);
-    }, [3000]);
-  };
-
-  const handleProgress = ({ playedSeconds }) => {
-    console.log(playedSeconds, "progress");
-  };
-
-  const handleDuration = (duration) => {
-    console.log("onDuration", duration);
-  };
 
   // // Add score to database
   const handleAddScore = async (score) => {
@@ -237,8 +239,7 @@ export default function Dashboard({
       }, 4000);
       if (results.length < 3) {
         // ADD SCORE
-        console.log(results, "results");
-        console.log(results.length, "results length");
+
         if (results.length === 0) {
           handleAddScore(15);
         } else if (results.length === 1) {
@@ -467,11 +468,12 @@ export default function Dashboard({
 
   return (
     <>
+      {/* <Player playing={playing} setPlaying={setPlaying} /> */}
       <ReactPlayer
-        url={`https%3A//api.soundcloud.com/tracks/${1262879566}`}
-        width="100%"
-        height="150"
-        // style={{ display: "none" }}
+        url={`https%3A//api.soundcloud.com/tracks/${track?.id}`}
+        width="10%"
+        height="0"
+        style={{ display: "none" }}
         ref={(el) => (playerRefs.current[0] = el)}
         id="react-player"
         // pip={pip}
@@ -493,7 +495,7 @@ export default function Dashboard({
         onSeek={(seconds) => console.log("onSeek", seconds)}
         // onEnded={this.handleEnded}
         onError={(e) => console.log("onError", e)}
-        onProgress={handleProgress(state)}
+        onProgress={(e) => handleProgress(e.playedSeconds)}
         onDuration={handleDuration}
       />
       <Container className="text-center">
@@ -543,10 +545,6 @@ export default function Dashboard({
                     <>
                       {!result ? (
                         <>
-                          {/* <Container className="px-auto text-center">
-                            <p>{guessA ? guessA.join(" ") : " "}</p>
-                            <p>{guessB ? guessB.join(" ") : " "}</p>
-                          </Container> */}
                           <Row>
                             <Col>
                               <Container className="px-2 text-center mt-1">
@@ -702,7 +700,11 @@ export default function Dashboard({
           <Row className="justify-content-center">
             <Col className="text-center align-items-center">
               {/* <h2>1</h2> */}
-              <h3 className={results[0] === "Correct" ? "pass" : "fail"}>
+              <h3
+                className={
+                  results[0] === "Correct my-4" ? "pass my-4" : "fail my-4"
+                }
+              >
                 {/* {results[0] || "none"} */}
                 {results[0] || (
                   <div className="sk-wander sk-center my-4">
@@ -715,7 +717,11 @@ export default function Dashboard({
             </Col>
             <Col className="text-center">
               {/* <h2>2</h2> */}
-              <h3 className={results[1] === "Correct" ? "pass" : "fail"}>
+              <h3
+                className={
+                  results[1] === "Correct my-4" ? "pass my-4" : "fail my-4"
+                }
+              >
                 {/* {results[1] || "none"} */}
                 {results[1] || (
                   <div className="sk-wander sk-center my-4">
@@ -728,7 +734,11 @@ export default function Dashboard({
             </Col>
             <Col className="text-center">
               {/* <h2>3</h2> */}
-              <h3 className={results[2] === "Correct" ? "pass" : "fail"}>
+              <h3
+                className={
+                  results[2] === "Correct my-4" ? "pass my-4" : "fail my-4"
+                }
+              >
                 {/* {results[2] || "none"} */}
                 {results[2] || (
                   <div className="sk-wander sk-center my-4">

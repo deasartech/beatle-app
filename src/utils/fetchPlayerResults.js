@@ -1,4 +1,4 @@
-import { auth, db } from "../firebase-config";
+import { db } from "../firebase-config";
 import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 
 // Async function to retrieve players points and results from firestore
@@ -21,7 +21,6 @@ export const fetchAllPlayersTotalPoints = async () => {
   const playersArr = [];
   data.forEach((doc) => playersArr.push(doc.data()));
   playersArr.sort((a, b) => (a.totalPoints < b.totalPoints ? 1 : -1));
-  console.log(playersArr, "array");
   return playersArr.slice(0, 11);
 };
 
@@ -32,18 +31,22 @@ export const addPlayerTotalPoints = async (scores, uid) => {
     return (total += item.score.points);
   });
   // players doc
-  const playersScoreRef = doc(db, "users", `${uid}`);
-  await updateDoc(playersScoreRef, {
-    totalPoints: total,
-  });
-  return total;
+  if (scores && uid) {
+    const playersScoreRef = doc(db, "users", `${uid}`);
+    await updateDoc(playersScoreRef, {
+      totalPoints: total,
+    });
+    return total;
+  }
 };
 // update leaderboard with players totalPoints
 export const addPointsLeaderboard = async (total, uid) => {
   // leaderboard doc
-  const leaderboardRef = doc(db, "leaderboard", `${uid}`);
-  const update = await updateDoc(leaderboardRef, {
-    totalPoints: total,
-  });
-  return update;
+  if (total && uid) {
+    const leaderboardRef = doc(db, "leaderboard", `${uid}`);
+    const update = await updateDoc(leaderboardRef, {
+      totalPoints: total,
+    });
+    return update;
+  }
 };

@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase-config";
 import Login from "./components/Login";
@@ -12,39 +12,48 @@ import Username from "./components/Username";
 
 function App() {
   const [user, setUser] = useState(null);
-  const [songObj, setSongObj] = useState(null);
   const [modalShow, setModalShow] = useState(true);
   const [hearts, setHearts] = useState();
   const [played, setPlayed] = useState(false);
   const [songs, setSongs] = useState([
     {
-      src: ["./songs/055.wav", "./songs/055mixture.wav"],
-      timestamp: [1000, 11000],
-      name: "I'm Alright",
-      artist: "Angels in Amplifiers",
+      id: 1262879566,
+      timestamp: [69, 13000],
+      name: "Churchill Downs",
+      artist: "Jack Harlow ft Drake",
       lyrics: [
-        "I know the seasons ripe for change it's changing all around",
-        "I know the reasons you've arranged they're tearing me down",
+        "All that time in the kitchen finally panned out I put some flavor in a pot and took the bland out",
+        "I know my grandpa would have a heart attack if I pulled a hunnid grand out",
       ],
     },
     {
-      src: ["./songs/005.wav", "./songs/005mixture.wav"],
-      timestamp: [1000, 10000],
-      name: "Milk Cow Blues",
-      artist: "Angela Thomas Wade",
+      id: 1245609985,
+      timestamp: [112, 10000],
+      name: "First Class",
+      artist: "Jack Harlow",
       lyrics: [
-        "Well I woke up this morning looked out my door",
-        "I could tell my Milk Cow I could tell by the way she luls",
+        "This lifestyle don't got many downsides except for the lack of time I get round my",
+        "Family, makin' sure they never downsize",
       ],
     },
     {
-      src: ["./songs/stay.mp3", "./songs/stay.mp3"],
-      timestamp: [11300, 5900],
-      name: "STAY",
-      artist: "Justin Bieber and The Kid LARO",
+      id: 254527393,
+      timestamp: [52, 15000],
+      name: "Running Up That Hill (A Deal With God)",
+      artist: "Kate Bush",
       lyrics: [
-        "I do the same thing I told you that I never would",
-        "I told you I'd change even when I knew I never could",
+        "I'd make a deal with God And I'd get him to swap our places",
+        "Be running up that road Be running up that hill Be running up that building",
+      ],
+    },
+    {
+      id: 1267146844,
+      timestamp: [52, 11000],
+      name: "Cooped Up (feat. Roddy Ricch)",
+      artist: "Post Malone",
+      lyrics: [
+        "Feelin like an outcast I'm the only guy in slacks That'll cost you three stacks",
+        "Now you're savin that check why you takin my swag Can you give me that back",
       ],
     },
   ]);
@@ -53,9 +62,6 @@ function App() {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
-    // console.log(getDailyTrack(songs), "app");
-    // const dailySong = getDailyTrack(songs);
-    // setSongObj(dailySong);
   });
 
   return (
@@ -68,14 +74,13 @@ function App() {
             element={
               <Dashboard
                 songs={songs}
-                songObj={songObj}
                 user={user}
                 modalShow={modalShow}
                 setModalShow={setModalShow}
                 hearts={hearts}
                 setHearts={setHearts}
                 played={played}
-                setPlayed={setHearts}
+                setPlayed={setPlayed}
               />
             }
           />

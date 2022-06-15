@@ -14,7 +14,7 @@ export default function NavBar({ hearts }) {
   useEffect(() => {}, [hearts]);
   //   const navigate = useNavigate();
   return (
-    <Navbar expand={false} className="py-0 ">
+    <Navbar expand={false} className="py-0 mb-2">
       <Container className="py-0">
         <Button href="/info" className="btn-info">
           <svg

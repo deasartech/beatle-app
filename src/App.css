@@ -8,6 +8,10 @@
   box-shadow: none;
 }
 
+/* Nav {
+  border-bottom: 0.2rem solid red;
+} */
+
 .play {
   cursor: pointer;
   border: 0 none !important;
@@ -166,7 +170,7 @@ svg:hover {
 .smalltext {
   padding-top: 5px;
   font-size: 0.7rem;
-  color: #00816a;
+  color: rgba(0, 0, 0, 0.8);
 }
 
 #clockdiv {
@@ -180,7 +184,7 @@ svg:hover {
 #clockdiv div > span {
   padding: 5px;
   border-radius: 3px;
-  background: #00816a;
+  background: rgba(0, 0, 0, 0.8);
 }
 
 #countdowndiv {
@@ -191,8 +195,8 @@ svg:hover {
   font-size: 0.8rem;
 }
 
-#dountdowndiv div > span {
+#countdowndiv div > span {
   padding: 5px;
   border-radius: 3px;
-  background: #00816a;
+  background: rgba(0, 0, 0, 0.8);
 }

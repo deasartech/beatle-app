@@ -24,26 +24,28 @@ export default function Leaderboard() {
     // get leaderboard data
     fetchAllPlayersTotalPoints().then((res) => {
       setAllPlayers(res);
-      console.log(allPlayers, "all players");
+
       setIsLoading(false);
       // console.log(allPlayers, "all players");
     });
     // update players totalPoints and also return the value
-    addPlayerTotalPoints(scores, auth.currentUser?.uid).then((res) => {
-      console.log(res, "total player points");
-      setTotalPoints(res);
-    });
-    addPointsLeaderboard(totalPoints, auth.currentUser?.uid).then((res) => {
-      console.log(res);
-    });
+    addPlayerTotalPoints(scores, auth.currentUser?.uid)
+      .then((res) => {
+        setTotalPoints(res);
+      })
+      .catch((err) => {
+        console.log(err, "addPlayerTotalPointsError");
+      });
+
+    addPointsLeaderboard(totalPoints, auth.currentUser?.uid)
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err, "addPointsLeaderboard");
+      });
 
     const d = Date.now();
     const date = Date(d);
-
-    console.log(date, "date");
   }, [auth.currentUser?.uid, totalPoints]);
-
-  console.log(typeof allPlayers, "allPlayers");
 
   if (isLoading) {
     return (
@@ -69,8 +71,6 @@ export default function Leaderboard() {
                 </Col>
               </Row>
               {allPlayers?.map((item, index) => {
-                console.log(item.username, "username");
-                console.log(item.totalPoints, "totalPoints");
                 return (
                   <>
                     <Row>
