@@ -20,11 +20,11 @@ export default function Leaderboard() {
     // retrieve players history
     fetchPlayerResults(auth.currentUser?.uid).then((res) => {
       setScores(res);
+      console.log(res, "player results");
     });
     // get leaderboard data
     fetchAllPlayersTotalPoints().then((res) => {
       setAllPlayers(res);
-
       setIsLoading(false);
       // console.log(allPlayers, "all players");
     });
@@ -43,8 +43,8 @@ export default function Leaderboard() {
         console.log(err, "addPointsLeaderboard");
       });
 
-    const d = Date.now();
-    const date = Date(d);
+    // const d = Date.now();
+    // const date = Date(d);
   }, [auth.currentUser?.uid, totalPoints]);
 
   if (isLoading) {
@@ -105,17 +105,19 @@ export default function Leaderboard() {
                       <b>Points</b>
                     </Col>
                   </Row>
-                  {scores.map((item) => {
-                    const d = item.date;
-                    const dateString = Date(d).split(" ");
-                    const date = dateString.slice(1, 4).join(" ");
+                  {scores.map((el) => {
+                    const itemDate = el.date;
+                    const dateString = Date(itemDate).split(" ");
+                    console.log(el, "el");
+                    // console.log(dateString.getDate(), "date");
+                    const newDate = dateString.slice(1, 4).join(" ");
                     return (
                       <Row>
                         <Col>
-                          <p className="text-center">{date}</p>
+                          <p className="text-center">{newDate}</p>
                         </Col>
                         <Col>
-                          <p className="text-center">{item.score.points}</p>
+                          <p className="text-center">{el.score.points}</p>
                         </Col>
                       </Row>
                     );

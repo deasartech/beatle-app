@@ -153,12 +153,14 @@ export default function Dashboard({
 
   // // handleAddScore: Add score to database
   const handleAddScore = async (score) => {
-    await setDoc(
-      doc(db, `users/${auth.currentUser?.uid}/scores`, `${Date.now()}`),
+    const date = Date.now();
+    const added = await setDoc(
+      doc(db, `users/${auth.currentUser?.uid}/scores`, date),
       {
         points: score,
       }
     );
+    console.log(added, "score added response");
   };
 
   // handleSubmit: check guess submission and calculate result
@@ -469,9 +471,12 @@ export default function Dashboard({
                                               width: 15 * element.length,
                                             }}
                                             className={
-                                              resultArray[index]
+                                              // const newIndex = (index + guessA.length)
+                                              resultArray[index + guessA.length]
                                                 ? "green border-0 px-1"
-                                                : resultArray[index] === false
+                                                : resultArray[
+                                                    index + guessA.length
+                                                  ] === false
                                                 ? "red border-0 px-1"
                                                 : "guessInput border-0 px-1"
                                             }
