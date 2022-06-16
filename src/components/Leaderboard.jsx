@@ -80,7 +80,7 @@ export default function Leaderboard() {
                           stye={{ color: `${item.nameColour}` }}
                           className={`mx-2 text-center ${item.nameColour}`}
                         >
-                          {item.username}
+                          <b>{item.username}</b>
                         </p>
                       </Col>
                       <Col>

@@ -80,7 +80,7 @@ export default function InfoModal(props, modalShow, setModalShow) {
             </p>
             <p className="modal-text">
               3. There is a leaderboard for the best players but you must be
-              signed in to enterz
+              signed in to enter
             </p>
           </Modal.Body>
           <Modal.Footer style={{ backgroundColor: "#334155" }}>
