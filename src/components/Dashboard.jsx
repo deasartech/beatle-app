@@ -157,6 +157,7 @@ export default function Dashboard({
     const added = await setDoc(
       doc(db, `users/${auth.currentUser?.uid}/scores`, date),
       {
+        date: Date(),
         points: score,
       }
     );

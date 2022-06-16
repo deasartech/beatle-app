@@ -108,7 +108,6 @@ export default function Leaderboard() {
                   {scores.map((el) => {
                     const itemDate = el.date;
                     const dateString = Date(itemDate).split(" ");
-                    console.log(el, "el");
                     // console.log(dateString.getDate(), "date");
                     const newDate = dateString.slice(1, 4).join(" ");
                     return (
