@@ -8,12 +8,39 @@ import { useNavigate } from "react-router-dom";
 export default function Username() {
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
+  const [colourArray, setColourArray] = useState([
+    "blue",
+    "coral",
+    "dodgerblue",
+    "springgreen",
+    "yellowgreen",
+    "green",
+    "orangered",
+    "red",
+    "goldenrod",
+    "hotpink",
+    "cadetblue",
+    "seagreen",
+    "chocolate",
+    "blueviolet",
+    "firebrick",
+  ]);
+  const [colour, setColour] = useState();
+
+  const randomColour = (colourArray) => {
+    const length = colourArray.length;
+    const random = Math.floor(Math.random() * length);
+    const colourPicker = colourArray[random];
+    return colourPicker;
+  };
 
   const navigate = useNavigate();
   const usersCollectionRef = collection(db, "users");
 
   const handleUsernameUpdate = async (event) => {
     event.preventDefault();
+    const col = randomColour(colourArray);
+    setColour(col);
     try {
       await updateProfile(auth.currentUser, {
         displayName: username,
@@ -21,12 +48,14 @@ export default function Username() {
       // create user doc with uid
       await setDoc(doc(db, "users", auth.currentUser?.uid), {
         displayName: username,
+        nameColour: col,
         totalPoints: 0,
         uid: auth.currentUser?.uid,
       });
       // create spot on leaderboard for player
       await setDoc(doc(db, "leaderboard", auth.currentUser?.uid), {
         username: username,
+        nameColour: col,
         totalPoints: 0,
       });
       // navigation.navigate("Home");
@@ -61,7 +90,7 @@ export default function Username() {
             <Button
               style={{ color: "white" }}
               variant="light"
-              className="p-2 px-4 mt-3 btn-trophy align-items-center"
+              className="p-2 px-4 mt-3 play ms-auto align-items-center"
               type="submit"
             >
               Confirm

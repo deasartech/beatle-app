@@ -75,8 +75,12 @@ export default function Leaderboard() {
                   <>
                     <Row>
                       <Col>
-                        <p className="mx-2">
-                          {index + 1}. {item.username}
+                        {/* {index + 1}. */}
+                        <p
+                          stye={{ color: `${item.nameColour}` }}
+                          className={`mx-2 text-center ${item.nameColour}`}
+                        >
+                          {item.username}
                         </p>
                       </Col>
                       <Col>

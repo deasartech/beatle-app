@@ -4,7 +4,13 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function SignUp({ user, setUser, modalShow, setModalShow }) {
+export default function SignUp({
+  user,
+  setUser,
+  modalShow,
+  hideText,
+  setHideText,
+}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
@@ -26,7 +32,7 @@ export default function SignUp({ user, setUser, modalShow, setModalShow }) {
         );
         setEmail("");
         setPassword("");
-        setModalShow(false);
+        // setModalShow(false);
         navigate("/username");
       } catch (error) {
         alert(error.message);
@@ -106,7 +112,7 @@ export default function SignUp({ user, setUser, modalShow, setModalShow }) {
                 </Col>
               </Row>
             </Form>
-            {!modalShow ? (
+            {!hideText ? (
               <p className="py-3">
                 Have an account?{" "}
                 <Link to="/login" className="link">

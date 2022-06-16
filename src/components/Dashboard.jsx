@@ -155,13 +155,12 @@ export default function Dashboard({
   const handleAddScore = async (score) => {
     const date = Date.now();
     const added = await setDoc(
-      doc(db, `users/${auth.currentUser?.uid}/scores`, date),
+      doc(db, `users/${auth.currentUser?.uid}/scores`, `${date}`),
       {
         date: Date(),
         points: score,
       }
     );
-    console.log(added, "score added response");
   };
 
   // handleSubmit: check guess submission and calculate result

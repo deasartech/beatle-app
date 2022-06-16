@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-export default function Login(modalShow, setModalShow) {
+export default function Login({ hideText, setHideText }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -30,7 +30,7 @@ export default function Login(modalShow, setModalShow) {
         setEmail("");
         setPassword("");
         navigate("/");
-        setModalShow(false);
+        // setModalShow(false);
       })
       .catch((error) => {
         console.log(error.code);
@@ -79,7 +79,7 @@ export default function Login(modalShow, setModalShow) {
               </Col>
             </Row>
           </Form>
-          {!modalShow ? (
+          {!hideText ? (
             <p className="py-3">
               Don't have an account?{" "}
               <Link to="/signup" className="link">
