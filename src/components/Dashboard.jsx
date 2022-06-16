@@ -40,6 +40,9 @@ export default function Dashboard({
   const [loading, setLoading] = useState(true);
   const [track, setTrack] = useState();
   const [playing, setPlaying] = useState(false);
+  const [muted, setMuted] = useState(false);
+  const [volume, setVolume] = useState(0);
+  const [playsinline, setPlaysinline] = useState(true);
   // const [seconds, setSeconds] = useState(0);
   // const [duration, setDuration] = useState(0);
 
@@ -64,22 +67,38 @@ export default function Dashboard({
     setBlockB(track?.lyrics[1]);
     if (!played) {
       setHearts(3);
+      const button = document.getElementById("play-button");
+      button.addEventListener("click", (e) => handlePlayButtonClick());
+      button.removeEventListener("click", handlePlayButtonClick);
     }
   }, [track, songs, played, setHearts]);
 
-  // ref
+  // // ref
   const playerRefs = useRef([]);
   const ref = playerRefs.current[0];
 
+  // to be used by event listener on play button to solve safari autplay issue
+  const handleOnPlay = () => {
+    setMuted(false);
+    setVolume(1);
+  };
+
+  const handlePlayButtonClick = () => {
+    handlePlay();
+  };
+
+  // handle play triggers each attempt
   const handlePlay = () => {
     if (hearts > 0) {
+      setLoading(true);
+      ref.seekTo(track?.timestamp[0], "seconds");
       setTimeout(() => {
-        ref.seekTo(track?.timestamp[0], "seconds");
+        setLoading(false);
+        setMuted(false);
         setPlaying(true);
+        setVolume(1);
       }, 2000);
-
       setPlay(true);
-
       // temporary work-around
       setTimeout(() => {
         setPlaying(false);
@@ -125,6 +144,7 @@ export default function Dashboard({
     src: [gameOver],
     onend: function () {
       setPlaying(true);
+      setMuted(false);
     },
   });
 
@@ -133,6 +153,7 @@ export default function Dashboard({
     onend: function () {
       ref.seekTo(0, "seconds");
       setPlaying(true);
+      setMuted(false);
     },
   });
 
@@ -327,10 +348,13 @@ export default function Dashboard({
   return (
     <>
       <ReactPlayer
+        autoPlay
+        playsinline={playsinline}
+        muted={muted}
         url={`https%3A//api.soundcloud.com/tracks/${track?.id}`}
-        width="10%"
-        height="0"
-        style={{ display: "none" }}
+        width="100%"
+        height="100"
+        // style={{ display: "none" }}
         ref={(el) => (playerRefs.current[0] = el)}
         id="react-player"
         // pip={pip}
@@ -339,11 +363,10 @@ export default function Dashboard({
         // light={light}
         // loop={loop}
         // playbackRate={playbackRate}
-        volume={1}
-        // muted={muted}
+        volume={volume}
         onReady={handlePlayerLoaded}
         onStart={() => console.log("onStart")}
-        // onPlay={handlePlay}
+        onPlay={handleOnPlay}
         // onEnablePIP={this.handleEnablePIP}
         // onDisablePIP={this.handleDisablePIP}
         onPause={handlePause}
@@ -394,7 +417,7 @@ export default function Dashboard({
                 width="40"
                 height="40"
                 fill="white"
-                class="bi bi-volume-up-fill"
+                className="bi bi-volume-up-fill"
                 viewBox="0 0 16 16"
               >
                 <path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z" />
