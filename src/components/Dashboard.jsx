@@ -340,7 +340,7 @@ export default function Dashboard({
         // loop={loop}
         // playbackRate={playbackRate}
         volume={1}
-        // muted={muted}
+        muted={false}
         onReady={handlePlayerLoaded}
         onStart={() => console.log("onStart")}
         // onPlay={handlePlay}
