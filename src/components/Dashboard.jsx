@@ -73,9 +73,13 @@ export default function Dashboard({
 
   const handlePlay = () => {
     if (hearts > 0) {
-      ref.seekTo(track?.timestamp[0], "seconds");
-      setPlaying(true);
+      setTimeout(() => {
+        ref.seekTo(track?.timestamp[0], "seconds");
+        setPlaying(true);
+      }, 1000);
+
       setPlay(true);
+
       // temporary work-around
       setTimeout(() => {
         setPlaying(false);
