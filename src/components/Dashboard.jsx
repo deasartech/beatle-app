@@ -444,9 +444,9 @@ export default function Dashboard({
                                             }}
                                             className={
                                               resultArray[index] === true
-                                                ? "green border-0 px-1"
+                                                ? "greenGuess border-0 px-1"
                                                 : resultArray[index] === false
-                                                ? "red border-0 px-1"
+                                                ? "redGuess border-0 px-1"
                                                 : "guessInput border-0 px-1"
                                             }
                                             onKeyDown={(e) =>
@@ -489,11 +489,11 @@ export default function Dashboard({
                                             className={
                                               // const newIndex = (index + guessA.length)
                                               resultArray[index + guessA.length]
-                                                ? "green border-0 px-1"
+                                                ? "greenGuess border-0 px-1"
                                                 : resultArray[
                                                     index + guessA.length
                                                   ] === false
-                                                ? "red border-0 px-1"
+                                                ? "redGuess border-0 px-1"
                                                 : "guessInput border-0 px-1"
                                             }
                                             onKeyDown={(e) =>

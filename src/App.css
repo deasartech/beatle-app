@@ -113,6 +113,10 @@ svg:hover {
   border: none;
 }
 
+.form-control .red {
+  color: white !important;
+}
+
 .contact {
   border: none !important;
   border-radius: 10px !important;
@@ -164,14 +168,14 @@ svg:hover {
   background-color: antiquewhite !important;
 }
 
-.green {
+.greenGuess {
   padding: 0 !important;
   margin: 0 !important;
   outline: 0;
   background-color: #a3e635 !important;
 }
 
-.red {
+.redGuess {
   padding: 0 !important;
   margin: 0 !important;
   outline: 0;
