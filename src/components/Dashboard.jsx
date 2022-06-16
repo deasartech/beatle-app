@@ -69,7 +69,6 @@ export default function Dashboard({
       setHearts(3);
       const button = document.getElementById("play-button");
       button.addEventListener("click", (e) => handlePlayButtonClick());
-      button.removeEventListener("click", handlePlayButtonClick);
     }
   }, [track, songs, played, setHearts]);
 
@@ -404,7 +403,7 @@ export default function Dashboard({
                 {/* <Player /> */}
                 <Button
                   id="play-button"
-                  onClick={handlePlay}
+                  onClick={handlePlayButtonClick}
                   className="play px-4"
                 >
                   Play
