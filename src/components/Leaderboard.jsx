@@ -20,7 +20,7 @@ export default function Leaderboard() {
     // retrieve players history
     fetchPlayerResults(auth.currentUser?.uid).then((res) => {
       setScores(res);
-      console.log(res, "player results");
+      // console.log(res, "player results");
     });
     // get leaderboard data
     fetchAllPlayersTotalPoints().then((res) => {
@@ -108,7 +108,6 @@ export default function Leaderboard() {
                   {scores.map((el) => {
                     const itemDate = el.date;
                     const dateString = Date(itemDate).split(" ");
-                    console.log(el, "el");
                     // console.log(dateString.getDate(), "date");
                     const newDate = dateString.slice(1, 4).join(" ");
                     return (
