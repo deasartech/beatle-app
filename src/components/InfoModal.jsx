@@ -66,14 +66,14 @@ export default function InfoModal(props, modalShow, setModalShow) {
             </p>
             <p className="modal-text">
               {" "}
-              1. listen to the track and memorise the lyrics
+              1. Listen to the track and memorise the lyrics
             </p>
             <p className="modal-text">
               2. You have 3 attempts to answer with the correct lyrics to win
             </p>
             <p className="modal-text">
-              3. There is a leaderboard for the best players, but you must be
-              signed in to view and enter
+              3. There is a leaderboard for the best players but you must be
+              signed in to enter
             </p>
           </Modal.Body>
           <Modal.Footer style={{ backgroundColor: "#334155" }}>
