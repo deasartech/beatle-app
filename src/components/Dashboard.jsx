@@ -327,6 +327,7 @@ export default function Dashboard({
   return (
     <>
       <ReactPlayer
+        autoplay
         url={`https%3A//api.soundcloud.com/tracks/${track?.id}`}
         width="10%"
         height="0"
