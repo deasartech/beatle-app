@@ -76,14 +76,14 @@ export default function Dashboard({
       setTimeout(() => {
         ref.seekTo(track?.timestamp[0], "seconds");
         setPlaying(true);
-      }, 1000);
+      }, 2000);
 
       setPlay(true);
 
       // temporary work-around
       setTimeout(() => {
         setPlaying(false);
-      }, track?.timestamp[1]);
+      }, track?.timestamp[1] + 2000);
       // if (seconds >= 80) {
       //   console.log("stop");
       //   setPlaying(!playing);

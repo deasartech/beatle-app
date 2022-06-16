@@ -14,6 +14,6 @@ export const getDailyTrack = (songs) => {
 
   const wrapped = wrap(dayOffset);
   const targetSong = songs[Math.floor(wrapped)];
-  // const targetSong = songs[3];
+  // const targetSong = songs[1];
   return targetSong;
 };

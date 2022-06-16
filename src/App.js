@@ -19,7 +19,7 @@ function App() {
   const [songs, setSongs] = useState([
     {
       id: 1262879566,
-      timestamp: [69, 13000],
+      timestamp: [69, 12000],
       name: "Churchill Downs",
       artist: "Jack Harlow ft Drake",
       lyrics: [
@@ -49,7 +49,7 @@ function App() {
     },
     {
       id: 1267146844,
-      timestamp: [52, 11000],
+      timestamp: [52, 10000],
       name: "Cooped Up (feat. Roddy Ricch)",
       artist: "Post Malone",
       lyrics: [
