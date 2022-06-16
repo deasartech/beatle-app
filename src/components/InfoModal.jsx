@@ -5,7 +5,7 @@ import Login from "./Login";
 import { auth } from "../firebase-config";
 
 // instructions modal
-export default function InfoModal(props, setModalShow) {
+export default function InfoModal(props, modalShow, setModalShow) {
   const [loginShow, setLoginShow] = useState(false);
   const [registerShow, setRegisterShow] = useState(false);
 
@@ -30,8 +30,8 @@ export default function InfoModal(props, setModalShow) {
       {loginShow && !auth.currentUser ? (
         <>
           <Modal.Header closeButton></Modal.Header>
-          <Modal.Body>
-            <Login setModalShow={setModalShow} />
+          <Modal.Body className="infoModal">
+            <Login modalShow={modalShow} setModalShow={setModalShow} />
           </Modal.Body>
           <Modal.Footer style={{ backgroundColor: "#334155" }}>
             {/* <Button href="/login" className="btn-trophy"> */}
@@ -43,8 +43,8 @@ export default function InfoModal(props, setModalShow) {
       ) : registerShow && !auth.currentUser ? (
         <>
           <Modal.Header closeButton></Modal.Header>
-          <Modal.Body>
-            <SignUp setModalShow={setModalShow} />
+          <Modal.Body className="infoModal">
+            <SignUp modalShow={modalShow} setModalShow={setModalShow} />
           </Modal.Body>
           <Modal.Footer style={{ backgroundColor: "#334155" }}>
             {/* <Button href="/login" className="btn-trophy"> */}
@@ -57,18 +57,21 @@ export default function InfoModal(props, setModalShow) {
         <>
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              <h2>How to play</h2>
+              <h2 className="modal-text">How to play</h2>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>
+            <p className="modal-text">
               <b>Beatle plays a new song every day</b>
             </p>
-            <p> 1. listen to the track and memorise the lyrics</p>
-            <p>
+            <p className="modal-text">
+              {" "}
+              1. listen to the track and memorise the lyrics
+            </p>
+            <p className="modal-text">
               2. You have 3 attempts to answer with the correct lyrics to win
             </p>
-            <p>
+            <p className="modal-text">
               3. There is a leaderboard for the best players, but you must be
               signed in to view and enter
             </p>
@@ -79,7 +82,7 @@ export default function InfoModal(props, setModalShow) {
                 Sign in
               </Button>
             ) : (
-              <div className="py-2"></div>
+              <div className="py-3"></div>
             )}
           </Modal.Footer>
         </>

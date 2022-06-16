@@ -564,9 +564,7 @@ export default function Dashboard({
             <Col className="text-center align-items-center">
               {/* <h2>1</h2> */}
               <h3
-                className={
-                  results[0] === "Correct my-4" ? "pass my-4" : "fail my-4"
-                }
+                className={results[0] === "Correct" ? "pass my-4" : "fail my-4"}
               >
                 {/* {results[0] || "none"} */}
                 {results[0] || (
@@ -581,9 +579,7 @@ export default function Dashboard({
             <Col className="text-center">
               {/* <h2>2</h2> */}
               <h3
-                className={
-                  results[1] === "Correct my-4" ? "pass my-4" : "fail my-4"
-                }
+                className={results[1] === "Correct" ? "pass my-4" : "fail my-4"}
               >
                 {/* {results[1] || "none"} */}
                 {results[1] || (
@@ -598,9 +594,7 @@ export default function Dashboard({
             <Col className="text-center">
               {/* <h2>3</h2> */}
               <h3
-                className={
-                  results[2] === "Correct my-4" ? "pass my-4" : "fail my-4"
-                }
+                className={results[2] === "Correct" ? "pass my-4" : "fail my-4"}
               >
                 {/* {results[2] || "none"} */}
                 {results[2] || (
