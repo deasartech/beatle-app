@@ -8,13 +8,16 @@ import { auth } from "../firebase-config";
 export default function InfoModal(props, modalShow, setModalShow) {
   const [loginShow, setLoginShow] = useState(false);
   const [registerShow, setRegisterShow] = useState(false);
+  const [hideText, setHideText] = useState(true);
 
   const handleLoginShow = () => {
+    setHideText(true);
     setRegisterShow(false);
     setLoginShow(true);
   };
 
   const handleSignUpShow = () => {
+    setHideText(true);
     setLoginShow(false);
     setRegisterShow(true);
   };
@@ -31,7 +34,7 @@ export default function InfoModal(props, modalShow, setModalShow) {
         <>
           <Modal.Header closeButton></Modal.Header>
           <Modal.Body className="infoModal">
-            <Login modalShow={modalShow} setModalShow={setModalShow} />
+            <Login hideText={hideText} setHideText={setHideText} />
           </Modal.Body>
           <Modal.Footer style={{ backgroundColor: "#334155" }}>
             {/* <Button href="/login" className="btn-trophy"> */}
@@ -44,7 +47,11 @@ export default function InfoModal(props, modalShow, setModalShow) {
         <>
           <Modal.Header closeButton></Modal.Header>
           <Modal.Body className="infoModal">
-            <SignUp modalShow={modalShow} setModalShow={setModalShow} />
+            <SignUp
+              modalShow={modalShow}
+              hideText={hideText}
+              setHideText={setHideText}
+            />
           </Modal.Body>
           <Modal.Footer style={{ backgroundColor: "#334155" }}>
             {/* <Button href="/login" className="btn-trophy"> */}
@@ -73,7 +80,7 @@ export default function InfoModal(props, modalShow, setModalShow) {
             </p>
             <p className="modal-text">
               3. There is a leaderboard for the best players but you must be
-              signed in to enter
+              signed in to enterz
             </p>
           </Modal.Body>
           <Modal.Footer style={{ backgroundColor: "#334155" }}>

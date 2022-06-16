@@ -232,3 +232,65 @@ svg:hover {
   border-radius: 3px;
   background: rgba(0, 0, 0, 0.8);
 }
+
+/* username colour classes */
+
+.seagreen {
+  color: seagreen !important;
+}
+
+.blue {
+  color: blue !important;
+}
+
+.coral {
+  color: coral !important;
+}
+
+.dodgerblue {
+  color: dodgerblue !important;
+}
+
+.springgreen {
+  color: springgreen !important;
+}
+
+.yellowgreen {
+  color: yellowgreen !important;
+}
+
+.green {
+  color: green !important;
+}
+
+.orangered {
+  color: orangered !important;
+}
+
+.red {
+  color: red !important;
+}
+
+.goldenrod {
+  color: goldenrod !important;
+}
+
+.hotpink {
+  color: hotpink !important;
+}
+
+.cadetblue {
+  color: cadetblue !important;
+}
+
+.chocolate {
+  color: chocolate !important;
+}
+
+.blueviolet {
+  color: blueviolet !important;
+}
+
+.firebrick {
+  color: firebrick !important;
+}
