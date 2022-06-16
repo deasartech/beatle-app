@@ -21,7 +21,7 @@ export default function NavBar({
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
-            fill="rgba(0, 0, 0, 0.80)"
+            fill="white"
             className="bi bi-music-player-fill"
             viewBox="0 0 16 16"
           >
@@ -34,7 +34,7 @@ export default function NavBar({
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
-            fill="rgba(0, 0, 0, 0.80)"
+            fill="white"
             className="bi bi-info-circle-fill buttons"
             viewBox="0 0 16 16"
           >
@@ -73,7 +73,7 @@ export default function NavBar({
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"
-              fill="currentColor"
+              fill="white"
               className="bi bi-heartbreak"
               viewBox="0 0 16 16"
             >
@@ -93,7 +93,7 @@ export default function NavBar({
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
-            fill="rgba(0, 0, 0, 0.80)"
+            fill="white"
             className="bi bi-trophy-fill"
             viewBox="0 0 16 16"
           >

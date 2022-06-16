@@ -15,14 +15,14 @@ export default function MusicModal(props, setMusicModalShow) {
       <>
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            <h2>We Love Music</h2>
+            <h2 className="modal-text">We Love Music</h2>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>
+          <p className="modal-text">
             <b>Beatle plays a new song every day</b>
           </p>
-          <p>
+          <p className="modal-text">
             This was built as a cool project for friends who love music to test
             their lyrical knowlegde in a fun way. All copyright goes to the
             artists featured.

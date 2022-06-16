@@ -56,10 +56,10 @@ export default function Leaderboard() {
   }
 
   return (
-    <Container>
+    <Container className="p-2">
       <Row className="g-3">
         <Col md="6" lg="6">
-          <Card className="leaderboard-card">
+          <Card className="leaderboard-card shadow border-0">
             <Card.Body>
               <Card.Title className="text-center">Leaderboard</Card.Title>
               <Row className="pb-2">
@@ -90,7 +90,7 @@ export default function Leaderboard() {
           </Card>
         </Col>
         <Col md="6" lg="6">
-          <Card className="leaderboard-card">
+          <Card className="leaderboard-card shadow border-0">
             {auth.currentUser ? (
               <>
                 <Card.Body>
