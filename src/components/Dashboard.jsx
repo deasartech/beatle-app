@@ -156,6 +156,7 @@ export default function Dashboard({
     await setDoc(
       doc(db, `users/${auth.currentUser?.uid}/scores`, `${Date.now()}`),
       {
+        date: Date(),
         points: score,
       }
     );

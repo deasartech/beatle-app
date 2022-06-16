@@ -106,13 +106,13 @@ export default function Leaderboard() {
                     </Col>
                   </Row>
                   {scores.map((item) => {
-                    const d = item.date;
-                    const dateString = Date(d).split(" ");
-                    const date = dateString.slice(1, 4).join(" ");
+                    const date = item.score.date;
+                    const dateArr = date.split(" ");
+                    const dateSliced = dateArr.slice(1, 4).join(" ");
                     return (
                       <Row>
                         <Col>
-                          <p className="text-center">{date}</p>
+                          <p className="text-center">{dateSliced}</p>
                         </Col>
                         <Col>
                           <p className="text-center">{item.score.points}</p>
