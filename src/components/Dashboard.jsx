@@ -199,7 +199,7 @@ export default function Dashboard({
     }
 
     const wordResults = checkGuess(blockA, blockB, guessA, guessB);
-    console.log(wordResults, "wordResults");
+    // console.log(wordResults, "wordResults");
     setResultArray(wordResults);
 
     if (!wordResults.includes(false)) {

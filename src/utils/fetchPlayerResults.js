@@ -6,10 +6,9 @@ export const fetchPlayerResults = async (uid) => {
   const querySnapshot = await getDocs(collection(db, `users/${uid}/scores`));
   const scoreArray = [];
   querySnapshot.forEach((doc) => {
-    console.log(doc.id, doc.data(), "util");
     scoreArray.push({
-      date: doc.id,
-      score: doc.data(),
+      date: doc.data().date,
+      score: doc.data().points,
     });
   });
   return scoreArray;
@@ -29,7 +28,7 @@ export const fetchAllPlayersTotalPoints = async () => {
 export const addPlayerTotalPoints = async (scores, uid) => {
   let total = 0;
   scores.map((item) => {
-    return (total += item.score.points);
+    return (total += item.score);
   });
   // players doc
   if (scores && uid) {

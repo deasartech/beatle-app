@@ -73,7 +73,7 @@ export default function Leaderboard() {
               {allPlayers?.map((item, index) => {
                 return (
                   <>
-                    <Row>
+                    <Row key={index}>
                       <Col>
                         {/* {index + 1}. */}
                         <p
@@ -109,18 +109,16 @@ export default function Leaderboard() {
                       <b>Points</b>
                     </Col>
                   </Row>
-                  {scores.map((el) => {
-                    const itemDate = el.date;
-                    const dateString = Date(itemDate).split(" ");
-                    // console.log(dateString.getDate(), "date");
-                    const newDate = dateString.slice(1, 4).join(" ");
+                  {scores.map((el, index) => {
+                    const itemDate = el.date.split(" ");
+                    const newDate = itemDate.slice(1, 4).join(" ");
                     return (
-                      <Row>
+                      <Row key={index}>
                         <Col>
                           <p className="text-center">{newDate}</p>
                         </Col>
                         <Col>
-                          <p className="text-center">{el.score.points}</p>
+                          <p className="text-center">{el.score}</p>
                         </Col>
                       </Row>
                     );
