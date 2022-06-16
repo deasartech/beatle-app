@@ -6,6 +6,7 @@ export const fetchPlayerResults = async (uid) => {
   const querySnapshot = await getDocs(collection(db, `users/${uid}/scores`));
   const scoreArray = [];
   querySnapshot.forEach((doc) => {
+    console.log(doc.id, doc.data(), "util");
     scoreArray.push({
       date: doc.id,
       score: doc.data(),

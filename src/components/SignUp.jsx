@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function SignUp({ user, setUser, setModalShow }) {
+export default function SignUp({ user, setUser, modalShow, setModalShow }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
@@ -76,13 +76,19 @@ export default function SignUp({ user, setUser, setModalShow }) {
                     type="password"
                     className="my-1"
                     value={passwordCheck}
-                    placeholder="confirm your password"
+                    placeholder="confirm password"
                     onChange={(event) => {
                       setPasswordCheck(event.target.value);
                     }}
                   />
                   {error || message ? (
-                    <p className="text-center p-1">
+                    <p
+                      className={
+                        modalShow
+                          ? "infoModal text-center p-1"
+                          : "text-center p-1"
+                      }
+                    >
                       {message ||
                         "Please check your email/password and try again"}
                     </p>
@@ -100,12 +106,14 @@ export default function SignUp({ user, setUser, setModalShow }) {
                 </Col>
               </Row>
             </Form>
-            <p className="py-3">
-              Have an account?{" "}
-              <Link to="/login" className="link">
-                Sign in
-              </Link>
-            </p>
+            {!modalShow ? (
+              <p className="py-3">
+                Have an account?{" "}
+                <Link to="/login" className="link">
+                  Sign in
+                </Link>
+              </p>
+            ) : null}
           </div>
         )}
       </Container>

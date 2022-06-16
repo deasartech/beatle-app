@@ -153,13 +153,15 @@ export default function Dashboard({
 
   // // handleAddScore: Add score to database
   const handleAddScore = async (score) => {
-    await setDoc(
-      doc(db, `users/${auth.currentUser?.uid}/scores`, `${Date.now()}`),
+    const date = Date.now();
+    const added = await setDoc(
+      doc(db, `users/${auth.currentUser?.uid}/scores`, date),
       {
         date: Date(),
         points: score,
       }
     );
+    console.log(added, "score added response");
   };
 
   // handleSubmit: check guess submission and calculate result
@@ -470,9 +472,12 @@ export default function Dashboard({
                                               width: 15 * element.length,
                                             }}
                                             className={
-                                              resultArray[index]
+                                              // const newIndex = (index + guessA.length)
+                                              resultArray[index + guessA.length]
                                                 ? "green border-0 px-1"
-                                                : resultArray[index] === false
+                                                : resultArray[
+                                                    index + guessA.length
+                                                  ] === false
                                                 ? "red border-0 px-1"
                                                 : "guessInput border-0 px-1"
                                             }
@@ -560,9 +565,7 @@ export default function Dashboard({
             <Col className="text-center align-items-center">
               {/* <h2>1</h2> */}
               <h3
-                className={
-                  results[0] === "Correct my-4" ? "pass my-4" : "fail my-4"
-                }
+                className={results[0] === "Correct" ? "pass my-4" : "fail my-4"}
               >
                 {/* {results[0] || "none"} */}
                 {results[0] || (
@@ -577,9 +580,7 @@ export default function Dashboard({
             <Col className="text-center">
               {/* <h2>2</h2> */}
               <h3
-                className={
-                  results[1] === "Correct my-4" ? "pass my-4" : "fail my-4"
-                }
+                className={results[1] === "Correct" ? "pass my-4" : "fail my-4"}
               >
                 {/* {results[1] || "none"} */}
                 {results[1] || (
@@ -594,9 +595,7 @@ export default function Dashboard({
             <Col className="text-center">
               {/* <h2>3</h2> */}
               <h3
-                className={
-                  results[2] === "Correct my-4" ? "pass my-4" : "fail my-4"
-                }
+                className={results[2] === "Correct" ? "pass my-4" : "fail my-4"}
               >
                 {/* {results[2] || "none"} */}
                 {results[2] || (

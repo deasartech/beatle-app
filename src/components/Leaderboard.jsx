@@ -20,11 +20,11 @@ export default function Leaderboard() {
     // retrieve players history
     fetchPlayerResults(auth.currentUser?.uid).then((res) => {
       setScores(res);
+      console.log(res, "player results");
     });
     // get leaderboard data
     fetchAllPlayersTotalPoints().then((res) => {
       setAllPlayers(res);
-
       setIsLoading(false);
       // console.log(allPlayers, "all players");
     });
@@ -43,8 +43,8 @@ export default function Leaderboard() {
         console.log(err, "addPointsLeaderboard");
       });
 
-    const d = Date.now();
-    const date = Date(d);
+    // const d = Date.now();
+    // const date = Date(d);
   }, [auth.currentUser?.uid, totalPoints]);
 
   if (isLoading) {
@@ -56,10 +56,10 @@ export default function Leaderboard() {
   }
 
   return (
-    <Container>
+    <Container className="p-2">
       <Row className="g-3">
         <Col md="6" lg="6">
-          <Card className="leaderboard-card">
+          <Card className="leaderboard-card shadow border-0">
             <Card.Body>
               <Card.Title className="text-center">Leaderboard</Card.Title>
               <Row className="pb-2">
@@ -90,7 +90,7 @@ export default function Leaderboard() {
           </Card>
         </Col>
         <Col md="6" lg="6">
-          <Card className="leaderboard-card">
+          <Card className="leaderboard-card shadow border-0">
             {auth.currentUser ? (
               <>
                 <Card.Body>
@@ -105,17 +105,18 @@ export default function Leaderboard() {
                       <b>Points</b>
                     </Col>
                   </Row>
-                  {scores.map((item) => {
-                    const date = item.score.date;
-                    const dateArr = date.split(" ");
-                    const dateSliced = dateArr.slice(1, 4).join(" ");
+                  {scores.map((el) => {
+                    const itemDate = el.date;
+                    const dateString = Date(itemDate).split(" ");
+                    // console.log(dateString.getDate(), "date");
+                    const newDate = dateString.slice(1, 4).join(" ");
                     return (
                       <Row>
                         <Col>
-                          <p className="text-center">{dateSliced}</p>
+                          <p className="text-center">{newDate}</p>
                         </Col>
                         <Col>
-                          <p className="text-center">{item.score.points}</p>
+                          <p className="text-center">{el.score.points}</p>
                         </Col>
                       </Row>
                     );
