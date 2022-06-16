@@ -354,7 +354,7 @@ export default function Dashboard({
         url={`https%3A//api.soundcloud.com/tracks/${track?.id}`}
         width="100%"
         height="100"
-        // style={{ display: "none" }}
+        style={{ display: "none" }}
         ref={(el) => (playerRefs.current[0] = el)}
         id="react-player"
         // pip={pip}
