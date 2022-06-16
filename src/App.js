@@ -19,22 +19,12 @@ function App() {
   const [songs, setSongs] = useState([
     {
       id: 1262879566,
-      timestamp: [69, 12000],
+      timestamp: [69, 10000],
       name: "Churchill Downs",
       artist: "Jack Harlow ft Drake",
       lyrics: [
         "All that time in the kitchen finally panned out I put some flavor in a pot and took the bland out",
         "I know my grandpa would have a heart attack if I pulled a hunnid grand out",
-      ],
-    },
-    {
-      id: 1245609985,
-      timestamp: [112, 10000],
-      name: "First Class",
-      artist: "Jack Harlow",
-      lyrics: [
-        "This lifestyle don't got many downsides except for the lack of time I get round my",
-        "Family, makin' sure they never downsize",
       ],
     },
     {
@@ -49,12 +39,22 @@ function App() {
     },
     {
       id: 1267146844,
-      timestamp: [52, 10000],
+      timestamp: [52, 9500],
       name: "Cooped Up (feat. Roddy Ricch)",
       artist: "Post Malone",
       lyrics: [
         "Feelin like an outcast I'm the only guy in slacks That'll cost you three stacks",
         "Now you're savin that check why you takin my swag Can you give me that back",
+      ],
+    },
+    {
+      id: 1245609985,
+      timestamp: [112, 9000],
+      name: "First Class",
+      artist: "Jack Harlow",
+      lyrics: [
+        "This lifestyle don't got many downsides except for the lack of time I get round my",
+        "Family, makin' sure they never downsize",
       ],
     },
   ]);
