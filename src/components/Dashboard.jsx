@@ -438,8 +438,8 @@ export default function Dashboard({
                       <Row>
                         <Col>
                           <Container className="text-center mx-auto ml2-wrapper">
-                            <p className="p-4 ml2">{blockA}</p>
-                            <p className="p-4 ml2">{blockB}</p>
+                            <p className="px-4 py-0 ml2">{blockA}</p>
+                            <p className="px-4 py-0 ml2">{blockB}</p>
                           </Container>
                         </Col>
                       </Row>
