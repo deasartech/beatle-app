@@ -68,7 +68,7 @@ export default function Dashboard({
     if (!played) {
       setHearts(3);
       const button = document.getElementById("play-button");
-      button.addEventListener("click", (e) => handlePlayButtonClick());
+      button.addEventListener("click", () => handlePlayButtonClick());
     }
   }, [track, songs, played, setHearts]);
 
@@ -91,17 +91,18 @@ export default function Dashboard({
     if (hearts > 0) {
       setLoading(true);
       ref.seekTo(track?.timestamp[0], "seconds");
+      setPlay(true);
       setTimeout(() => {
         setLoading(false);
         setMuted(false);
         setPlaying(true);
         setVolume(1);
       }, 2000);
-      setPlay(true);
+
       // temporary work-around
       setTimeout(() => {
         setPlaying(false);
-      }, track?.timestamp[1] + 2000);
+      }, track?.timestamp[1] + 1000);
       // if (seconds >= 80) {
       //   console.log("stop");
       //   setPlaying(!playing);
