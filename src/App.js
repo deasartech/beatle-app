@@ -19,42 +19,42 @@ function App() {
   const [songs, setSongs] = useState([
     {
       id: 1262879566,
-      timestamp: [69, 10000],
+      timestamp: [69, 6000],
       name: "Churchill Downs",
       artist: "Jack Harlow ft Drake",
       lyrics: [
-        "All that time in the kitchen finally panned out I put some flavor in a pot and took the bland out",
-        "I know my grandpa would have a heart attack if I pulled a hunnid grand out",
+        "All that time in the kitchen finally panned out",
+        "I put some flavor in a pot and took the bland out",
       ],
     },
     {
       id: 254527393,
-      timestamp: [52, 15000],
+      timestamp: [51.5, 11500],
       name: "Running Up That Hill (A Deal With God)",
       artist: "Kate Bush",
       lyrics: [
         "I'd make a deal with God And I'd get him to swap our places",
-        "Be running up that road Be running up that hill Be running up that building",
+        "Be running up that road Be running up that hill",
       ],
     },
     {
       id: 1267146844,
-      timestamp: [52, 9500],
+      timestamp: [52, 8000],
       name: "Cooped Up (feat. Roddy Ricch)",
       artist: "Post Malone",
       lyrics: [
-        "Feelin like an outcast I'm the only guy in slacks That'll cost you three stacks",
-        "Now you're savin that check why you takin my swag Can you give me that back",
+        "Feelin like an outcast I'm the only guy in slacks",
+        "That'll cost you three stacks Now you're savin that check",
       ],
     },
     {
       id: 1245609985,
-      timestamp: [112, 9000],
+      timestamp: [112, 6000],
       name: "First Class",
       artist: "Jack Harlow",
       lyrics: [
-        "This lifestyle don't got many downsides except for the lack of time I get round my",
-        "Family, makin' sure they never downsize",
+        "This lifestyle don't got many downsides",
+        "except for the lack of time I get round my",
       ],
     },
   ]);
