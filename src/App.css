@@ -150,6 +150,11 @@ svg:hover {
   text-align: justify;
 }
 
+.link {
+  color: #b58ecc !important;
+  text-decoration: none !important;
+}
+
 #inputContainer {
   display: flex;
   flex-wrap: wrap;
