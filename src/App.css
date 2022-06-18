@@ -141,13 +141,14 @@ svg:hover {
 
 .ml2 {
   font-family: "Poppins", sans-serif;
-  text-align: justify;
+  /* text-align: justify; */
   font-weight: 500;
   font-size: 1.4em;
 }
 
 .blank {
-  text-align: justify;
+  /* text-align: justify; */
+  text-align: center;
 }
 
 .link {

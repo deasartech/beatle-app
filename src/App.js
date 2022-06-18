@@ -19,7 +19,7 @@ function App() {
   const [songs, setSongs] = useState([
     {
       id: 1262879566,
-      timestamp: [69, 6000],
+      timestamp: [69, 6500],
       name: "Churchill Downs",
       artist: "Jack Harlow ft Drake",
       lyrics: [
@@ -29,7 +29,7 @@ function App() {
     },
     {
       id: 254527393,
-      timestamp: [51.5, 11500],
+      timestamp: [52, 11500],
       name: "Running Up That Hill (A Deal With God)",
       artist: "Kate Bush",
       lyrics: [

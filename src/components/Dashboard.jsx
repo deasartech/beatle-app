@@ -88,7 +88,9 @@ export default function Dashboard({
 
   // handle play triggers each attempt
   const handlePlay = () => {
-    if (hearts > 0) {
+    if (hearts === 0) {
+      setPlaying(true);
+    } else {
       setLoading(true);
       ref.seekTo(track?.timestamp[0], "seconds");
       setPlay(true);
@@ -98,7 +100,6 @@ export default function Dashboard({
         setPlaying(true);
         setVolume(1);
       }, 2000);
-
       // temporary work-around
       setTimeout(() => {
         setPlaying(false);
@@ -107,8 +108,6 @@ export default function Dashboard({
       //   console.log("stop");
       //   setPlaying(!playing);
       // }
-    } else {
-      setPlaying(true);
     }
   };
 
@@ -117,6 +116,8 @@ export default function Dashboard({
     setTimeout(() => {
       setTimePassed(true);
       init();
+      const button = document.getElementById("play-button");
+      button.addEventListener("click", () => handlePlayButtonClick());
     }, [420]);
   };
 
