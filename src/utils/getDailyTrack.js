@@ -1,7 +1,7 @@
 // import { targetSongs } from "./songs";
 
 export const getDailyTrack = (songs) => {
-  const offsetFromDate = new Date(2022, 4, 28);
+  const offsetFromDate = new Date(2022, 4, 29);
 
   const msOffset = Date.now() - offsetFromDate;
   const dayOffset = msOffset / 1000 / 60 / 60 / 24;

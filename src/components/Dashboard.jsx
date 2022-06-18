@@ -89,7 +89,9 @@ export default function Dashboard({
   // handle play triggers each attempt
   const handlePlay = () => {
     if (hearts === 0) {
-      setPlaying(true);
+      setTimeout(() => {
+        setPlaying(true);
+      }, 2000);
     } else {
       setLoading(true);
       setPlay(true);
@@ -116,6 +118,8 @@ export default function Dashboard({
     setTimeout(() => {
       setTimePassed(true);
       init();
+      const button = document.getElementById("play-button");
+      button.addEventListener("click", handlePlayButtonClick);
     }, [420]);
   };
 
@@ -353,7 +357,6 @@ export default function Dashboard({
         url={`https%3A//api.soundcloud.com/tracks/${track?.id}`}
         width="100%"
         height="0"
-        // style={{ display: "none" }}
         style={{ visibility: "hidden" }}
         ref={(el) => (playerRefs.current[0] = el)}
         id="react-player"
