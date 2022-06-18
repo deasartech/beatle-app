@@ -72,10 +72,6 @@ export default function Dashboard({
     }
   }, [track, songs, played, setHearts]);
 
-  // // ref
-  const playerRefs = useRef([]);
-  const ref = playerRefs.current[0];
-
   // to be used by event listener on play button to solve safari autplay issue
   const handleOnPlay = () => {
     setMuted(false);
@@ -86,15 +82,19 @@ export default function Dashboard({
     handlePlay();
   };
 
+  // // ref
+  const playerRefs = useRef([]);
+  const ref = playerRefs.current[0];
+
   // handle play triggers each attempt
   const handlePlay = () => {
     if (hearts === 0) {
       setPlaying(true);
     } else {
       setLoading(true);
-      ref.seekTo(track?.timestamp[0], "seconds");
       setPlay(true);
       setTimeout(() => {
+        ref.seekTo(track.timestamp[0], "seconds");
         setLoading(false);
         setMuted(false);
         setPlaying(true);
@@ -405,7 +405,7 @@ export default function Dashboard({
                 {/* <Player /> */}
                 <Button
                   id="play-button"
-                  onClick={handlePlayButtonClick}
+                  // onClick={handlePlayButtonClick}
                   className="play px-4"
                 >
                   Play
