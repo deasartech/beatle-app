@@ -116,8 +116,6 @@ export default function Dashboard({
     setTimeout(() => {
       setTimePassed(true);
       init();
-      const button = document.getElementById("play-button");
-      button.addEventListener("click", () => handlePlayButtonClick());
     }, [420]);
   };
 
