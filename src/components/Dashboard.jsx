@@ -354,8 +354,9 @@ export default function Dashboard({
         muted={muted}
         url={`https%3A//api.soundcloud.com/tracks/${track?.id}`}
         width="100%"
-        height="100"
-        style={{ display: "none" }}
+        height="0"
+        // style={{ display: "none" }}
+        style={{ visibility: "hidden" }}
         ref={(el) => (playerRefs.current[0] = el)}
         id="react-player"
         // pip={pip}
