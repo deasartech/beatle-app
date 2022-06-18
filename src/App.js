@@ -14,7 +14,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [modalShow, setModalShow] = useState(false);
   const [musicModalShow, setMusicModalShow] = useState(false);
-  const [hearts, setHearts] = useState();
+  const [hearts, setHearts] = useState(0);
   const [played, setPlayed] = useState(false);
   const [songs, setSongs] = useState([
     {
