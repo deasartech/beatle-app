@@ -50,6 +50,7 @@ export default function Dashboard({
   const [resultArray, setResultArray] = useState([]);
   // const [scoreValues, setScoreValues] = useState({});
   // const [score, setScore] = useState(0);
+  const [isReady, setIsReady] = useState(false);
 
   // answer
   const [guessA, setGuessA] = useState("");
@@ -88,29 +89,31 @@ export default function Dashboard({
 
   // handle play triggers each attempt
   const handlePlay = () => {
-    if (hearts === 0) {
+    if (hearts > 0) {
+      if (isReady) {
+        setLoading(true);
+        // ref.seekTo(track?.timestamp[0], "seconds");
+        setPlay(true);
+        setTimeout(() => {
+          setLoading(false);
+          setMuted(false);
+          setPlaying(true);
+          ref.seekTo(track?.timestamp[0], "seconds");
+          setVolume(1);
+        }, 2000);
+        // temporary work-around
+        setTimeout(() => {
+          setPlaying(false);
+        }, track?.timestamp[1] + 1000);
+        // if (seconds >= 80) {
+        //   console.log("stop");
+        //   setPlaying(!playing);
+        // }
+      }
+    } else if (hearts === 0) {
       setPlaying(true);
     } else {
-      setLoading(true);
-      ref.seekTo(track?.timestamp[0], "seconds");
-      setPlay(true);
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
-      setTimeout(() => {
-        // setLoading(false);
-        setMuted(false);
-        setPlaying(true);
-        setVolume(1);
-      }, 2000);
-      // temporary work-around
-      setTimeout(() => {
-        setPlaying(false);
-      }, track?.timestamp[1] + 1000);
-      // if (seconds >= 80) {
-      //   console.log("stop");
-      //   setPlaying(!playing);
-      // }
+      console.log("error");
     }
   };
 
@@ -124,7 +127,7 @@ export default function Dashboard({
 
   const handlePlayerLoaded = (e) => {
     console.log("player loaded successfully");
-    setLoading(false);
+    setIsReady(true);
   };
 
   const handleProgress = (secs) => {
@@ -189,7 +192,8 @@ export default function Dashboard({
   };
 
   // handleSubmit: check guess submission and calculate result
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (guessA.includes(undefined) || guessA.length < lyricsA.length) {
       alert("Hello! your answer is missing something!!");
       return;
@@ -542,7 +546,7 @@ export default function Dashboard({
                                 </Form>
 
                                 <Button
-                                  onClick={handleSubmit}
+                                  onClick={(e) => handleSubmit(e)}
                                   className="m-3 play"
                                 >
                                   Guess
