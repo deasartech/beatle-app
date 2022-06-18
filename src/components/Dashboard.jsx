@@ -405,7 +405,7 @@ export default function Dashboard({
                 {/* <Player /> */}
                 <Button
                   id="play-button"
-                  // onClick={handlePlayButtonClick}
+                  onClick={handlePlayButtonClick}
                   className="play px-4"
                 >
                   Play
