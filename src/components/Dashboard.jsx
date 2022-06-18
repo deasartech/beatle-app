@@ -96,6 +96,9 @@ export default function Dashboard({
       setPlay(true);
       setTimeout(() => {
         setLoading(false);
+      }, 2000);
+      setTimeout(() => {
+        // setLoading(false);
         setMuted(false);
         setPlaying(true);
         setVolume(1);
@@ -121,9 +124,7 @@ export default function Dashboard({
 
   const handlePlayerLoaded = (e) => {
     console.log("player loaded successfully");
-    setTimeout(() => {
-      setLoading(false);
-    }, [3000]);
+    setLoading(false);
   };
 
   const handleProgress = (secs) => {
