@@ -1,7 +1,7 @@
-// import { targetSongs } from "./songs";
+import { songs } from "./songs";
 
-export const getDailyTrack = (songs) => {
-  const offsetFromDate = new Date(2022, 4, 28);
+export const getDailyTrack = () => {
+  const offsetFromDate = new Date(2022, 4, 27);
 
   const msOffset = Date.now() - offsetFromDate;
   const dayOffset = msOffset / 1000 / 60 / 60 / 24;
@@ -15,7 +15,7 @@ export const getDailyTrack = (songs) => {
   const wrapped = wrap(dayOffset);
 
   const targetSong = songs[Math.floor(wrapped)];
-  // const targetSong = songs[3];
+  // const targetSong = songs[24];
 
   return targetSong;
 };

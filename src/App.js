@@ -16,48 +16,6 @@ function App() {
   const [musicModalShow, setMusicModalShow] = useState(false);
   const [hearts, setHearts] = useState(0);
   const [played, setPlayed] = useState(false);
-  const [songs, setSongs] = useState([
-    {
-      id: 1262879566,
-      timestamp: [69, 6500],
-      name: "Churchill Downs",
-      artist: "Jack Harlow ft Drake",
-      lyrics: [
-        "All that time in the kitchen finally panned out",
-        "I put some flavor in a pot and took the bland out",
-      ],
-    },
-    {
-      id: 254527393,
-      timestamp: [52, 11500],
-      name: "Running Up That Hill (A Deal With God)",
-      artist: "Kate Bush",
-      lyrics: [
-        "I'd make a deal with God And I'd get him to swap our places",
-        "Be running up that road Be running up that hill",
-      ],
-    },
-    {
-      id: 1267146844,
-      timestamp: [52, 8000],
-      name: "Cooped Up (feat. Roddy Ricch)",
-      artist: "Post Malone",
-      lyrics: [
-        "Feelin like an outcast I'm the only guy in slacks",
-        "That'll cost you three stacks Now you're savin that check",
-      ],
-    },
-    {
-      id: 1245609985,
-      timestamp: [112, 6000],
-      name: "First Class",
-      artist: "Jack Harlow",
-      lyrics: [
-        "This lifestyle don't got many downsides",
-        "except for the lack of time I get round my",
-      ],
-    },
-  ]);
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
@@ -80,7 +38,6 @@ function App() {
             path="/"
             element={
               <Dashboard
-                songs={songs}
                 user={user}
                 modalShow={modalShow}
                 setModalShow={setModalShow}
