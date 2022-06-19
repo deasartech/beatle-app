@@ -51,6 +51,7 @@ export default function Dashboard({
   // const [scoreValues, setScoreValues] = useState({});
   // const [score, setScore] = useState(0);
   const [isReady, setIsReady] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   // answer
   const [guessA, setGuessA] = useState("");
@@ -83,7 +84,7 @@ export default function Dashboard({
     setVolume(1);
   };
 
-  const handlePlayButtonClick = () => {
+  const handlePlayButtonClick = (e) => {
     handlePlay();
   };
 
@@ -95,6 +96,7 @@ export default function Dashboard({
         // ref.seekTo(track?.timestamp[0], "seconds");
         setPlay(true);
         setTimeout(() => {
+          setSubmitted(false);
           setLoading(false);
           setMuted(false);
           setPlaying(true);
@@ -194,6 +196,8 @@ export default function Dashboard({
   // handleSubmit: check guess submission and calculate result
   const handleSubmit = (e) => {
     e.preventDefault();
+    e.stopPropagation();
+    setSubmitted(true);
     if (guessA.includes(undefined) || guessA.length < lyricsA.length) {
       alert("Hello! your answer is missing something!!");
       return;
@@ -410,7 +414,7 @@ export default function Dashboard({
                 <Button
                   id="play-button"
                   onClick={handlePlayButtonClick}
-                  className="play px-4"
+                  className={!isReady ? "noplay px-4" : "play px-4"}
                 >
                   Play
                 </Button>
@@ -546,6 +550,7 @@ export default function Dashboard({
                                 </Form>
 
                                 <Button
+                                  disabled={submitted}
                                   onClick={(e) => handleSubmit(e)}
                                   className="m-3 play"
                                 >
