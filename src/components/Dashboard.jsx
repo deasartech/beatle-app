@@ -79,10 +79,7 @@ export default function Dashboard({
   const ref = playerRefs.current[0];
 
   // to be used by event listener on play button to solve safari autplay issue
-  const handleOnPlay = () => {
-    setMuted(false);
-    setVolume(1);
-  };
+  const handleOnPlay = () => {};
 
   const handlePlayButtonClick = (e) => {
     handlePlay();
@@ -93,7 +90,6 @@ export default function Dashboard({
     if (hearts > 0) {
       if (isReady) {
         setLoading(true);
-        // ref.seekTo(track?.timestamp[0], "seconds");
         setPlay(true);
         setTimeout(() => {
           setSubmitted(false);
@@ -362,7 +358,6 @@ export default function Dashboard({
         url={`https%3A//api.soundcloud.com/tracks/${track?.id}`}
         width="100%"
         height="0"
-        // style={{ display: "none" }}
         style={{ visibility: "hidden" }}
         ref={(el) => (playerRefs.current[0] = el)}
         id="react-player"
