@@ -64,7 +64,7 @@ export default function InfoModal(props, modalShow, setModalShow) {
         <>
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              <h2 className="modal-text">How to play</h2>
+              <h2 className="modal-text">How To Play</h2>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
