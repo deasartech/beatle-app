@@ -74,13 +74,11 @@ p {
   background: none !important;
 }
 
-svg:hover {
+.svgcolor:hover {
   cursor: pointer;
   border: 0 none !important;
   box-shadow: none !important;
-  fill: #5de6de;
   animation-fill-mode: both !important;
-  /* image: linear-gradient(315deg, #5de6de 0%, #b58ecc 74%); */
 
   transition: 200ms !important;
 }
