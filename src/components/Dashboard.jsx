@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Container, Button, Form, Card, Row, Col } from "react-bootstrap";
 import { Howl } from "howler";
 // import anime from "animejs/lib/anime.es.js";
-import { initialiseClock } from "../utils/script";
+import { getTimeRemaining, initialiseClock } from "../utils/script";
 import { getDailyTrack } from "../utils/getDailyTrack";
 import wrongAnswer from "../assets/audio/incorrect.wav";
 import gameOver from "../assets/audio/end.wav";
@@ -18,6 +18,7 @@ import { checkGuess } from "../utils/checkGuess";
 import InfoModal from "./InfoModal";
 import MusicModal from "./MusicModal";
 import AlertModal from "./AlertModal";
+import Cookies from "js-cookie";
 
 export default function Dashboard({
   songs,
@@ -74,6 +75,11 @@ export default function Dashboard({
       setHearts(3);
       const button = document.getElementById("play-button");
       button.addEventListener("click", () => handlePlayButtonClick());
+    } else {
+      setPlay(true);
+      setLoading(false);
+      setTimePassed(true);
+      setResult(true);
     }
   }, [track, songs, played, setHearts]);
 
@@ -198,6 +204,7 @@ export default function Dashboard({
 
   // handleSubmit: check guess submission and calculate result
   const handleSubmit = (e) => {
+    getTimeRemaining();
     e.preventDefault();
     e.stopPropagation();
     setAlert(false);
@@ -220,7 +227,11 @@ export default function Dashboard({
     // console.log(wordResults, "wordResults");
     setResultArray(wordResults);
 
+    const remaining = getTimeRemaining();
+    const endOfDay = remaining.hours / 24;
+
     if (!wordResults.includes(false)) {
+      Cookies.set("played", "true", { expires: endOfDay });
       setTimeout(() => {
         flipTile(tileCard);
       }, 4000);
@@ -280,6 +291,7 @@ export default function Dashboard({
 
       setResults([...results, "X"]);
     } else {
+      Cookies.set("played", "true", { expires: endOfDay });
       setHearts((currNum) => currNum - 1);
       setTimeout(() => {
         flipTile(tileCard);
