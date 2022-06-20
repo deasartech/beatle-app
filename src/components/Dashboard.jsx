@@ -332,7 +332,6 @@ export default function Dashboard({
 
   // move focus to previous field
   const onKeyDown = (e, i, block) => {
-    setAlert(false);
     const newIndex = i + lyricsA.length;
     const keyCode = e.nativeEvent.code;
 
