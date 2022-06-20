@@ -10,6 +10,7 @@ import NavBar from "./components/NavBar";
 import Leaderboard from "./components/Leaderboard";
 import Username from "./components/Username";
 import { fetchPlayerResults } from "./utils/fetchPlayerResults";
+import Cookies from "js-cookie";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -24,6 +25,13 @@ function App() {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
+
+    console.log(Cookies.get("played"), "cookies get played");
+    const cookie = Cookies.get("played");
+    if (cookie === "true") {
+      setPlayed(true);
+      setHearts(0);
+    }
     // fetchPlayerResults
     fetchPlayerResults(auth.currentUser?.uid).then((res) => {
       checkIfPlayedToday(res);

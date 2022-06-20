@@ -5,7 +5,6 @@ export const getDailyTrack = () => {
 
   const msOffset = Date.now() - offsetFromDate;
   const dayOffset = msOffset / 1000 / 60 / 60 / 24;
-
   //loop to start
   const wrap = (num) => {
     if (num > songs.length) num = num - songs.length;
