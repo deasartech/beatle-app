@@ -17,6 +17,7 @@ import ReactPlayer from "react-player";
 import { checkGuess } from "../utils/checkGuess";
 import InfoModal from "./InfoModal";
 import MusicModal from "./MusicModal";
+import AlertModal from "./AlertModal";
 
 export default function Dashboard({
   songs,
@@ -58,6 +59,7 @@ export default function Dashboard({
   const [guessB, setGuessB] = useState("");
   const [result, setResult] = useState(null);
   // const [message, setMessage] = useState("");
+  const [alert, setAlert] = useState(false);
 
   const BACKSPACE_KEY = "Backspace";
 
@@ -193,13 +195,19 @@ export default function Dashboard({
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    setAlert(false);
     setSubmitted(true);
+
     if (guessA.includes(undefined) || guessA.length < lyricsA.length) {
-      alert("Hello! your answer is missing something!!");
+      // alert("Hello! your answer is missing something!!");
+      setAlert(true);
+      setSubmitted(false);
       return;
     }
     if (guessB.includes(undefined) || guessB.length < lyricsB.length) {
-      alert("Hello! your answer is missing something!!");
+      // alert("Hello! your answer is missing something!!");
+      setAlert(true);
+      setSubmitted(false);
       return;
     }
 
@@ -319,6 +327,7 @@ export default function Dashboard({
 
   // move focus to previous field
   const onKeyDown = (e, i, block) => {
+    setAlert(false);
     const newIndex = i + lyricsA.length;
     const keyCode = e.nativeEvent.code;
 
@@ -454,6 +463,12 @@ export default function Dashboard({
                         <>
                           <Row>
                             <Col>
+                              <AlertModal
+                                show={alert}
+                                onHide={() => setAlert(false)}
+                                alert={alert}
+                                setAlert={setAlert}
+                              />
                               <Container className="p-3 text-center mt-1">
                                 <Form id="inputContainer" className="mb-2">
                                   {lyricsA.map((element, index) => {
