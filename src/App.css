@@ -122,6 +122,10 @@ svg:hover {
   background-color: white !important;
 }
 
+.spinner-border {
+  color: white !important;
+}
+
 .form-control {
   border: none;
 }
