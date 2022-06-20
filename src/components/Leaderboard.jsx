@@ -42,9 +42,6 @@ export default function Leaderboard() {
       .catch((err) => {
         console.log(err, "addPointsLeaderboard");
       });
-
-    // const d = Date.now();
-    // const date = Date(d);
   }, [auth.currentUser?.uid, totalPoints]);
 
   if (isLoading) {

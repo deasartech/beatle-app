@@ -30,6 +30,7 @@ export default function Dashboard({
   setHearts,
   played,
   setPlayed,
+  hasPlayed,
 }) {
   const [lyricsA, setLyricsA] = useState("");
   const [lyricsB, setLyricsB] = useState("");
@@ -181,14 +182,18 @@ export default function Dashboard({
 
   // // handleAddScore: Add score to database
   const handleAddScore = async (score) => {
-    const date = Date.now();
-    const added = await setDoc(
-      doc(db, `users/${auth.currentUser?.uid}/scores`, `${date}`),
-      {
-        date: Date(),
-        points: score,
-      }
-    );
+    if (hasPlayed[0]) {
+      console.log("player already played today");
+    } else {
+      const date = Date.now();
+      const added = await setDoc(
+        doc(db, `users/${auth.currentUser?.uid}/scores`, `${date}`),
+        {
+          date: Date(),
+          points: score,
+        }
+      );
+    }
   };
 
   // handleSubmit: check guess submission and calculate result
