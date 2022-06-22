@@ -72,7 +72,6 @@ export default function Dashboard({
     setBlockA(track?.lyrics[0]);
     setBlockB(track?.lyrics[1]);
     if (!played) {
-      setHearts(3);
       const button = document.getElementById("play-button");
       button.addEventListener("click", () => handlePlayButtonClick());
     } else {
@@ -276,6 +275,7 @@ export default function Dashboard({
       }
     } else if (wordResults.includes(false) && results.length < 2) {
       setHearts((currNum) => currNum - 1);
+      Cookies.set("hearts", hearts - 1, { expires: endOfDay });
       setTimeout(() => {
         setResult("try again");
       }, 4000);
@@ -291,6 +291,7 @@ export default function Dashboard({
 
       setResults([...results, "X"]);
     } else {
+      Cookies.set("hearts", 0, { expires: endOfDay });
       Cookies.set("played", "true", { expires: endOfDay });
       setHearts((currNum) => currNum - 1);
       setTimeout(() => {

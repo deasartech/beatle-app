@@ -25,8 +25,12 @@ function App() {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
-
-    console.log(Cookies.get("played"), "cookies get played");
+    const heartsCookie = Cookies.get("hearts");
+    if (!heartsCookie) {
+      setHearts(3);
+    } else {
+      setHearts(heartsCookie);
+    }
     const cookie = Cookies.get("played");
     if (cookie === "true") {
       setPlayed(true);
