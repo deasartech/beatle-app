@@ -230,7 +230,6 @@ export default function Dashboard({
     const endOfDay = remaining.hours / 24;
 
     if (!wordResults.includes(false)) {
-      Cookies.remove("hearts");
       Cookies.set("played", "true", { expires: endOfDay });
       setTimeout(() => {
         flipTile(tileCard);
@@ -292,7 +291,7 @@ export default function Dashboard({
 
       setResults([...results, "X"]);
     } else {
-      Cookies.remove("hearts");
+      Cookies.set("hearts", 0);
       Cookies.set("played", "true", { expires: endOfDay });
       setHearts((currNum) => currNum - 1);
       setTimeout(() => {
@@ -370,7 +369,7 @@ export default function Dashboard({
     }
   };
 
-  if (played) {
+  if (played || hearts === 0) {
     setTimeout(() => {
       initialiseClock("clockdiv");
     }, [420]);
