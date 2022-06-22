@@ -230,6 +230,7 @@ export default function Dashboard({
     const endOfDay = remaining.hours / 24;
 
     if (!wordResults.includes(false)) {
+      Cookies.remove("hearts");
       Cookies.set("played", "true", { expires: endOfDay });
       setTimeout(() => {
         flipTile(tileCard);
