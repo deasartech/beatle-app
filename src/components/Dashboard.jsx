@@ -291,7 +291,7 @@ export default function Dashboard({
 
       setResults([...results, "X"]);
     } else {
-      Cookies.remove("hearts");
+      Cookies.set("hearts", 0, { expires: endOfDay });
       Cookies.set("played", "true", { expires: endOfDay });
       setHearts((currNum) => currNum - 1);
       setTimeout(() => {
