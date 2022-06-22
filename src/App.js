@@ -26,13 +26,17 @@ function App() {
       setUser(currentUser);
     });
     const heartsCookie = Cookies.get("hearts");
+    const cookie = Cookies.get("played");
     if (!heartsCookie) {
       setHearts(3);
+    } else if (cookie === "true") {
+      // Cookies.remove("hearts");
+      setHearts(0);
     } else {
       setHearts(heartsCookie);
     }
-    const cookie = Cookies.get("played");
     if (cookie === "true") {
+      // Cookies.remove("hearts");
       setPlayed(true);
       setHearts(0);
     }
