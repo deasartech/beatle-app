@@ -11,7 +11,9 @@ export default function AlertModal({ alert, setAlert }) {
         aria-labelledby="example-modal-sizes-title-sm"
       >
         <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-sm"></Modal.Title>
+          <Modal.Title id="example-modal-sizes-title-sm">
+            <h4 className="modal-text">Check Answer</h4>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body className={"text-center"}>
           Your answer is missing something

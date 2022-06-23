@@ -80,7 +80,10 @@ export default function Dashboard({
       setTimePassed(true);
       setResult(true);
     }
-  }, [track, songs, played, setHearts]);
+    if (isReady) {
+      setModalShow(true);
+    }
+  }, [track, songs, played, setHearts, isReady]);
 
   // // ref
   const playerRefs = useRef([]);
