@@ -241,7 +241,7 @@ export const songs = [
   },
   {
     id: 720147052,
-    timestamp: [54, 20600],
+    timestamp: [54, 20800],
     name: "She's Electric",
     artist: "Oasis",
     lyrics: [
