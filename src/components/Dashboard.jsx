@@ -80,7 +80,7 @@ export default function Dashboard({
       setTimePassed(true);
       setResult(true);
     }
-    if (isReady) {
+    if (isReady && !played) {
       setModalShow(true);
     }
   }, [track, songs, played, setHearts, isReady]);
