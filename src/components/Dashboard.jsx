@@ -1,5 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Container, Button, Form, Card, Row, Col } from "react-bootstrap";
+import {
+  Container,
+  Button,
+  Form,
+  Card,
+  Row,
+  Col,
+  Image,
+} from "react-bootstrap";
 import { Howl } from "howler";
 // import anime from "animejs/lib/anime.es.js";
 import { getTimeRemaining, initialiseClock } from "../utils/script";
@@ -19,6 +27,7 @@ import InfoModal from "./InfoModal";
 import MusicModal from "./MusicModal";
 import AlertModal from "./AlertModal";
 import Cookies from "js-cookie";
+import { searchTrack } from "../utils/api";
 
 export default function Dashboard({
   songs,
@@ -63,11 +72,21 @@ export default function Dashboard({
   const [result, setResult] = useState(null);
   // const [message, setMessage] = useState("");
   const [alert, setAlert] = useState(false);
+  const [trackMeta, setTrackMeta] = useState();
 
   const BACKSPACE_KEY = "Backspace";
 
   useEffect(() => {
     const dailySong = getDailyTrack(songs);
+    searchTrack(dailySong.artist.toLowerCase(), dailySong.name.toLowerCase())
+      .then((res) => {
+        return res.data.length > 1
+          ? setTrackMeta(res.data[0])
+          : setTrackMeta(res.data);
+      })
+      .catch((err) => {
+        console.log(err, "error");
+      });
     setTrack(dailySong);
     // setLyrics(track?.lyrics);
     setBlockA(track?.lyrics[0]);
@@ -115,10 +134,6 @@ export default function Dashboard({
         setTimeout(() => {
           setPlaying(false);
         }, track?.timestamp[1] + 1000);
-        // if (seconds >= 80) {
-        //   console.log("stop");
-        //   setPlaying(!playing);
-        // }
       }
     } else if (hearts === 0) {
       setPlaying(true);
@@ -235,8 +250,6 @@ export default function Dashboard({
 
     if (!wordResults.includes(false)) {
       Cookies.set("played", "true", { expires: endOfDay });
-      console.log(endOfDay, "endOfDay");
-      console.log(remaining, "remaining");
       setTimeout(() => {
         flipTile(tileCard);
       }, 4000);
@@ -604,15 +617,19 @@ export default function Dashboard({
                       ) : (
                         <>
                           <Container className="px-2 text-center mb-2">
-                            {/* <p>{track?.title}</p>
                             <Image
-                              src={track?.albumArt}
+                              className="p-2"
+                              src={trackMeta?.album.cover}
                               height="100"
                               width="100"
-                            /> */}
+                            />
+                            <p>
+                              {track.artist} - {track.name}
+                            </p>
+
                             {played || hearts === 0 ? (
                               <>
-                                <h5>Next Beatle in</h5>
+                                <h5 className="pt-4">Next Beatle in</h5>
                                 <Card
                                   id="clockdiv"
                                   className="border-0 text-center"

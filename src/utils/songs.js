@@ -3,7 +3,7 @@ export const songs = [
     id: 1262879566,
     timestamp: [69, 6500],
     name: "Churchill Downs",
-    artist: "Jack Harlow ft Drake",
+    artist: "Jack Harlow",
     lyrics: [
       "All that time in the kitchen finally panned out",
       "I put some flavor in a pot and took the bland out",
@@ -12,7 +12,7 @@ export const songs = [
   {
     id: 254527393,
     timestamp: [52, 11500],
-    name: "Running Up That Hill (A Deal With God)",
+    name: "Running Up That Hill",
     artist: "Kate Bush",
     lyrics: [
       "I'd make a deal with God And I'd get him to swap our places",
@@ -22,7 +22,7 @@ export const songs = [
   {
     id: 1267146844,
     timestamp: [52, 8500],
-    name: "Cooped Up (feat. Roddy Ricch)",
+    name: "Cooped Up",
     artist: "Post Malone",
     lyrics: [
       "Feelin like an outcast I'm the only guy in slacks",
