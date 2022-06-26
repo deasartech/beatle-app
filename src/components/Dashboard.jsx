@@ -32,6 +32,7 @@ export default function Dashboard({
   played,
   setPlayed,
   hasPlayed,
+  isReturning,
 }) {
   const [lyricsA, setLyricsA] = useState("");
   const [lyricsB, setLyricsB] = useState("");
@@ -80,7 +81,7 @@ export default function Dashboard({
       setTimePassed(true);
       setResult(true);
     }
-    if (isReady && !played) {
+    if (isReady && !played && !isReturning) {
       setModalShow(true);
     }
   }, [track, songs, played, setHearts, isReady]);
@@ -230,10 +231,12 @@ export default function Dashboard({
     setResultArray(wordResults);
 
     const remaining = getTimeRemaining();
-    const endOfDay = remaining.hours / 24;
+    const endOfDay = remaining.total / (24 * 60 * 60 * 1000);
 
     if (!wordResults.includes(false)) {
       Cookies.set("played", "true", { expires: endOfDay });
+      console.log(endOfDay, "endOfDay");
+      console.log(remaining, "remaining");
       setTimeout(() => {
         flipTile(tileCard);
       }, 4000);

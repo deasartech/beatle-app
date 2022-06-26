@@ -20,6 +20,7 @@ function App() {
   const [played, setPlayed] = useState(false);
   // const [playerResults, setPlayerResults] = useState([]);
   const [hasPlayed, setHasPlayed] = useState([]);
+  const [isReturning, setIsReturning] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
@@ -27,6 +28,7 @@ function App() {
     });
     const heartsCookie = Cookies.get("hearts");
     const cookie = Cookies.get("played");
+    const hasVisited = Cookies.get("isReturning");
     if (!heartsCookie) {
       setHearts(3);
     } else if (cookie === "true") {
@@ -39,6 +41,10 @@ function App() {
       // Cookies.remove("hearts");
       setPlayed(true);
       setHearts(0);
+      Cookies.set("isReturning", true, { expires: 365 });
+    }
+    if (hasVisited) {
+      setIsReturning(true);
     }
     // fetchPlayerResults
     fetchPlayerResults(auth.currentUser?.uid).then((res) => {
@@ -83,6 +89,7 @@ function App() {
                 played={played}
                 setPlayed={setPlayed}
                 hasPlayed={hasPlayed}
+                isReturning={isReturning}
               />
             }
           />
