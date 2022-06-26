@@ -60,3 +60,10 @@ export const initialiseCountdown = (id) => {
     timeleft -= 1;
   }, 1000);
 };
+
+export const calculateWPM = (time, wordCount) => {
+  const one = wordCount / time;
+  const wpm = one * 60;
+  console.log(wpm, "wpm");
+  return Math.round(wpm);
+};

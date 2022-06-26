@@ -10,7 +10,11 @@ import {
 } from "react-bootstrap";
 import { Howl } from "howler";
 // import anime from "animejs/lib/anime.es.js";
-import { getTimeRemaining, initialiseClock } from "../utils/script";
+import {
+  getTimeRemaining,
+  initialiseClock,
+  calculateWPM,
+} from "../utils/script";
 import { getDailyTrack } from "../utils/getDailyTrack";
 import wrongAnswer from "../assets/audio/incorrect.wav";
 import gameOver from "../assets/audio/end.wav";
@@ -73,22 +77,23 @@ export default function Dashboard({
   // const [message, setMessage] = useState("");
   const [alert, setAlert] = useState(false);
   const [trackMeta, setTrackMeta] = useState();
+  const [wpmTimer, setWpmTimer] = useState(0);
+  const [wpmTotal, setWpmTotal] = useState(0);
 
   const BACKSPACE_KEY = "Backspace";
 
   useEffect(() => {
     const dailySong = getDailyTrack(songs);
-    searchTrack(dailySong.artist.toLowerCase(), dailySong.name.toLowerCase())
-      .then((res) => {
-        return res.data.length > 1
-          ? setTrackMeta(res.data[0])
-          : setTrackMeta(res.data);
-      })
-      .catch((err) => {
-        console.log(err, "error");
-      });
+    // searchTrack(dailySong.artist.toLowerCase(), dailySong.name.toLowerCase())
+    //   .then((res) => {
+    //     return res.data.length > 1
+    //       ? setTrackMeta(res.data[0])
+    //       : setTrackMeta(res.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err, "error");
+    //   });
     setTrack(dailySong);
-    // setLyrics(track?.lyrics);
     setBlockA(track?.lyrics[0]);
     setBlockB(track?.lyrics[1]);
     if (!played) {
@@ -108,7 +113,7 @@ export default function Dashboard({
   // // ref
   const playerRefs = useRef([]);
   const ref = playerRefs.current[0];
-
+  var myIntervalRef;
   // to be used by event listener on play button to solve safari autplay issue
   const handleOnPlay = () => {};
 
@@ -120,6 +125,7 @@ export default function Dashboard({
   const handlePlay = () => {
     if (hearts > 0) {
       if (isReady) {
+        setWpmTimer(0);
         setLoading(true);
         setPlay(true);
         setTimeout(() => {
@@ -147,6 +153,9 @@ export default function Dashboard({
     setTimeout(() => {
       setTimePassed(true);
       init();
+      myIntervalRef = setInterval(function () {
+        setWpmTimer((currVal) => currVal + 1);
+      }, 1000);
     }, [420]);
   };
 
@@ -227,6 +236,10 @@ export default function Dashboard({
     e.stopPropagation();
     setAlert(false);
     setSubmitted(true);
+    clearInterval(myIntervalRef);
+    const wordCount = guessA.length + guessB.length;
+    const wpm = calculateWPM(wpmTimer, wordCount);
+    setWpmTotal(wpm);
 
     if (guessA.includes(undefined) || guessA.length < lyricsA.length) {
       // alert("Hello! your answer is missing something!!");
@@ -514,102 +527,115 @@ export default function Dashboard({
                                 setAlert={setAlert}
                               />
                               <Container className="p-3 text-center mt-1">
-                                <Form id="inputContainer" className="mb-2">
-                                  {lyricsA.map((element, index) => {
-                                    return (
-                                      <>
-                                        <div className="inputWrapper mx-2 mb-1 py-1">
-                                          <Form.Control
-                                            ref={(el) => {
-                                              if (el) {
-                                                inputRefs.current[index] = el;
+                                <Form onSubmit={handleSubmit}>
+                                  <Form.Group
+                                    id="inputContainer"
+                                    className="mb-2"
+                                  >
+                                    {lyricsA.map((element, index) => {
+                                      return (
+                                        <>
+                                          <div className="inputWrapper mx-2 mb-1 py-1">
+                                            <Form.Control
+                                              autoFocus={
+                                                index === 0 ? true : false
                                               }
-                                            }}
-                                            key={index}
-                                            value={guessA[index]}
-                                            maxLength={element.length}
-                                            style={{
-                                              minWidth: 20,
-                                              width: 14 * element.length,
-                                            }}
-                                            className={
-                                              resultArray[index] === true
-                                                ? "greenGuess border-0 px-1"
-                                                : resultArray[index] === false
-                                                ? "redGuess border-0 px-1"
-                                                : "guessInput border-0 px-1"
-                                            }
-                                            onKeyDown={(e) =>
-                                              onKeyDown(e, index, "A")
-                                            }
-                                            onChange={(e) =>
-                                              handleInputChangeA(
-                                                e,
-                                                index,
-                                                element.length
-                                              )
-                                            }
-                                          />
-                                        </div>
-                                      </>
-                                    );
-                                  })}
-                                  <br />
-                                </Form>
-                                <Form id="inputContainer" className="mb-2">
-                                  {lyricsB.map((element, index) => {
-                                    return (
-                                      <>
-                                        <div className="inputWrapper mx-2 mb-1 py-1">
-                                          <Form.Control
-                                            ref={(el) => {
-                                              if (el) {
-                                                inputRefs.current[
-                                                  index + lyricsA.length
-                                                ] = el;
+                                              ref={(el) => {
+                                                if (el) {
+                                                  inputRefs.current[index] = el;
+                                                }
+                                              }}
+                                              key={index}
+                                              value={guessA[index]}
+                                              maxLength={element.length}
+                                              style={{
+                                                minWidth: 20,
+                                                width: 14 * element.length,
+                                              }}
+                                              className={
+                                                resultArray[index] === true
+                                                  ? "greenGuess border-0 px-1"
+                                                  : resultArray[index] === false
+                                                  ? "redGuess border-0 px-1"
+                                                  : "guessInput border-0 px-1"
                                               }
-                                            }}
-                                            key={"b" + index}
-                                            value={guessB[index]}
-                                            maxLength={element.length}
-                                            style={{
-                                              minWidth: 20,
-                                              width: 15 * element.length,
-                                            }}
-                                            className={
-                                              // const newIndex = (index + guessA.length)
-                                              resultArray[index + guessA.length]
-                                                ? "greenGuess border-0 px-1"
-                                                : resultArray[
-                                                    index + guessA.length
-                                                  ] === false
-                                                ? "redGuess border-0 px-1"
-                                                : "guessInput border-0 px-1"
-                                            }
-                                            onKeyDown={(e) =>
-                                              onKeyDown(e, index, "B")
-                                            }
-                                            onChange={(e) =>
-                                              handleInputChangeB(
-                                                e,
-                                                index,
-                                                element.length
-                                              )
-                                            }
-                                          />
-                                        </div>
-                                      </>
-                                    );
-                                  })}
+                                              onKeyDown={(e) =>
+                                                onKeyDown(e, index, "A")
+                                              }
+                                              onChange={(e) =>
+                                                handleInputChangeA(
+                                                  e,
+                                                  index,
+                                                  element.length
+                                                )
+                                              }
+                                            />
+                                          </div>
+                                        </>
+                                      );
+                                    })}
+                                    <br />
+                                  </Form.Group>
+                                  <Form.Group
+                                    id="inputContainer"
+                                    className="mb-2"
+                                  >
+                                    {lyricsB.map((element, index) => {
+                                      return (
+                                        <>
+                                          <div className="inputWrapper mx-2 mb-1 py-1">
+                                            <Form.Control
+                                              ref={(el) => {
+                                                if (el) {
+                                                  inputRefs.current[
+                                                    index + lyricsA.length
+                                                  ] = el;
+                                                }
+                                              }}
+                                              key={"b" + index}
+                                              value={guessB[index]}
+                                              maxLength={element.length}
+                                              style={{
+                                                minWidth: 20,
+                                                width: 15 * element.length,
+                                              }}
+                                              className={
+                                                // const newIndex = (index + guessA.length)
+                                                resultArray[
+                                                  index + guessA.length
+                                                ]
+                                                  ? "greenGuess border-0 px-1"
+                                                  : resultArray[
+                                                      index + guessA.length
+                                                    ] === false
+                                                  ? "redGuess border-0 px-1"
+                                                  : "guessInput border-0 px-1"
+                                              }
+                                              onKeyDown={(e) =>
+                                                onKeyDown(e, index, "B")
+                                              }
+                                              onChange={(e) =>
+                                                handleInputChangeB(
+                                                  e,
+                                                  index,
+                                                  element.length
+                                                )
+                                              }
+                                            />
+                                          </div>
+                                        </>
+                                      );
+                                    })}
+                                  </Form.Group>
+                                  <Button
+                                    disabled={submitted}
+                                    // onClick={(e) => handleSubmit(e)}
+                                    type="submit"
+                                    className="m-3 play"
+                                  >
+                                    Guess
+                                  </Button>
                                 </Form>
-
-                                <Button
-                                  disabled={submitted}
-                                  onClick={(e) => handleSubmit(e)}
-                                  className="m-3 play"
-                                >
-                                  Guess
-                                </Button>
                               </Container>
                             </Col>
                           </Row>
@@ -617,18 +643,17 @@ export default function Dashboard({
                       ) : (
                         <>
                           <Container className="px-2 text-center mb-2">
-                            <Image
-                              className="p-2"
-                              src={trackMeta?.album.cover}
-                              height="100"
-                              width="100"
-                            />
-                            <p>
-                              {track.artist} - {track.name}
-                            </p>
-
                             {played || hearts === 0 ? (
                               <>
+                                {/* <Image
+                                  className="p-2"
+                                  src={trackMeta?.album.cover}
+                                  height="100"
+                                  width="100"
+                                /> */}
+                                <p>
+                                  {track.artist} - {track.name}
+                                </p>
                                 <h5 className="pt-4">Next Beatle in</h5>
                                 <Card
                                   id="clockdiv"
@@ -656,6 +681,7 @@ export default function Dashboard({
                               </>
                             ) : null}
 
+                            <h5 className="py-1">Speed: {wpmTotal} wpm</h5>
                             <h5>{result}</h5>
                           </Container>
                         </>
