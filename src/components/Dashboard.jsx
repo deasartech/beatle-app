@@ -681,7 +681,7 @@ export default function Dashboard({
                               </>
                             ) : null}
 
-                            <h5 className="py-1">Speed: {wpmTotal} wpm</h5>
+                            {/* <h5 className="py-1">Speed: {wpmTotal} wpm</h5> */}
                             <h5>{result}</h5>
                           </Container>
                         </>
