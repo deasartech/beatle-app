@@ -249,4 +249,111 @@ export const songs = [
       "But I need more time and I want you to say",
     ],
   },
+  {
+    id: 97395946,
+    timestamp: [126, 15900],
+    name: "Paradise",
+    artist: "Coldplay",
+    lyrics: [
+      "In the night the stormy night she'd close her eyes",
+      "In the night the stormy night away she'd fly",
+    ],
+  },
+  {
+    id: 273792931,
+    timestamp: [21, 10000],
+    name: "Somebody Told Me",
+    artist: "The Killers",
+    lyrics: [
+      "Breaking my back just to know your name",
+      "Seventeen tracks and I've had it with this game",
+    ],
+  },
+  {
+    id: 391470726,
+    timestamp: [68, 12800],
+    name: "Live Forever",
+    artist: "Oasis",
+    lyrics: [
+      "Lately did you ever feel the pain",
+      "In the morning rain as it soaks you to the bone",
+    ],
+  },
+  {
+    id: 255824765,
+    timestamp: [30, 11500],
+    name: "Numb",
+    artist: "Linkin Park",
+    lyrics: [
+      "I don't know what you're expecting of me",
+      "Put under the pressure of walking in your shoes",
+    ],
+  },
+  {
+    id: 258954353,
+    timestamp: [33, 10000],
+    name: "Come As You Are",
+    artist: "Nirvana",
+    lyrics: ["Take your time hurry up", "Choice is yours don't be late"],
+  },
+  {
+    id: 944991541,
+    timestamp: [47, 13500],
+    name: "This Side of Paradise",
+    artist: "Coyote Theory",
+    lyrics: [
+      "Feel like I've been living life asleep",
+      "Love so strong it makes me feel so weak",
+    ],
+  },
+  {
+    id: 14700262,
+    timestamp: [60, 7200],
+    name: "Naive",
+    artist: "The Kooks",
+    lyrics: [
+      "I may say it was your fault",
+      "Because I know you could have done more",
+    ],
+  },
+  {
+    id: 219074813,
+    timestamp: [28, 6000],
+    name: "In the End",
+    artist: "Linkin Park",
+    lyrics: [
+      "Time is a valuable thing",
+      "Watch it fly by as the pendulum swings",
+    ],
+  },
+  {
+    id: 325474463,
+    timestamp: [45, 8500],
+    name: "Someone To You",
+    artist: "BANNERS",
+    lyrics: [
+      "I wanna be the one you're guiding",
+      "Cause I believe that you could lead the way",
+    ],
+  },
+  {
+    id: 291233511,
+    timestamp: [101, 9000],
+    name: "Champagne Supernova",
+    artist: "Oasis",
+    lyrics: [
+      "A dreamer dreams she never dies",
+      "Wipe that tear away now from your eye",
+    ],
+  },
+  {
+    id: 271455488,
+    timestamp: [102, 9000],
+    name: "Little Lion Man",
+    artist: "Mumford & Sons",
+    lyrics: [
+      "Now learn from your mother",
+      "Or else spend your days biting your own neck",
+    ],
+  },
 ];
