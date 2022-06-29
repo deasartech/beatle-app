@@ -9,9 +9,12 @@ import {
   addPointsLeaderboard,
 } from "../utils/fetchPlayerResults";
 
-export default function Leaderboard() {
-  const [scores, setScores] = useState([]);
-  const [totalPoints, setTotalPoints] = useState();
+export default function Leaderboard({
+  scores,
+  setScores,
+  totalPoints,
+  setTotalPoints,
+}) {
   const [isLoading, setIsLoading] = useState(false);
   const [allPlayers, setAllPlayers] = useState([]);
 

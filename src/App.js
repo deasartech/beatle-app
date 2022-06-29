@@ -9,7 +9,11 @@ import Dashboard from "./components/Dashboard";
 import NavBar from "./components/NavBar";
 import Leaderboard from "./components/Leaderboard";
 import Username from "./components/Username";
-import { fetchPlayerResults } from "./utils/fetchPlayerResults";
+import {
+  fetchPlayerResults,
+  addPlayerTotalPoints,
+  addPointsLeaderboard,
+} from "./utils/fetchPlayerResults";
 import Cookies from "js-cookie";
 
 function App() {
@@ -21,6 +25,8 @@ function App() {
   // const [playerResults, setPlayerResults] = useState([]);
   const [hasPlayed, setHasPlayed] = useState([]);
   const [isReturning, setIsReturning] = useState(false);
+  const [scores, setScores] = useState([]);
+  const [totalPoints, setTotalPoints] = useState();
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
@@ -49,8 +55,23 @@ function App() {
     // fetchPlayerResults
     fetchPlayerResults(auth.currentUser?.uid).then((res) => {
       checkIfPlayedToday(res);
+      setScores(res);
     });
-  }, [auth.currentUser?.uid]);
+    // update players totalPoints and also return the value
+    addPlayerTotalPoints(scores, auth.currentUser?.uid)
+      .then((res) => {
+        setTotalPoints(res);
+      })
+      .catch((err) => {
+        console.log(err, "addPlayerTotalPointsError");
+      });
+    // update leaderboard totalPoints
+    addPointsLeaderboard(totalPoints, auth.currentUser?.uid)
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err, "addPointsLeaderboard");
+      });
+  }, [auth.currentUser?.uid, totalPoints, played]);
 
   const checkIfPlayedToday = (playerResults) => {
     const today = Date();
@@ -96,7 +117,17 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/username" element={<Username />} />
-          <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route
+            path="/leaderboard"
+            element={
+              <Leaderboard
+                scores={scores}
+                setScores={setScores}
+                totalPoints={totalPoints}
+                setTotalPoints={setTotalPoints}
+              />
+            }
+          />
         </Routes>
       </BrowserRouter>
     </>
