@@ -356,4 +356,174 @@ export const songs = [
       "Or else spend your days biting your own neck",
     ],
   },
+  {
+    id: 283975503,
+    timestamp: [10, 13500],
+    name: "Don’t Look Back In Anger",
+    artist: "Oasis",
+    lyrics: [
+      "Slip inside the eye of your mind",
+      "Don't you know you might find A better place to play",
+    ],
+  },
+  {
+    id: 283975559,
+    timestamp: [65, 14000],
+    name: "Wonderwal",
+    artist: "Oasis",
+    lyrics: [
+      "And all the roads we have to walk are winding",
+      "And all the lights that lead us there are blinding",
+    ],
+  },
+  {
+    id: 1245701401,
+    timestamp: [48, 9000],
+    name: "Flowers",
+    artist: "Lauren Spencer-Smith",
+    lyrics: [
+      "I guess that flowers aren't just used for big apologies",
+      "I guess I should've been more conscious how you spoke to me",
+    ],
+  },
+  {
+    id: 1070894320,
+    timestamp: [63, 12000],
+    name: "Holiday",
+    artist: "KSI",
+    lyrics: [
+      "Cool like the ocean lost in emotion",
+      "Fly me a way away you're my holiday",
+    ],
+  },
+  {
+    id: 1177727125,
+    timestamp: [15, 10000],
+    name: "drunk text me",
+    artist: "Lexi Jayde",
+    lyrics: [
+      "Said you never liked big crowds",
+      "Acting like you like them now without me",
+    ],
+  },
+  {
+    id: 693274768,
+    timestamp: [24, 17500],
+    name: "Canter",
+    artist: "Gerry Cinnamon",
+    lyrics: [
+      "You better start moving like you're running out of time",
+      "The realisation coming over your mind that it should be a canter",
+    ],
+  },
+  {
+    id: 213950659,
+    timestamp: [33, 18500],
+    name: "Photograph",
+    artist: "Ed Sheeran",
+    lyrics: [
+      "When it gets hard you know it can get hard sometimes",
+      "It is the only thing that makes us feel alive",
+    ],
+  },
+  {
+    id: 1096504597,
+    timestamp: [208, 11000],
+    name: "Happier Than Ever",
+    artist: "Billie Eilish",
+    lyrics: [
+      "I could talk about every time that you showed up on time",
+      "But I'd have an empty line cause you never did",
+    ],
+  },
+  {
+    id: 431099817,
+    timestamp: [74, 11000],
+    name: "lovely",
+    artist: "Billie Eilish",
+    lyrics: [
+      "Heart made of glass my mind of stone",
+      "Tear me to pieces skin to bone",
+    ],
+  },
+  {
+    id: 144189921,
+    timestamp: [47, 11500],
+    name: "Let It Go",
+    artist: "James Bay",
+    lyrics: [
+      "Holding something we don't need",
+      "All this delusion in our heads is gonna bring us to our knees",
+    ],
+  },
+  {
+    id: 1215909469,
+    timestamp: [70, 8000],
+    name: "House On Fire",
+    artist: "Mimi Webb",
+    lyrics: [
+      "You should've seen this from the start",
+      "When you could've been honest you could've been smart",
+    ],
+  },
+  {
+    id: 256187803,
+    timestamp: [19, 10000],
+    name: "Payphone",
+    artist: "Maroon 5",
+    lyrics: [
+      "I know it's hard to remember the people we used to be",
+      "It's even harder to picture that you're not here next to me",
+    ],
+  },
+  {
+    id: 128778707,
+    timestamp: [39, 10000],
+    name: "Am I Wrong",
+    artist: "Nico & Vinz",
+    lyrics: [
+      "If one thing I know I'll fall but I'll grow",
+      "I'm walking down this road of mine this road that I call home",
+    ],
+  },
+  {
+    id: 1246780027,
+    timestamp: [14, 6500],
+    name: "2step",
+    artist: "Ed Sheeran",
+    lyrics: [
+      "You could see in my eyes that it was taking over",
+      "I guess I was just blind and caught up in the moment",
+    ],
+  },
+  {
+    id: 1089020740,
+    timestamp: [33, 9500],
+    name: "abcdefu",
+    artist: "GAYLE",
+    lyrics: [
+      "Dated a girl that I hate for the attention",
+      "She only made it two days what a connection",
+    ],
+  },
+  {
+    id: 1252610197,
+    timestamp: [59, 7000],
+    name: "Thousand Miles",
+    artist: "The Kid LAROI",
+    lyrics: [
+      "Tryna block you out but you're invading my thoughts",
+      "And you got ten fingers wrapped around my heart",
+    ],
+  },
+  {
+    id: 861425395,
+    timestamp: [52, 12000],
+    name: "Mood",
+    artist: "24kGoldn",
+    lyrics: [
+      "We play games of love to avoid the depression",
+      "We been here before and I won't be your victim",
+    ],
+  },
 ];
