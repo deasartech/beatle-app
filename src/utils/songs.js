@@ -328,7 +328,7 @@ export const songs = [
   },
   {
     id: 325474463,
-    timestamp: [45, 8500],
+    timestamp: [45, 10000],
     name: "Someone To You",
     artist: "BANNERS",
     lyrics: [
