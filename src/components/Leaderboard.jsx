@@ -60,37 +60,51 @@ export default function Leaderboard({
       <Row className="g-3">
         <Col md="6" lg="6">
           <Card className="leaderboard-card shadow border-0">
-            <Card.Body>
-              <Card.Title className="text-center">Leaderboard</Card.Title>
-              <Row className="pb-2">
-                <Col className="text-center">
-                  <b>Username</b>
-                </Col>
-                <Col className="text-center">
-                  <b>Points</b>
-                </Col>
-              </Row>
-              {allPlayers?.map((item, index) => {
-                return (
-                  <>
-                    <Row key={index}>
-                      <Col>
-                        {/* {index + 1}. */}
-                        <p
-                          stye={{ color: `${item.nameColour}` }}
-                          className={`mx-2 text-center ${item.nameColour}`}
-                        >
-                          <b>{item.username}</b>
-                        </p>
-                      </Col>
-                      <Col>
-                        <p className="text-center">{item.totalPoints}</p>
-                      </Col>
-                    </Row>
-                  </>
-                );
-              })}
-            </Card.Body>
+            {auth.currentUser ? (
+              <Card.Body>
+                <Card.Title className="text-center">Leaderboard</Card.Title>
+                <Row className="pb-2">
+                  <Col className="text-center">
+                    <b>Username</b>
+                  </Col>
+                  <Col className="text-center">
+                    <b>Points</b>
+                  </Col>
+                </Row>
+                {allPlayers?.map((item, index) => {
+                  return (
+                    <>
+                      <Row key={index}>
+                        <Col>
+                          {/* {index + 1}. */}
+                          <p
+                            stye={{ color: `${item.nameColour}` }}
+                            className={`mx-2 text-center ${item.nameColour}`}
+                          >
+                            <b>{item.username}</b>
+                          </p>
+                        </Col>
+                        <Col>
+                          <p className="text-center">{item.totalPoints}</p>
+                        </Col>
+                      </Row>
+                    </>
+                  );
+                })}
+              </Card.Body>
+            ) : (
+              <>
+                <Card.Body>
+                  <Card.Title className="text-center mb-5">
+                    Leaderboard
+                  </Card.Title>
+                  <h6 className="text-center">Sign in to view leaderboard</h6>
+                  <div className="text-center py-4">
+                    <Logout />
+                  </div>
+                </Card.Body>
+              </>
+            )}
           </Card>
         </Col>
         <Col md="6" lg="6">
