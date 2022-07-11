@@ -526,4 +526,84 @@ export const songs = [
       "We been here before and I won't be your victim",
     ],
   },
+  {
+    id: 1091657155,
+    timestamp: [135, 11000],
+    name: "Better Days",
+    artist: "Dermot Kennedy",
+    lyrics: [
+      "Your story's gonna change just wait for better days",
+      "You've seen too much of pain now you don't even know",
+    ],
+  },
+  {
+    id: 1205677894,
+    timestamp: [46, 15000],
+    name: "she’s all i wanna be",
+    artist: "Tate McRae",
+    lyrics: [
+      "Stupid boy making me so sad didn't think you could change this fast",
+      "She's got everything that I don't have how could I ever compete with that?",
+    ],
+  },
+  {
+    id: 470261487,
+    timestamp: [53, 7300],
+    name: "Eastside",
+    artist: "benny blanco",
+    lyrics: [
+      "We can do anything if we put our minds to it",
+      "Take your old life then you put a line through it",
+    ],
+  },
+  {
+    id: 1082723470,
+    timestamp: [11, 7500],
+    name: "Stay",
+    artist: "The Kid LAROI",
+    lyrics: [
+      "I do the same thing I told you that I never would",
+      "I told you I'd change even when I knew I never could",
+    ],
+  },
+  {
+    id: 384075449,
+    timestamp: [6, 17300],
+    name: "This City",
+    artist: "Sam Fischer",
+    lyrics: [
+      "I've been seeing lonely people in crowded rooms covering their old heartbreaks with new tattoos",
+      "It's all about smoke screens and cigarettes",
+    ],
+  },
+  {
+    id: 220647780,
+    timestamp: [49, 19500],
+    name: "Iris",
+    artist: "Goo Goo Dolls",
+    lyrics: [
+      "And I don't want the world to see me cause I don't think that they'd understand",
+      "When everything's made to be broken I just want you to know who I am",
+    ],
+  },
+  {
+    id: 1071204931,
+    timestamp: [117, 13500],
+    name: "Bad Habits",
+    artist: "Ed Sheeran",
+    lyrics: [
+      "My bad habits lead to late nights ending alone conversations with a stranger I barely know",
+      "Swearing this'll be the last but it probably won't",
+    ],
+  },
+  {
+    id: 301161123,
+    timestamp: [89, 11500],
+    name: "Shape of You",
+    artist: "Ed Sheeran",
+    lyrics: [
+      "One week in we let the story begin we're going out on our first date",
+      "You and me are thrifty so go all you can eat fill up your bag and I fill up a plate",
+    ],
+  },
 ];
