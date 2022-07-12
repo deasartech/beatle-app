@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Button, Card, Row, Col } from "react-bootstrap";
+import { Container, Card, Row, Col } from "react-bootstrap";
 import Logout from "./Logout";
 import { auth } from "../firebase-config";
 import {
@@ -8,12 +8,19 @@ import {
   fetchAllPlayersTotalPoints,
   addPointsLeaderboard,
 } from "../utils/fetchPlayerResults";
+import MusicModal from "./MusicModal";
+import InfoModal from "./InfoModal";
 
 export default function Leaderboard({
   scores,
   setScores,
   totalPoints,
   setTotalPoints,
+  user,
+  modalShow,
+  setModalShow,
+  musicModalShow,
+  setMusicModalShow,
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [allPlayers, setAllPlayers] = useState([]);
@@ -57,6 +64,15 @@ export default function Leaderboard({
 
   return (
     <Container className="p-2">
+      <InfoModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        user={user}
+      />
+      <MusicModal
+        show={musicModalShow}
+        onHide={() => setMusicModalShow(false)}
+      />
       <Row className="g-3">
         <Col md="6" lg="6">
           <Card className="leaderboard-card shadow border-0">

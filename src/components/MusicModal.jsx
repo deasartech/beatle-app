@@ -3,7 +3,7 @@ import { Modal, Image } from "react-bootstrap";
 import soundcloud from "../assets/soundcloud.png";
 
 // Music information modal
-export default function MusicModal(props, setMusicModalShow) {
+export default function MusicModal(props) {
   return (
     <Modal
       {...props}

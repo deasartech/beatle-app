@@ -5,7 +5,7 @@ import Login from "./Login";
 import { auth } from "../firebase-config";
 
 // instructions modal
-export default function InfoModal(props, modalShow, setModalShow) {
+export default function InfoModal(props, modalShow) {
   const [loginShow, setLoginShow] = useState(false);
   const [registerShow, setRegisterShow] = useState(false);
   const [hideText, setHideText] = useState(true);
