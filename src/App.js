@@ -125,6 +125,11 @@ function App() {
                 setScores={setScores}
                 totalPoints={totalPoints}
                 setTotalPoints={setTotalPoints}
+                user={user}
+                modalShow={modalShow}
+                setModalShow={setModalShow}
+                musicModalShow={musicModalShow}
+                setMusicModalShow={setMusicModalShow}
               />
             }
           />

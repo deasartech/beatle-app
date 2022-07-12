@@ -445,7 +445,6 @@ export default function Dashboard({
           show={modalShow}
           onHide={() => setModalShow(false)}
           user={user}
-          setModalShow={setModalShow}
         />
         <MusicModal
           show={musicModalShow}
