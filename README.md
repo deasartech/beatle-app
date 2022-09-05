@@ -6,8 +6,7 @@
 
 This project is a React JS web app which uses Firebase for authentication, firestore database and storage. My overall aim was to achieve an interactive and user-friendly web interface which implemented a game design with UI flow. Once the user clicks play the client should play an audio snippet, on ending of the snippet the client should display an array of inputs where the user can enter the lyrics they memorise from the snippet. The format is inspired by Wordle and so there is a new song each day and the user gets three attempts to guess correctly, the number of points a player gains depends on the number guesses it takes them to enter the correct answer. For further gamification I wanted to add a leaderboard that displays the top 10 highest scoring players, and also allow users to view their score history when logged in.
 
-> Beatle is featured in ["Wordle Spinoffs: The Complete and Authoritative Index"](https://medium.com/floodgates/the-complete-and-authoritative-list-of-wordle-spinoffs-fb00bfafc448)
-> (https://user-images.githubusercontent.com/86922213/188456939-8d50e20f-5d75-4011-83cd-17427499d236.png)
+> Beatle is featured in ["Wordle Spinoffs: The Complete and Authoritative Index"](https://medium.com/floodgates/the-complete-and-authoritative-list-of-wordle-spinoffs-fb00bfafc448) > ![wordle spinoff index](https://user-images.githubusercontent.com/86922213/188456939-8d50e20f-5d75-4011-83cd-17427499d236.png)
 
 ![input](https://user-images.githubusercontent.com/86922213/188456815-fc09822a-95af-484b-8434-948012f58206.png)
 
